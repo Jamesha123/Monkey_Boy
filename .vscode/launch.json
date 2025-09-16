@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run JAR",
+            "request": "launch",
+            "mainClass": "main.Main",
+            "projectName": "Monkey Boy",
+            "args": "",
+            "vmArgs": "-jar MonkeyBoy.jar"
+        },
+        {
+            "type": "java", 
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
