@@ -387,9 +387,9 @@ implements Runnable {
             this.g2.fillRect(0, 0, 960, 576);
             this.g2.setColor(Color.white);
             this.g2.setFont(this.ui.fontBold50);
-            var3_2 = (960 - this.g2.getFontMetrics().stringWidth(this.loadingMessage)) / 2;
+            int messageX = (960 - this.g2.getFontMetrics().stringWidth(this.loadingMessage)) / 2;
             int n = 258;
-            this.g2.drawString(this.loadingMessage, var3_2, n);
+            this.g2.drawString(this.loadingMessage, messageX, n);
             int n2 = 300;
             int n3 = 20;
             int n4 = (960 - n2) / 2;
@@ -409,41 +409,39 @@ implements Runnable {
             this.snakeGame.draw(this.g2);
         } else {
             this.tileM.draw(this.g2);
-            for (var3_2 = 0; var3_2 < this.iTile[1].length; ++var3_2) {
-                if (this.iTile[this.currentMap][var3_2] == null) continue;
-                this.iTile[this.currentMap][var3_2].draw(this.g2);
+            for (int i = 0; i < this.iTile[1].length; ++i) {
+                if (this.iTile[this.currentMap][i] == null) continue;
+                this.iTile[this.currentMap][i].draw(this.g2);
             }
             this.entityList.add(this.player);
-            for (var3_2 = 0; var3_2 < this.npc[1].length; ++var3_2) {
-                if (this.npc[this.currentMap][var3_2] == null) continue;
-                this.entityList.add(this.npc[this.currentMap][var3_2]);
+            for (int i = 0; i < this.npc[1].length; ++i) {
+                if (this.npc[this.currentMap][i] == null) continue;
+                this.entityList.add(this.npc[this.currentMap][i]);
             }
-            for (var3_2 = 0; var3_2 < this.obj[1].length; ++var3_2) {
-                if (this.obj[this.currentMap][var3_2] == null) continue;
-                this.entityList.add(this.obj[this.currentMap][var3_2]);
+            for (int i = 0; i < this.obj[1].length; ++i) {
+                if (this.obj[this.currentMap][i] == null) continue;
+                this.entityList.add(this.obj[this.currentMap][i]);
             }
-            for (var3_2 = 0; var3_2 < this.monster[1].length; ++var3_2) {
-                if (this.monster[this.currentMap][var3_2] == null) continue;
-                this.entityList.add(this.monster[this.currentMap][var3_2]);
+            for (int i = 0; i < this.monster[1].length; ++i) {
+                if (this.monster[this.currentMap][i] == null) continue;
+                this.entityList.add(this.monster[this.currentMap][i]);
             }
-            for (var3_2 = 0; var3_2 < this.projectile[1].length; ++var3_2) {
-                if (this.projectile[this.currentMap][var3_2] == null) continue;
-                this.entityList.add(this.projectile[this.currentMap][var3_2]);
+            for (int i = 0; i < this.projectile[1].length; ++i) {
+                if (this.projectile[this.currentMap][i] == null) continue;
+                this.entityList.add(this.projectile[this.currentMap][i]);
             }
-            for (var3_2 = 0; var3_2 < this.particleList.size(); ++var3_2) {
-                if (this.particleList.get(var3_2) == null) continue;
-                this.entityList.add(this.particleList.get(var3_2));
+            for (int i = 0; i < this.particleList.size(); ++i) {
+                if (this.particleList.get(i) == null) continue;
+                this.entityList.add(this.particleList.get(i));
             }
-            Collections.sort(this.entityList, new Comparator<Entity>(this){
-
+            Collections.sort(this.entityList, new Comparator<Entity>() {
                 @Override
                 public int compare(Entity entity, Entity entity2) {
-                    int n = Integer.compare(entity.worldY, entity2.worldY);
-                    return n;
+                    return Integer.compare(entity.worldY, entity2.worldY);
                 }
             });
-            for (var3_2 = 0; var3_2 < this.entityList.size(); ++var3_2) {
-                this.entityList.get(var3_2).draw(this.g2);
+            for (int i = 0; i < this.entityList.size(); ++i) {
+                this.entityList.get(i).draw(this.g2);
             }
             this.entityList.clear();
             this.eManager.draw(this.g2);
@@ -477,6 +475,16 @@ implements Runnable {
     public void playSE(int n) {
         this.se.setFile(n);
         this.se.play();
+    }
+
+    public void applyAreaForMap(int mapIndex) {
+        if (mapIndex == this.dungeon01 || mapIndex == this.dungeon02 || mapIndex == this.skeletonLordRoom) {
+            this.currentArea = this.dungeon;
+        } else if (mapIndex == this.bedroom || mapIndex == this.downstairs || mapIndex == this.store || mapIndex == this.wizardHome) {
+            this.currentArea = this.indoor;
+        } else {
+            this.currentArea = this.outside;
+        }
     }
 
     public void playMusicForCurrentArea() {

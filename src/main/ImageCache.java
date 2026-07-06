@@ -132,27 +132,34 @@ public class ImageCache {
         }
     }
 
-    public static BufferedImage getImage(String string, int n, int n2) {
-        String string2 = string + "_" + n + "x" + n2;
-        if (cache.containsKey(string2)) {
-            return cache.get(string2);
+    public static BufferedImage getImage(String path, int width, int height) {
+        String normalizedPath = ImageCache.normalizePath(path);
+        String cacheKey = normalizedPath + "_" + width + "x" + height;
+        if (cache.containsKey(cacheKey)) {
+            return cache.get(cacheKey);
         }
-        BufferedImage bufferedImage = ImageCache.loadImage(string, n, n2);
-        if (bufferedImage != null) {
-            cache.put(string2, bufferedImage);
+        BufferedImage image = ImageCache.loadImage(normalizedPath, width, height);
+        if (image != null) {
+            cache.put(cacheKey, image);
         }
-        return bufferedImage;
+        return image;
     }
 
-    private static BufferedImage loadImage(String string, int n, int n2) {
-        try {
-            BufferedImage bufferedImage = ImageIO.read(ImageCache.class.getResourceAsStream(string + ".png"));
-            if (bufferedImage != null) {
-                UtilityTool utilityTool = new UtilityTool();
-                return utilityTool.scaleImage(bufferedImage, n, n2);
-            }
+    private static String normalizePath(String path) {
+        while (path.endsWith(".png")) {
+            path = path.substring(0, path.length() - 4);
         }
-        catch (Exception exception) {
+        return path;
+    }
+
+    private static BufferedImage loadImage(String path, int width, int height) {
+        try {
+            BufferedImage image = ImageIO.read(ImageCache.class.getResourceAsStream(path + ".png"));
+            if (image != null) {
+                UtilityTool utilityTool = new UtilityTool();
+                return utilityTool.scaleImage(image, width, height);
+            }
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
         return null;

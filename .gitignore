@@ -1,0 +1,5 @@
+﻿bin/
+err.txt
+*.class
+.DS_Store
+Thumbs.db

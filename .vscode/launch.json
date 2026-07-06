@@ -3,18 +3,25 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Run JAR",
+            "name": "Run Monkey Boy",
             "request": "launch",
             "mainClass": "main.Main",
             "projectName": "Monkey Boy",
-            "args": "",
-            "vmArgs": "-jar MonkeyBoy.jar"
+            "cwd": "${workspaceFolder}",
+            "classPaths": [
+                "${workspaceFolder}/bin",
+                "${workspaceFolder}/res"
+            ]
         },
         {
-            "type": "java", 
-            "name": "Current File",
+            "type": "java",
+            "name": "Run JAR",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "main.Main",
+            "cwd": "${workspaceFolder}",
+            "classPaths": [
+                "${workspaceFolder}/MonkeyBoy.jar"
+            ]
         }
     ]
 }

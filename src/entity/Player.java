@@ -222,126 +222,57 @@ extends Entity {
         }
     }
 
-    /*
-     * Unable to fully structure code
-     */
-    public void setRetryPositions(int var1_1, int var2_2) {
-        block32: {
-            block31: {
-                block30: {
-                    this.gp.currentMap = var1_1;
-                    Objects.requireNonNull(this.gp);
-                    if (var1_1 == 0) break block30;
-                    Objects.requireNonNull(this.gp);
-                    if (var1_1 == 1) break block30;
-                    Objects.requireNonNull(this.gp);
-                    if (var1_1 == 6) break block30;
-                    Objects.requireNonNull(this.gp);
-                    if (var1_1 != 7) break block31;
-                }
-                Objects.requireNonNull(this.gp);
-                this.gp.currentArea = 2;
-                break block32;
-            }
-            Objects.requireNonNull(this.gp);
-            if (var1_1 == 11 || var1_1 == 12 || var1_1 == 13) {
-            // 3 sources
+    public void setRetryPositions(int targetMap, int previousMap) {
+        this.gp.currentMap = targetMap;
+        this.gp.applyAreaForMap(targetMap);
+        if (!this.applyRetrySpawn(targetMap, previousMap)) {
+            this.setDefaultPositions(targetMap);
+        }
+    }
 
-            {
-                Objects.requireNonNull(this.gp);
-                this.gp.currentArea = 3;
-            } else {
-                Objects.requireNonNull(this.gp);
-                this.gp.currentArea = 1;
+    private boolean applyRetrySpawn(int targetMap, int previousMap) {
+        int tileSize = this.gp.tileSize;
+        if (targetMap == this.gp.worldmap2 && previousMap == this.gp.worldmap3) {
+            this.placeAt(tileSize * 38, tileSize * 12, "left");
+            return true;
+        }
+        if (targetMap == this.gp.worldmap3) {
+            if (previousMap == this.gp.village) {
+                this.placeAt(tileSize * 37, tileSize * 37, "left");
+                return true;
+            }
+            if (previousMap == this.gp.worldmap4) {
+                this.placeAt(tileSize * 11, tileSize * 37, "right");
+                return true;
+            }
+            if (previousMap == this.gp.worldmap5) {
+                this.placeAt(tileSize * 35, tileSize * 9, "down");
+                return true;
             }
         }
-        Objects.requireNonNull(this.gp);
-        if (var1_1 == 3) {
-            Objects.requireNonNull(this.gp);
-            if (var2_2 == 4) {
-                this.worldX = this.gp.tileSize * 38;
-                this.worldY = this.gp.tileSize * 12;
-                this.direction = "left";
-            } else {
-                this.setDefaultPositions(var1_1);
-            }
-        } else {
-            Objects.requireNonNull(this.gp);
-            if (var1_1 == 4) {
-                Objects.requireNonNull(this.gp);
-                if (var2_2 == 5) {
-                    this.worldX = this.gp.tileSize * 37;
-                    this.worldY = this.gp.tileSize * 37;
-                    this.direction = "left";
-                } else {
-                    Objects.requireNonNull(this.gp);
-                    if (var2_2 == 8) {
-                        this.worldX = this.gp.tileSize * 11;
-                        this.worldY = this.gp.tileSize * 37;
-                        this.direction = "right";
-                    } else {
-                        Objects.requireNonNull(this.gp);
-                        if (var2_2 == 10) {
-                            this.worldX = this.gp.tileSize * 35;
-                            this.worldY = this.gp.tileSize * 9;
-                            this.direction = "down";
-                        } else {
-                            this.setDefaultPositions(var1_1);
-                        }
-                    }
-                }
-            } else {
-                Objects.requireNonNull(this.gp);
-                if (var1_1 == 8) {
-                    Objects.requireNonNull(this.gp);
-                    if (var2_2 == 9) {
-                        this.worldX = this.gp.tileSize * 21;
-                        this.worldY = this.gp.tileSize * 42;
-                        this.direction = "up";
-                    } else {
-                        this.setDefaultPositions(var1_1);
-                    }
-                } else {
-                    Objects.requireNonNull(this.gp);
-                    if (var1_1 == 10) {
-                        Objects.requireNonNull(this.gp);
-                        if (var2_2 == 11) {
-                            this.worldX = this.gp.tileSize * 36;
-                            this.worldY = this.gp.tileSize * 9;
-                            this.direction = "down";
-                        } else {
-                            this.setDefaultPositions(var1_1);
-                        }
-                    } else {
-                        Objects.requireNonNull(this.gp);
-                        if (var1_1 == 11) {
-                            Objects.requireNonNull(this.gp);
-                            if (var2_2 == 12) {
-                                this.worldX = this.gp.tileSize * 12;
-                                this.worldY = this.gp.tileSize * 8;
-                                this.direction = "down";
-                            } else {
-                                this.setDefaultPositions(var1_1);
-                            }
-                        } else {
-                            Objects.requireNonNull(this.gp);
-                            if (var1_1 == 12) {
-                                Objects.requireNonNull(this.gp);
-                                if (var2_2 == 13) {
-                                    this.worldX = this.gp.tileSize * 38;
-                                    this.worldY = this.gp.tileSize * 9;
-                                    this.direction = "down";
-                                } else {
-                                    this.setDefaultPositions(var1_1);
-                                }
-                            } else {
-                                this.setDefaultPositions(var1_1);
-                            }
-                        }
-                    }
-                }
-            }
+        if (targetMap == this.gp.worldmap4 && previousMap == this.gp.slimeBossRoom) {
+            this.placeAt(tileSize * 21, tileSize * 42, "up");
+            return true;
         }
+        if (targetMap == this.gp.worldmap5 && previousMap == this.gp.dungeon01) {
+            this.placeAt(tileSize * 36, tileSize * 9, "down");
+            return true;
+        }
+        if (targetMap == this.gp.dungeon01 && previousMap == this.gp.dungeon02) {
+            this.placeAt(tileSize * 12, tileSize * 8, "down");
+            return true;
+        }
+        if (targetMap == this.gp.dungeon02 && previousMap == this.gp.skeletonLordRoom) {
+            this.placeAt(tileSize * 38, tileSize * 9, "down");
+            return true;
+        }
+        return false;
+    }
+
+    private void placeAt(int worldX, int worldY, String direction) {
+        this.worldX = worldX;
+        this.worldY = worldY;
+        this.direction = direction;
     }
 
     public void setDialogue() {

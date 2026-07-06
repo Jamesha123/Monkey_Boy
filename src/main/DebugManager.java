@@ -47,19 +47,13 @@ public class DebugManager {
         this.keyH = gamePanel.keyH;
     }
 
-    /*
-     * Unable to fully structure code
-     */
     public void update() {
-        v0 = this.gp.gameState;
-        Objects.requireNonNull(this.gp);
-        if (v0 == 2 || v1 == 10 || v2 == 11) {
-        // 3 sources
-
-        {
-            v3 = true;
+        if (this.gp.gameState == this.gp.dialogueState
+                || this.gp.gameState == this.gp.cutsceneState
+                || this.gp.gameState == this.gp.cutsceneTransitionState) {
+            this.inRestrictedState = true;
         } else {
-            v3 = this.inRestrictedState = false;
+            this.inRestrictedState = false;
         }
         if (this.inRestrictedState) {
             if (this.debugMode && !this.debugSuspended) {

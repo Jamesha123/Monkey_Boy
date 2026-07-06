@@ -247,9 +247,6 @@ public class Lighting {
         }
     }
 
-    /*
-     * Unable to fully structure code
-     */
     private void updateDayNightCycle() {
         if (this.dayState == 0) {
             this.filterAlpha = 0.0f;
@@ -260,18 +257,13 @@ public class Lighting {
             }
         }
         if (this.dayState == 1) {
-        v0 = this.gp.currentArea;
-        Objects.requireNonNull(this.gp);
-        if (v0 != 3) {
-            this.filterAlpha += 0.005f;
-            if (this.filterAlpha > 1.0f) {
-                this.filterAlpha = 1.0f;
-                this.dayState = 2;
-            }
-        } else if (this.dayState == 1) {
-            v1 = this.gp.currentArea;
-            Objects.requireNonNull(this.gp);
-            if (v1 == 3) {
+            if (this.gp.currentArea != this.gp.dungeon) {
+                this.filterAlpha += 0.005f;
+                if (this.filterAlpha > 1.0f) {
+                    this.filterAlpha = 1.0f;
+                    this.dayState = 2;
+                }
+            } else {
                 ++this.dayCounter;
                 if (this.dayCounter > 3600) {
                     this.dayState = 2;
@@ -288,18 +280,13 @@ public class Lighting {
             }
         }
         if (this.dayState == 3) {
-        v2 = this.gp.currentArea;
-        Objects.requireNonNull(this.gp);
-        if (v2 != 3) {
-            this.filterAlpha -= 0.005f;
-            if (this.filterAlpha < 0.0f) {
-                this.filterAlpha = 0.0f;
-                this.dayState = 0;
-            }
-        } else if (this.dayState == 3) {
-            v3 = this.gp.currentArea;
-            Objects.requireNonNull(this.gp);
-            if (v3 == 3) {
+            if (this.gp.currentArea != this.gp.dungeon) {
+                this.filterAlpha -= 0.005f;
+                if (this.filterAlpha < 0.0f) {
+                    this.filterAlpha = 0.0f;
+                    this.dayState = 0;
+                }
+            } else {
                 ++this.dayCounter;
                 if (this.dayCounter > 3600) {
                     this.dayState = 2;
