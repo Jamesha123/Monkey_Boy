@@ -1,6 +1,6 @@
 @echo off
 setlocal
-set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
+set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-24.0.2.12-hotspot"
 set "PATH=%JAVA_HOME%\bin;%PATH%"
 
 if not exist bin\main\Main.class (

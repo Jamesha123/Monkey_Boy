@@ -2,5 +2,13 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [],
-    "java.project.resourceFilters": ["node_modules", ".git"]
+    "java.project.resourceFilters": ["node_modules", ".git"],
+    "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-24.0.2.12-hotspot",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-24",
+            "path": "C:\\Program Files\\Eclipse Adoptium\\jdk-24.0.2.12-hotspot",
+            "default": true
+        }
+    ]
 }

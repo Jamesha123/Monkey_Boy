@@ -4,6 +4,7 @@
 package main;
 
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -153,13 +154,18 @@ public class ImageCache {
     }
 
     private static BufferedImage loadImage(String path, int width, int height) {
-        try {
-            BufferedImage image = ImageIO.read(ImageCache.class.getResourceAsStream(path + ".png"));
+        try (InputStream stream = ImageCache.class.getResourceAsStream(path + ".png")) {
+            if (stream == null) {
+                System.err.println("Missing image resource: " + path + ".png");
+                return null;
+            }
+            BufferedImage image = ImageIO.read(stream);
             if (image != null) {
                 UtilityTool utilityTool = new UtilityTool();
                 return utilityTool.scaleImage(image, width, height);
             }
         } catch (Exception exception) {
+            System.err.println("Failed to load image: " + path + ".png");
             exception.printStackTrace();
         }
         return null;
