@@ -97,13 +97,13 @@ extends Entity {
                     this.opened = true;
                 }
             } else if (this.loot.name.equals("Key")) {
-                boolean bl = false;
+                boolean doorExistsOnMap = false;
                 for (int i = 0; i < this.gp.obj[this.gp.currentMap].length; ++i) {
                     if (this.gp.obj[this.gp.currentMap][i] == null || !this.gp.obj[this.gp.currentMap][i].name.equals("Door")) continue;
-                    bl = true;
+                    doorExistsOnMap = true;
                     break;
                 }
-                if (bl) {
+                if (doorExistsOnMap) {
                     if (!this.loot.name.equals("Key")) {
                         this.loot = this.gp.eGenerator.getObject("Key");
                     }

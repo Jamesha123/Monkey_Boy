@@ -10,8 +10,8 @@ public class PlayerDummy
 extends Entity {
     public static final String npcName = "PlayerDummy";
 
-    public PlayerDummy(GamePanel gamePanel) {
-        super(gamePanel);
+    public PlayerDummy(GamePanel gp) {
+        super(gp);
         this.name = npcName;
         this.type = 1;
         this.getImage();

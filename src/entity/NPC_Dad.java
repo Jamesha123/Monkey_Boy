@@ -9,8 +9,8 @@ import main.GamePanel;
 
 public class NPC_Dad
 extends Entity {
-    public NPC_Dad(GamePanel gamePanel) {
-        super(gamePanel);
+    public NPC_Dad(GamePanel gp) {
+        super(gp);
         this.name = "Dad";
         this.type = 1;
         this.solidArea = new Rectangle();

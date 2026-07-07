@@ -71,167 +71,167 @@ extends Entity {
     }
 
     public void getImage() {
-        int n = 5;
+        int spriteScale = 5;
         if (!this.inRage) {
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up1 = this.setup("/Monster/skeletonlord_up_1.png", 48 * n, 48 * n);
+            this.up1 = this.setup("/Monster/skeletonlord_up_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up2 = this.setup("/Monster/skeletonlord_up_2.png", 48 * n, 48 * n);
+            this.up2 = this.setup("/Monster/skeletonlord_up_2.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down1 = this.setup("/Monster/skeletonlord_down_1.png", 48 * n, 48 * n);
+            this.down1 = this.setup("/Monster/skeletonlord_down_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down2 = this.setup("/Monster/skeletonlord_down_2.png", 48 * n, 48 * n);
+            this.down2 = this.setup("/Monster/skeletonlord_down_2.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left1 = this.setup("/Monster/skeletonlord_left_1.png", 48 * n, 48 * n);
+            this.left1 = this.setup("/Monster/skeletonlord_left_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left2 = this.setup("/Monster/skeletonlord_left_2.png", 48 * n, 48 * n);
+            this.left2 = this.setup("/Monster/skeletonlord_left_2.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right1 = this.setup("/Monster/skeletonlord_right_1.png", 48 * n, 48 * n);
+            this.right1 = this.setup("/Monster/skeletonlord_right_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right2 = this.setup("/Monster/skeletonlord_right_2.png", 48 * n, 48 * n);
+            this.right2 = this.setup("/Monster/skeletonlord_right_2.png", 48 * spriteScale, 48 * spriteScale);
         } else {
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up1 = this.setup("/Monster/skeletonlord_phase2_up_1.png", 48 * n, 48 * n);
+            this.up1 = this.setup("/Monster/skeletonlord_phase2_up_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up2 = this.setup("/Monster/skeletonlord_phase2_up_2.png", 48 * n, 48 * n);
+            this.up2 = this.setup("/Monster/skeletonlord_phase2_up_2.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down1 = this.setup("/Monster/skeletonlord_phase2_down_1.png", 48 * n, 48 * n);
+            this.down1 = this.setup("/Monster/skeletonlord_phase2_down_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down2 = this.setup("/Monster/skeletonlord_phase2_down_2.png", 48 * n, 48 * n);
+            this.down2 = this.setup("/Monster/skeletonlord_phase2_down_2.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left1 = this.setup("/Monster/skeletonlord_phase2_left_1.png", 48 * n, 48 * n);
+            this.left1 = this.setup("/Monster/skeletonlord_phase2_left_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left2 = this.setup("/Monster/skeletonlord_phase2_left_2.png", 48 * n, 48 * n);
+            this.left2 = this.setup("/Monster/skeletonlord_phase2_left_2.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right1 = this.setup("/Monster/skeletonlord_phase2_right_1.png", 48 * n, 48 * n);
+            this.right1 = this.setup("/Monster/skeletonlord_phase2_right_1.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right2 = this.setup("/Monster/skeletonlord_phase2_right_2.png", 48 * n, 48 * n);
+            this.right2 = this.setup("/Monster/skeletonlord_phase2_right_2.png", 48 * spriteScale, 48 * spriteScale);
         }
     }
 
     public void getAttackImage() {
-        int n = 5;
+        int spriteScale = 5;
         if (!this.inRage) {
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackUp1 = this.setup("/Monster/skeletonlord_attack_up_1.png", 48 * n, 48 * n * 2);
+            this.attackUp1 = this.setup("/Monster/skeletonlord_attack_up_1.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackUp2 = this.setup("/Monster/skeletonlord_attack_up_2.png", 48 * n, 48 * n * 2);
+            this.attackUp2 = this.setup("/Monster/skeletonlord_attack_up_2.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackDown1 = this.setup("/Monster/skeletonlord_attack_down_1.png", 48 * n, 48 * n * 2);
+            this.attackDown1 = this.setup("/Monster/skeletonlord_attack_down_1.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackDown2 = this.setup("/Monster/skeletonlord_attack_down_2.png", 48 * n, 48 * n * 2);
+            this.attackDown2 = this.setup("/Monster/skeletonlord_attack_down_2.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackLeft1 = this.setup("/Monster/skeletonlord_attack_left_1.png", 48 * n * 2, 48 * n);
+            this.attackLeft1 = this.setup("/Monster/skeletonlord_attack_left_1.png", 48 * spriteScale * 2, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackLeft2 = this.setup("/Monster/skeletonlord_attack_left_2.png", 48 * n * 2, 48 * n);
+            this.attackLeft2 = this.setup("/Monster/skeletonlord_attack_left_2.png", 48 * spriteScale * 2, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackRight1 = this.setup("/Monster/skeletonlord_attack_right_1.png", 48 * n * 2, 48 * n);
+            this.attackRight1 = this.setup("/Monster/skeletonlord_attack_right_1.png", 48 * spriteScale * 2, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackRight2 = this.setup("/Monster/skeletonlord_attack_right_2.png", 48 * n * 2, 48 * n);
+            this.attackRight2 = this.setup("/Monster/skeletonlord_attack_right_2.png", 48 * spriteScale * 2, 48 * spriteScale);
         } else {
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackUp1 = this.setup("/Monster/skeletonlord_phase2_attack_up_1.png", 48 * n, 48 * n * 2);
+            this.attackUp1 = this.setup("/Monster/skeletonlord_phase2_attack_up_1.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackUp2 = this.setup("/Monster/skeletonlord_phase2_attack_up_2.png", 48 * n, 48 * n * 2);
+            this.attackUp2 = this.setup("/Monster/skeletonlord_phase2_attack_up_2.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackDown1 = this.setup("/Monster/skeletonlord_phase2_attack_down_1.png", 48 * n, 48 * n * 2);
+            this.attackDown1 = this.setup("/Monster/skeletonlord_phase2_attack_down_1.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackDown2 = this.setup("/Monster/skeletonlord_phase2_attack_down_2.png", 48 * n, 48 * n * 2);
+            this.attackDown2 = this.setup("/Monster/skeletonlord_phase2_attack_down_2.png", 48 * spriteScale, 48 * spriteScale * 2);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackLeft1 = this.setup("/Monster/skeletonlord_phase2_attack_left_1.png", 48 * n * 2, 48 * n);
+            this.attackLeft1 = this.setup("/Monster/skeletonlord_phase2_attack_left_1.png", 48 * spriteScale * 2, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackLeft2 = this.setup("/Monster/skeletonlord_phase2_attack_left_2.png", 48 * n * 2, 48 * n);
+            this.attackLeft2 = this.setup("/Monster/skeletonlord_phase2_attack_left_2.png", 48 * spriteScale * 2, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackRight1 = this.setup("/Monster/skeletonlord_phase2_attack_right_1.png", 48 * n * 2, 48 * n);
+            this.attackRight1 = this.setup("/Monster/skeletonlord_phase2_attack_right_1.png", 48 * spriteScale * 2, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.attackRight2 = this.setup("/Monster/skeletonlord_phase2_attack_right_2.png", 48 * n * 2, 48 * n);
+            this.attackRight2 = this.setup("/Monster/skeletonlord_phase2_attack_right_2.png", 48 * spriteScale * 2, 48 * spriteScale);
         }
     }
 
     private void getSleepImage() {
-        int n = 5;
+        int spriteScale = 5;
         if (!this.inRage) {
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.up1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.up2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.down1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.down2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.left1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.left2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.right1 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * n, 48 * n);
+            this.right2 = this.setup("/Monster/skeletonlord_sleep.png", 48 * spriteScale, 48 * spriteScale);
         } else {
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.up1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.up2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.up2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.down1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.down2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.down2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.left1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.left2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.left2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.right1 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
             Objects.requireNonNull(this.gp);
             Objects.requireNonNull(this.gp);
-            this.right2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * n, 48 * n);
+            this.right2 = this.setup("/Monster/skeletonlord_phase2_sleep.png", 48 * spriteScale, 48 * spriteScale);
         }
     }
 
@@ -250,10 +250,10 @@ extends Entity {
             this.spriteNum = 1;
         } else if (this.spriteCounter > this.motion1_duration && this.spriteCounter <= this.motion2_duration) {
             this.spriteNum = 2;
-            int n = this.worldX;
-            int n2 = this.worldY;
-            int n3 = this.solidArea.width;
-            int n4 = this.solidArea.height;
+            int savedWorldX = this.worldX;
+            int savedWorldY = this.worldY;
+            int savedSolidWidth = this.solidArea.width;
+            int savedSolidHeight = this.solidArea.height;
             switch (this.direction) {
                 case "up": {
                     this.worldY -= this.attackArea.height;
@@ -278,18 +278,18 @@ extends Entity {
                     this.damagePlayer(this.attack);
                 }
             } else {
-                int n5 = this.gp.cChecker.checkEntity((Entity)this, this.gp.monster);
-                int n6 = this.currentWeapon != null ? this.currentWeapon.knockBackPower : 1;
-                this.gp.player.damageMonster(n5, (Entity)this, this.attack, n6, this.direction);
-                int n7 = this.gp.cChecker.checkEntity((Entity)this, (Entity[][])this.gp.iTile);
-                this.gp.player.damageInteractiveTile(n7);
-                int n8 = this.gp.cChecker.checkEntity((Entity)this, this.gp.projectile);
-                this.gp.player.damageProjectile(n8);
+                int monsterIndex = this.gp.cChecker.checkEntity((Entity)this, this.gp.monster);
+                int knockBackPower = this.currentWeapon != null ? this.currentWeapon.knockBackPower : 1;
+                this.gp.player.damageMonster(monsterIndex, (Entity)this, this.attack, knockBackPower, this.direction);
+                int tileIndex = this.gp.cChecker.checkEntity((Entity)this, (Entity[][])this.gp.iTile);
+                this.gp.player.damageInteractiveTile(tileIndex);
+                int projectileIndex = this.gp.cChecker.checkEntity((Entity)this, this.gp.projectile);
+                this.gp.player.damageProjectile(projectileIndex);
             }
-            this.worldX = n;
-            this.worldY = n2;
-            this.solidArea.width = n3;
-            this.solidArea.height = n4;
+            this.worldX = savedWorldX;
+            this.worldY = savedWorldY;
+            this.solidArea.width = savedSolidWidth;
+            this.solidArea.height = savedSolidHeight;
         } else if (this.spriteCounter > this.motion2_duration) {
             this.spriteNum = 1;
             this.spriteCounter = 0;
@@ -349,18 +349,18 @@ extends Entity {
         if (this.inInvinciblePhase) {
             return;
         }
-        int n = this.maxLife / 4;
-        if (this.currentPhase < 1 && this.life <= n * 3) {
+        int lifeThreshold = this.maxLife / 4;
+        if (this.currentPhase < 1 && this.life <= lifeThreshold * 3) {
             this.currentPhase = 1;
             this.inInvinciblePhase = true;
             this.onPath = true;
             this.invincible = true;
-        } else if (this.currentPhase < 2 && this.life <= n * 2) {
+        } else if (this.currentPhase < 2 && this.life <= lifeThreshold * 2) {
             this.currentPhase = 2;
             this.inInvinciblePhase = true;
             this.onPath = true;
             this.invincible = true;
-        } else if (this.currentPhase < 3 && this.life <= n) {
+        } else if (this.currentPhase < 3 && this.life <= lifeThreshold) {
             this.currentPhase = 3;
             this.inInvinciblePhase = true;
             this.onPath = true;
@@ -371,15 +371,15 @@ extends Entity {
     private void handleInvinciblePhase() {
         if (this.onPath) {
             Objects.requireNonNull(this.gp);
-            int n = 24 * 48;
+            int retreatTargetX = 24 * 48;
             Objects.requireNonNull(this.gp);
-            int n2 = 16 * 48;
-            int n3 = n - this.worldX;
-            int n4 = n2 - this.worldY;
-            int n5 = Math.abs(n3);
+            int retreatTargetY = 16 * 48;
+            int deltaX = retreatTargetX - this.worldX;
+            int deltaY = retreatTargetY - this.worldY;
+            int absDeltaX = Math.abs(deltaX);
             Objects.requireNonNull(this.gp);
-            if (n5 > 48 / 2) {
-                if (n3 > 0) {
+            if (absDeltaX > 48 / 2) {
+                if (deltaX > 0) {
                     this.direction = "right";
                     this.worldX += this.speed;
                 } else {
@@ -387,10 +387,10 @@ extends Entity {
                     this.worldX -= this.speed;
                 }
             }
-            int n6 = Math.abs(n4);
+            int absDeltaY = Math.abs(deltaY);
             Objects.requireNonNull(this.gp);
-            if (n6 > 48 / 2) {
-                if (n4 > 0) {
+            if (absDeltaY > 48 / 2) {
+                if (deltaY > 0) {
                     this.direction = "down";
                     this.worldY += this.speed;
                 } else {
@@ -398,12 +398,12 @@ extends Entity {
                     this.worldY -= this.speed;
                 }
             }
-            int n7 = Math.abs(n3);
+            int nearAbsDeltaX = Math.abs(deltaX);
             Objects.requireNonNull(this.gp);
-            if (n7 <= 48) {
-                int n8 = Math.abs(n4);
+            if (nearAbsDeltaX <= 48) {
+                int nearAbsDeltaY = Math.abs(deltaY);
                 Objects.requireNonNull(this.gp);
-                if (n8 <= 48) {
+                if (nearAbsDeltaY <= 48) {
                     if (!this.spawnSaved) {
                         this.spawnWorldX = this.worldX;
                         this.spawnWorldY = this.worldY;
@@ -426,8 +426,8 @@ extends Entity {
                     this.getSleepImage();
                     this.onPath = false;
                     this.sleep = true;
-                    this.worldX = n;
-                    this.worldY = n2;
+                    this.worldX = retreatTargetX;
+                    this.worldY = retreatTargetY;
                     this.spawnDungeonOrcs();
                 }
             }
@@ -440,12 +440,12 @@ extends Entity {
     }
 
     private void checkOrcsStatus() {
-        int n = 0;
+        int aliveOrcCount = 0;
         for (int i = 0; i < this.gp.monster[this.gp.currentMap].length; ++i) {
             if (this.gp.monster[this.gp.currentMap][i] == null || !this.gp.monster[this.gp.currentMap][i].name.equals("Dungeon Orc") || !this.gp.monster[this.gp.currentMap][i].alive || this.gp.monster[this.gp.currentMap][i].dying) continue;
-            ++n;
+            ++aliveOrcCount;
         }
-        this.orcsAlive = n > 0;
+        this.orcsAlive = aliveOrcCount > 0;
     }
 
     private void endInvinciblePhase() {
@@ -466,42 +466,42 @@ extends Entity {
     }
 
     private void wakeUpKnockBackPlayer() {
-        int n = this.worldX + this.solidArea.x + this.solidArea.width / 2;
-        int n2 = this.worldY + this.solidArea.y + this.solidArea.height / 2;
-        int n3 = this.gp.player.worldX + this.gp.player.solidArea.x + this.gp.player.solidArea.width / 2;
-        int n4 = this.gp.player.worldY + this.gp.player.solidArea.y + this.gp.player.solidArea.height / 2;
-        int n5 = n3 - n;
-        int n6 = n4 - n2;
-        String string = Math.abs(n5) > Math.abs(n6) ? (n5 >= 0 ? "right" : "left") : (n6 >= 0 ? "down" : "up");
-        int n7 = Math.max(this.knockBackPower, 60);
-        this.setKnockBack((Entity)this.gp.player, this, n7, string);
+        int bossCenterX = this.worldX + this.solidArea.x + this.solidArea.width / 2;
+        int bossCenterY = this.worldY + this.solidArea.y + this.solidArea.height / 2;
+        int playerCenterX = this.gp.player.worldX + this.gp.player.solidArea.x + this.gp.player.solidArea.width / 2;
+        int playerCenterY = this.gp.player.worldY + this.gp.player.solidArea.y + this.gp.player.solidArea.height / 2;
+        int deltaX = playerCenterX - bossCenterX;
+        int deltaY = playerCenterY - bossCenterY;
+        String knockBackDirection = Math.abs(deltaX) > Math.abs(deltaY) ? (deltaX >= 0 ? "right" : "left") : (deltaY >= 0 ? "down" : "up");
+        int knockBackStrength = Math.max(this.knockBackPower, 60);
+        this.setKnockBack((Entity)this.gp.player, this, knockBackStrength, knockBackDirection);
         this.getImage();
         this.invincible = false;
         this.sleep = false;
-        Rectangle rectangle = new Rectangle(this.worldX + this.solidArea.x, this.worldY + this.solidArea.y, this.solidArea.width, this.solidArea.height);
-        Rectangle rectangle2 = new Rectangle(this.gp.player.worldX + this.gp.player.solidArea.x, this.gp.player.worldY + this.gp.player.solidArea.y, this.gp.player.solidArea.width, this.gp.player.solidArea.height);
+        Rectangle bossBounds = new Rectangle(this.worldX + this.solidArea.x, this.worldY + this.solidArea.y, this.solidArea.width, this.solidArea.height);
+        Rectangle playerBounds = new Rectangle(this.gp.player.worldX + this.gp.player.solidArea.x, this.gp.player.worldY + this.gp.player.solidArea.y, this.gp.player.solidArea.width, this.gp.player.solidArea.height);
         Objects.requireNonNull(this.gp);
-        int n8 = 48 * 10;
-        int n9 = Math.max(4, this.gp.player.speed);
-        while (rectangle.intersects(rectangle2) && n8-- > 0) {
-            switch (string) {
+        int separationSteps = 48 * 10;
+        int pushSpeed = Math.max(4, this.gp.player.speed);
+        while (bossBounds.intersects(playerBounds) && separationSteps-- > 0) {
+            switch (knockBackDirection) {
                 case "up": {
-                    this.gp.player.worldY -= n9;
+                    this.gp.player.worldY -= pushSpeed;
                     break;
                 }
                 case "down": {
-                    this.gp.player.worldY += n9;
+                    this.gp.player.worldY += pushSpeed;
                     break;
                 }
                 case "left": {
-                    this.gp.player.worldX -= n9;
+                    this.gp.player.worldX -= pushSpeed;
                     break;
                 }
                 case "right": {
-                    this.gp.player.worldX += n9;
+                    this.gp.player.worldX += pushSpeed;
                 }
             }
-            rectangle2.setLocation(this.gp.player.worldX + this.gp.player.solidArea.x, this.gp.player.worldY + this.gp.player.solidArea.y);
+            playerBounds.setLocation(this.gp.player.worldX + this.gp.player.solidArea.x, this.gp.player.worldY + this.gp.player.solidArea.y);
         }
     }
 
@@ -515,15 +515,15 @@ extends Entity {
         this.orcsAlive = true;
     }
 
-    private void spawnOrcAtOffset(int n, int n2) {
+    private void spawnOrcAtOffset(int colOffset, int rowOffset) {
         for (int i = 0; i < this.gp.monster[this.gp.currentMap].length; ++i) {
             if (this.gp.monster[this.gp.currentMap][i] != null) continue;
-            MON_DungeonOrc mON_DungeonOrc = new MON_DungeonOrc(this.gp);
+            MON_DungeonOrc dungeonOrc = new MON_DungeonOrc(this.gp);
             Objects.requireNonNull(this.gp);
-            mON_DungeonOrc.worldX = this.worldX + n * 48;
+            dungeonOrc.worldX = this.worldX + colOffset * 48;
             Objects.requireNonNull(this.gp);
-            mON_DungeonOrc.worldY = this.worldY + n2 * 48;
-            this.gp.monster[this.gp.currentMap][i] = mON_DungeonOrc;
+            dungeonOrc.worldY = this.worldY + rowOffset * 48;
+            this.gp.monster[this.gp.currentMap][i] = dungeonOrc;
             ++this.orcsSpawned;
             break;
         }

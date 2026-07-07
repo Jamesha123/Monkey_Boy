@@ -63,74 +63,74 @@ public class CutsceneManager {
 
     public void scene_orcRobbery() {
         if (this.scenePhase == 0) {
-            int n = 0;
-            int n2 = 0;
+            int orcCount = 0;
+            int slotIndex = 0;
             while (true) {
                 Entity[][] entityArray = this.gp.npc;
                 Objects.requireNonNull(this.gp);
-                if (n2 >= entityArray[5].length) break;
+                if (slotIndex >= entityArray[5].length) break;
                 Entity[][] entityArray2 = this.gp.npc;
                 Objects.requireNonNull(this.gp);
-                if (entityArray2[5][n2].name.equals(NPC_OldMan.npcName)) {
+                if (entityArray2[5][slotIndex].name.equals(NPC_OldMan.npcName)) {
                     Entity[][] entityArray3 = this.gp.npc;
                     Objects.requireNonNull(this.gp);
-                    entityArray3[5][n2] = null;
+                    entityArray3[5][slotIndex] = null;
                     break;
                 }
-                ++n2;
+                ++slotIndex;
             }
-            n2 = 0;
+            slotIndex = 0;
             while (true) {
                 Entity[][] entityArray = this.gp.npc;
                 Objects.requireNonNull(this.gp);
-                if (n2 >= entityArray[4].length || n >= 3) break;
+                if (slotIndex >= entityArray[4].length || orcCount >= 3) break;
                 Entity[][] entityArray4 = this.gp.npc;
                 Objects.requireNonNull(this.gp);
-                if (entityArray4[4][n2] == null) {
+                if (entityArray4[4][slotIndex] == null) {
                     Entity[][] entityArray5 = this.gp.npc;
                     Objects.requireNonNull(this.gp);
-                    entityArray5[4][n2] = new OrcDummy(this.gp);
-                    switch (n) {
+                    entityArray5[4][slotIndex] = new OrcDummy(this.gp);
+                    switch (orcCount) {
                         case 0: {
                             Entity[][] entityArray6 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray6[4][n2].worldX = this.gp.tileSize * 18;
+                            entityArray6[4][slotIndex].worldX = this.gp.tileSize * 18;
                             Entity[][] entityArray7 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray7[4][n2].worldY = this.gp.tileSize * 37;
+                            entityArray7[4][slotIndex].worldY = this.gp.tileSize * 37;
                             Entity[][] entityArray8 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray8[4][n2].direction = "right";
-                            this.orcLeader = n2;
+                            entityArray8[4][slotIndex].direction = "right";
+                            this.orcLeader = slotIndex;
                             break;
                         }
                         case 1: {
                             Entity[][] entityArray9 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray9[4][n2].worldX = this.gp.tileSize * 19;
+                            entityArray9[4][slotIndex].worldX = this.gp.tileSize * 19;
                             Entity[][] entityArray10 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray10[4][n2].worldY = this.gp.tileSize * 36;
+                            entityArray10[4][slotIndex].worldY = this.gp.tileSize * 36;
                             Entity[][] entityArray11 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray11[4][n2].direction = "right";
+                            entityArray11[4][slotIndex].direction = "right";
                             break;
                         }
                         case 2: {
                             Entity[][] entityArray12 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray12[4][n2].worldX = this.gp.tileSize * 19;
+                            entityArray12[4][slotIndex].worldX = this.gp.tileSize * 19;
                             Entity[][] entityArray13 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray13[4][n2].worldY = this.gp.tileSize * 38;
+                            entityArray13[4][slotIndex].worldY = this.gp.tileSize * 38;
                             Entity[][] entityArray14 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray14[4][n2].direction = "right";
+                            entityArray14[4][slotIndex].direction = "right";
                         }
                     }
-                    ++n;
+                    ++orcCount;
                 }
-                ++n2;
+                ++slotIndex;
             }
             ++this.scenePhase;
         } else if (this.scenePhase == 1) {
@@ -141,48 +141,48 @@ public class CutsceneManager {
                 ++this.scenePhase;
             }
         } else if (this.scenePhase == 2) {
-            int n = 0;
-            int n3 = 0;
+            int orcCount = 0;
+            int slotIndex = 0;
             while (true) {
                 Entity[][] entityArray = this.gp.npc;
                 Objects.requireNonNull(this.gp);
-                if (n3 >= entityArray[4].length || n >= 2) break;
+                if (slotIndex >= entityArray[4].length || orcCount >= 2) break;
                 Entity[][] entityArray15 = this.gp.npc;
                 Objects.requireNonNull(this.gp);
-                if (entityArray15[4][n3] == null) {
+                if (entityArray15[4][slotIndex] == null) {
                     Entity[][] entityArray16 = this.gp.npc;
                     Objects.requireNonNull(this.gp);
-                    entityArray16[4][n3] = new OrcDummy(this.gp);
-                    switch (n) {
+                    entityArray16[4][slotIndex] = new OrcDummy(this.gp);
+                    switch (orcCount) {
                         case 0: {
                             Entity[][] entityArray17 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray17[4][n3].worldX = this.gp.tileSize * 20;
+                            entityArray17[4][slotIndex].worldX = this.gp.tileSize * 20;
                             Entity[][] entityArray18 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray18[4][n3].worldY = this.gp.tileSize * 25;
+                            entityArray18[4][slotIndex].worldY = this.gp.tileSize * 25;
                             Entity[][] entityArray19 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray19[4][n3].direction = "down";
-                            this.orcTop = n3;
+                            entityArray19[4][slotIndex].direction = "down";
+                            this.orcTop = slotIndex;
                             break;
                         }
                         case 1: {
                             Entity[][] entityArray20 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray20[4][n3].worldX = this.gp.tileSize * 33;
+                            entityArray20[4][slotIndex].worldX = this.gp.tileSize * 33;
                             Entity[][] entityArray21 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray21[4][n3].worldY = this.gp.tileSize * 37;
+                            entityArray21[4][slotIndex].worldY = this.gp.tileSize * 37;
                             Entity[][] entityArray22 = this.gp.npc;
                             Objects.requireNonNull(this.gp);
-                            entityArray22[4][n3].direction = "left";
-                            this.orcLeft = n3;
+                            entityArray22[4][slotIndex].direction = "left";
+                            this.orcLeft = slotIndex;
                         }
                     }
-                    ++n;
+                    ++orcCount;
                 }
-                ++n3;
+                ++slotIndex;
             }
             ++this.scenePhase;
         } else if (this.scenePhase == 3) {
@@ -204,10 +204,10 @@ public class CutsceneManager {
                 ++this.scenePhase;
             }
         } else if (this.scenePhase == 4) {
-            UI uI = this.gp.ui;
+            UI ui = this.gp.ui;
             Entity[][] entityArray = this.gp.npc;
             Objects.requireNonNull(this.gp);
-            uI.npc = entityArray[4][this.orcTop];
+            ui.npc = entityArray[4][this.orcTop];
             this.gp.ui.drawDialogueScreen();
         } else if (this.scenePhase == 5) {
             --this.gp.player.worldX;
@@ -243,21 +243,21 @@ public class CutsceneManager {
                 this.gp.playSE(6);
             }
             if (this.counter == 330) {
-                int n;
-                for (n = 0; n < this.gp.npc[1].length; ++n) {
-                    if (this.gp.npc[this.gp.currentMap][n] == null || !this.gp.npc[this.gp.currentMap][n].name.equals("OrcDummy")) continue;
-                    this.gp.npc[this.gp.currentMap][n] = null;
+                int i;
+                for (i = 0; i < this.gp.npc[1].length; ++i) {
+                    if (this.gp.npc[this.gp.currentMap][i] == null || !this.gp.npc[this.gp.currentMap][i].name.equals("OrcDummy")) continue;
+                    this.gp.npc[this.gp.currentMap][i] = null;
                 }
                 Objects.requireNonNull(this.gp);
                 this.gp.currentMap = 7;
                 this.gp.player.setDefaultPositions(this.gp.currentMap);
-                for (n = 0; n < this.gp.npc[1].length; ++n) {
-                    if (this.gp.npc[this.gp.currentMap][n] != null) continue;
-                    this.gp.npc[this.gp.currentMap][n] = new PlayerDummy(this.gp);
-                    this.gp.npc[this.gp.currentMap][n].worldX = this.gp.player.worldX;
-                    this.gp.npc[this.gp.currentMap][n].worldY = this.gp.player.worldY;
-                    this.gp.npc[this.gp.currentMap][n].direction = this.gp.player.direction;
-                    this.dummyPlayer = n;
+                for (i = 0; i < this.gp.npc[1].length; ++i) {
+                    if (this.gp.npc[this.gp.currentMap][i] != null) continue;
+                    this.gp.npc[this.gp.currentMap][i] = new PlayerDummy(this.gp);
+                    this.gp.npc[this.gp.currentMap][i].worldX = this.gp.player.worldX;
+                    this.gp.npc[this.gp.currentMap][i].worldY = this.gp.player.worldY;
+                    this.gp.npc[this.gp.currentMap][i].direction = this.gp.player.direction;
+                    this.dummyPlayer = i;
                     break;
                 }
             }
@@ -273,10 +273,10 @@ public class CutsceneManager {
             this.gp.player.inventory.remove(this.gp.player.searchItemInInventory("Sugar"));
             ++this.scenePhase;
         } else if (this.scenePhase == 8) {
-            UI uI = this.gp.ui;
+            UI ui = this.gp.ui;
             Entity[][] entityArray = this.gp.npc;
             Objects.requireNonNull(this.gp);
-            uI.npc = entityArray[7][this.dummyPlayer];
+            ui.npc = entityArray[7][this.dummyPlayer];
             this.gp.ui.drawDialogueScreen();
         } else if (this.scenePhase == 9) {
             for (int i = 0; i < this.gp.npc[1].length; ++i) {
@@ -343,27 +343,27 @@ public class CutsceneManager {
 
     public void scene_skeletonLord() {
         if (this.scenePhase == 0) {
-            int n;
+            int i;
             this.gp.bossBattleOn = true;
-            for (n = 0; n < this.gp.obj[1].length; ++n) {
-                if (this.gp.obj[this.gp.currentMap][n] != null) continue;
-                this.gp.obj[this.gp.currentMap][n] = new OBJ_Door_Iron(this.gp);
-                this.gp.obj[this.gp.currentMap][n].worldX = this.gp.tileSize * 25;
-                this.gp.obj[this.gp.currentMap][n].worldY = this.gp.tileSize * 11;
-                this.gp.obj[this.gp.currentMap][n].temp = true;
-                this.gp.obj[this.gp.currentMap][n + 1] = new OBJ_Door_Iron(this.gp);
-                this.gp.obj[this.gp.currentMap][n + 1].worldX = this.gp.tileSize * 25;
-                this.gp.obj[this.gp.currentMap][n + 1].worldY = this.gp.tileSize * 33;
-                this.gp.obj[this.gp.currentMap][n + 1].temp = true;
+            for (i = 0; i < this.gp.obj[1].length; ++i) {
+                if (this.gp.obj[this.gp.currentMap][i] != null) continue;
+                this.gp.obj[this.gp.currentMap][i] = new OBJ_Door_Iron(this.gp);
+                this.gp.obj[this.gp.currentMap][i].worldX = this.gp.tileSize * 25;
+                this.gp.obj[this.gp.currentMap][i].worldY = this.gp.tileSize * 11;
+                this.gp.obj[this.gp.currentMap][i].temp = true;
+                this.gp.obj[this.gp.currentMap][i + 1] = new OBJ_Door_Iron(this.gp);
+                this.gp.obj[this.gp.currentMap][i + 1].worldX = this.gp.tileSize * 25;
+                this.gp.obj[this.gp.currentMap][i + 1].worldY = this.gp.tileSize * 33;
+                this.gp.obj[this.gp.currentMap][i + 1].temp = true;
                 this.gp.playSE(21);
                 break;
             }
-            for (n = 0; n < this.gp.npc[1].length; ++n) {
-                if (this.gp.npc[this.gp.currentMap][n] != null) continue;
-                this.gp.npc[this.gp.currentMap][n] = new PlayerDummy(this.gp);
-                this.gp.npc[this.gp.currentMap][n].worldX = this.gp.player.worldX;
-                this.gp.npc[this.gp.currentMap][n].worldY = this.gp.player.worldY;
-                this.gp.npc[this.gp.currentMap][n].direction = this.gp.player.direction;
+            for (i = 0; i < this.gp.npc[1].length; ++i) {
+                if (this.gp.npc[this.gp.currentMap][i] != null) continue;
+                this.gp.npc[this.gp.currentMap][i] = new PlayerDummy(this.gp);
+                this.gp.npc[this.gp.currentMap][i].worldX = this.gp.player.worldX;
+                this.gp.npc[this.gp.currentMap][i].worldY = this.gp.player.worldY;
+                this.gp.npc[this.gp.currentMap][i].direction = this.gp.player.direction;
                 break;
             }
             this.gp.player.drawing = false;
@@ -434,8 +434,8 @@ public class CutsceneManager {
             if (this.alpha >= 1.0f) {
                 this.alpha = 1.0f;
             }
-            String string = "After a long journey, the little monkey could finally rest.\nYou've completed the game!\nThank you for playing!";
-            this.drawString(this.alpha, 38.0f, string, 200, 70, Color.white);
+            String completionText = "After a long journey, the little monkey could finally rest.\nYou've completed the game!\nThank you for playing!";
+            this.drawString(this.alpha, 38.0f, completionText, 200, 70, Color.white);
             if (this.counterReached(540)) {
                 this.gp.playMusic(0);
                 ++this.scenePhase;
@@ -469,33 +469,33 @@ public class CutsceneManager {
         }
     }
 
-    public void drawString(float f, float f2, String string, int n, int n2, Color color) {
-        this.g2.setComposite(AlphaComposite.getInstance(3, f));
-        this.g2.setFont(this.g2.getFont().deriveFont(f2));
+    public void drawString(float alpha, float fontSize, String text, int y, int lineSpacing, Color color) {
+        this.g2.setComposite(AlphaComposite.getInstance(3, alpha));
+        this.g2.setFont(this.g2.getFont().deriveFont(fontSize));
         this.g2.setColor(color);
-        for (String string2 : string.split("\n")) {
-            int n3 = this.gp.ui.getXforCenteredText(string2);
-            this.g2.drawString(string2, n3, n);
-            n += n2;
+        for (String line : text.split("\n")) {
+            int x = this.gp.ui.getXforCenteredText(line);
+            this.g2.drawString(line, x, y);
+            y += lineSpacing;
         }
         this.g2.setComposite(AlphaComposite.getInstance(3, 1.0f));
     }
 
-    public void fadeOut(float f) {
-        this.g2.setComposite(AlphaComposite.getInstance(3, f));
+    public void fadeOut(float alpha) {
+        this.g2.setComposite(AlphaComposite.getInstance(3, alpha));
         this.g2.setColor(Color.BLACK);
         this.g2.fillRect(0, 0, this.gp.screenWidth, this.gp.screenHeight);
         this.g2.setComposite(AlphaComposite.getInstance(3, 1.0f));
     }
 
-    public boolean counterReached(int n) {
-        boolean bl = false;
+    public boolean counterReached(int targetCount) {
+        boolean reached = false;
         ++this.counter;
-        if (this.counter >= n) {
-            bl = true;
+        if (this.counter >= targetCount) {
+            reached = true;
             this.counter = 0;
         }
-        return bl;
+        return reached;
     }
 
     private void animateEntity(Entity entity) {

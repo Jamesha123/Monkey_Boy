@@ -68,9 +68,9 @@ extends Entity {
     }
 
     public void setAction() {
-        int n = this.gp.currentMap;
+        int currentMap = this.gp.currentMap;
         Objects.requireNonNull(this.gp);
-        if (n == 9) {
+        if (currentMap == 9) {
             this.moveTowardPlayer(60);
         } else if (this.onPath) {
             this.checkStopChasing((Entity)this.gp.player, 15, 100);
@@ -111,10 +111,9 @@ extends Entity {
     }
 
     public void applyNightTimeBuffs() {
-        boolean bl;
-        boolean bl2 = bl = this.gp.eManager != null && this.gp.eManager.lighting != null && this.gp.eManager.lighting.isNightTime();
-        if (bl != this.isNightTime) {
-            this.isNightTime = bl;
+        boolean isNightNow = this.gp.eManager != null && this.gp.eManager.lighting != null && this.gp.eManager.lighting.isNightTime();
+        if (isNightNow != this.isNightTime) {
+            this.isNightTime = isNightNow;
             if (this.isNightTime) {
                 this.applyNightStats();
             } else {

@@ -12,7 +12,7 @@ import main.GamePanel;
 public class Main {
     public static JFrame window;
 
-    public static void main(String[] stringArray) {
+    public static void main(String[] args) {
         window = new JFrame();
         window.setDefaultCloseOperation(3);
         window.setResizable(false);

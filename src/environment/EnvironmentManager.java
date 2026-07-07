@@ -11,8 +11,8 @@ public class EnvironmentManager {
     GamePanel gp;
     public Lighting lighting;
 
-    public EnvironmentManager(GamePanel gamePanel) {
-        this.gp = gamePanel;
+    public EnvironmentManager(GamePanel gp) {
+        this.gp = gp;
     }
 
     public void setup() {

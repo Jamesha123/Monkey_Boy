@@ -27,22 +27,22 @@ public class EventHandler {
         this.gp = gamePanel;
         this.eventMaster = new Entity(gamePanel);
         this.eventRect = new EventRect[gamePanel.maxMap][gamePanel.maxWorldCol][gamePanel.maxWorldRow];
-        int n = 0;
-        int n2 = 0;
-        int n3 = 0;
-        while (n < gamePanel.maxMap && n2 < gamePanel.maxWorldCol && n3 < gamePanel.maxWorldRow) {
-            this.eventRect[n][n2][n3] = new EventRect();
-            this.eventRect[n][n2][n3].x = 23;
-            this.eventRect[n][n2][n3].y = 23;
-            this.eventRect[n][n2][n3].width = 2;
-            this.eventRect[n][n2][n3].height = 2;
-            this.eventRect[n][n2][n3].eventRectDefaultX = this.eventRect[n][n2][n3].x;
-            this.eventRect[n][n2][n3].eventRectDefaultY = this.eventRect[n][n2][n3].y;
-            if (++n2 != gamePanel.maxWorldCol) continue;
-            n2 = 0;
-            if (++n3 != gamePanel.maxWorldRow) continue;
-            n3 = 0;
-            ++n;
+        int mapIndex = 0;
+        int col = 0;
+        int row = 0;
+        while (mapIndex < gamePanel.maxMap && col < gamePanel.maxWorldCol && row < gamePanel.maxWorldRow) {
+            this.eventRect[mapIndex][col][row] = new EventRect();
+            this.eventRect[mapIndex][col][row].x = 23;
+            this.eventRect[mapIndex][col][row].y = 23;
+            this.eventRect[mapIndex][col][row].width = 2;
+            this.eventRect[mapIndex][col][row].height = 2;
+            this.eventRect[mapIndex][col][row].eventRectDefaultX = this.eventRect[mapIndex][col][row].x;
+            this.eventRect[mapIndex][col][row].eventRectDefaultY = this.eventRect[mapIndex][col][row].y;
+            if (++col != gamePanel.maxWorldCol) continue;
+            col = 0;
+            if (++row != gamePanel.maxWorldRow) continue;
+            row = 0;
+            ++mapIndex;
         }
         this.setDialogue();
     }
@@ -54,10 +54,10 @@ public class EventHandler {
     }
 
     public void checkEvent() {
-        int n;
-        int n2 = Math.abs(this.gp.player.worldX - this.previousEventX);
-        int n3 = Math.max(n2, n = Math.abs(this.gp.player.worldY - this.previousEventY));
-        if (n3 > this.gp.tileSize) {
+        int deltaY;
+        int deltaX = Math.abs(this.gp.player.worldX - this.previousEventX);
+        int maxDelta = Math.max(deltaX, deltaY = Math.abs(this.gp.player.worldY - this.previousEventY));
+        if (maxDelta > this.gp.tileSize) {
             this.canTouchEvent = true;
         }
         if (this.canTouchEvent) {
@@ -317,47 +317,47 @@ public class EventHandler {
         }
     }
 
-    public boolean hit(int n, int n2, int n3, String string) {
-        boolean bl = false;
-        if (n == this.gp.currentMap) {
+    public boolean hit(int mapIndex, int col, int row, String requiredDirection) {
+        boolean hit = false;
+        if (mapIndex == this.gp.currentMap) {
             this.gp.player.solidArea.x = this.gp.player.worldX + this.gp.player.solidArea.x;
             this.gp.player.solidArea.y = this.gp.player.worldY + this.gp.player.solidArea.y;
-            this.eventRect[n][n2][n3].x = n2 * this.gp.tileSize + this.eventRect[n][n2][n3].x;
-            this.eventRect[n][n2][n3].y = n3 * this.gp.tileSize + this.eventRect[n][n2][n3].y;
-            if (this.gp.player.solidArea.intersects(this.eventRect[n][n2][n3]) && !this.eventRect[n][n2][n3].eventDone && (this.gp.player.direction.contentEquals(string) || string.contentEquals("any"))) {
-                bl = true;
+            this.eventRect[mapIndex][col][row].x = col * this.gp.tileSize + this.eventRect[mapIndex][col][row].x;
+            this.eventRect[mapIndex][col][row].y = row * this.gp.tileSize + this.eventRect[mapIndex][col][row].y;
+            if (this.gp.player.solidArea.intersects(this.eventRect[mapIndex][col][row]) && !this.eventRect[mapIndex][col][row].eventDone && (this.gp.player.direction.contentEquals(requiredDirection) || requiredDirection.contentEquals("any"))) {
+                hit = true;
                 this.previousEventX = this.gp.player.worldX;
                 this.previousEventY = this.gp.player.worldY;
             }
             this.gp.player.solidArea.x = this.gp.player.solidAreaDefaultX;
             this.gp.player.solidArea.y = this.gp.player.solidAreaDefaultY;
-            this.eventRect[n][n2][n3].x = this.eventRect[n][n2][n3].eventRectDefaultX;
-            this.eventRect[n][n2][n3].y = this.eventRect[n][n2][n3].eventRectDefaultY;
+            this.eventRect[mapIndex][col][row].x = this.eventRect[mapIndex][col][row].eventRectDefaultX;
+            this.eventRect[mapIndex][col][row].y = this.eventRect[mapIndex][col][row].eventRectDefaultY;
         }
-        return bl;
+        return hit;
     }
 
-    public void teleport(int n, int n2, int n3, int n4) {
+    public void teleport(int destMap, int destCol, int destRow, int nextArea) {
         Objects.requireNonNull(this.gp);
         this.gp.gameState = 6;
-        this.gp.nextArea = n4;
-        this.tempMap = n;
-        this.tempCol = n2;
-        this.tempRow = n3;
+        this.gp.nextArea = nextArea;
+        this.tempMap = destMap;
+        this.tempCol = destCol;
+        this.tempRow = destRow;
         this.canTouchEvent = false;
         this.gp.playSE(13);
     }
 
-    public void damagePit(int n) {
-        this.gp.gameState = n;
+    public void damagePit(int gameState) {
+        this.gp.gameState = gameState;
         this.gp.playSE(6);
         this.eventMaster.startDialogue(this.eventMaster, 0);
         --this.gp.player.life;
         this.canTouchEvent = false;
     }
 
-    public void dialogue(int n) {
-        this.eventMaster.startDialogue(this.eventMaster, n);
+    public void dialogue(int dialogueSet) {
+        this.eventMaster.startDialogue(this.eventMaster, dialogueSet);
         this.canTouchEvent = false;
     }
 

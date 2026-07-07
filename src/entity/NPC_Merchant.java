@@ -16,8 +16,8 @@ import objects.OBJ_Torch;
 
 public class NPC_Merchant
 extends Entity {
-    public NPC_Merchant(GamePanel gamePanel) {
-        super(gamePanel);
+    public NPC_Merchant(GamePanel gp) {
+        super(gp);
         this.name = "Merchant";
         this.type = 1;
         this.getNPCImage();

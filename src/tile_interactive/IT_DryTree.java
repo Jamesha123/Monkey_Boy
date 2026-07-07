@@ -14,11 +14,11 @@ extends InteractiveTile {
     GamePanel gp;
     public static final String itName = "DryTree";
 
-    public IT_DryTree(GamePanel gamePanel, int n, int n2) {
-        super(gamePanel, n, n2);
+    public IT_DryTree(GamePanel gamePanel, int col, int row) {
+        super(gamePanel, col, row);
         this.gp = gamePanel;
-        this.worldX = gamePanel.tileSize * n;
-        this.worldY = gamePanel.tileSize * n2;
+        this.worldX = gamePanel.tileSize * col;
+        this.worldY = gamePanel.tileSize * row;
         this.name = itName;
         this.down1 = this.setup("/Tiles_Interactive/drytree", gamePanel.tileSize, gamePanel.tileSize);
         this.destructible = true;
@@ -27,11 +27,11 @@ extends InteractiveTile {
 
     @Override
     public boolean isCorrectItem(Entity entity) {
-        boolean bl = false;
+        boolean hasCorrectItem = false;
         if (entity.currentWeapon != null && entity.currentWeapon.type == 4) {
-            bl = true;
+            hasCorrectItem = true;
         }
-        return bl;
+        return hasCorrectItem;
     }
 
     @Override
@@ -41,31 +41,31 @@ extends InteractiveTile {
 
     @Override
     public InteractiveTile getDestroyedForm() {
-        IT_Trunk iT_Trunk = new IT_Trunk(this.gp, this.worldX / this.gp.tileSize, this.worldY / this.gp.tileSize);
-        return iT_Trunk;
+        IT_Trunk trunk = new IT_Trunk(this.gp, this.worldX / this.gp.tileSize, this.worldY / this.gp.tileSize);
+        return trunk;
     }
 
     @Override
     public Color getParticleColor() {
-        Color color = new Color(65, 50, 30);
-        return color;
+        Color particleColor = new Color(65, 50, 30);
+        return particleColor;
     }
 
     @Override
     public int getParticleSize() {
-        int n = 6;
-        return n;
+        int particleSize = 6;
+        return particleSize;
     }
 
     @Override
     public int getParticleSpeed() {
-        int n = 1;
-        return n;
+        int particleSpeed = 1;
+        return particleSpeed;
     }
 
     @Override
     public int getParticleMaxLife() {
-        int n = 20;
-        return n;
+        int particleMaxLife = 20;
+        return particleMaxLife;
     }
 }

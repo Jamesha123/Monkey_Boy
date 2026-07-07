@@ -299,14 +299,14 @@ public class DebugManager {
                 this.keyH.keyPressed[10] = false;
             }
         } else {
-            int n = Math.max(1, this.gp.player.inventory.size());
+            int inventorySize = Math.max(1, this.gp.player.inventory.size());
             if (this.keyH.keyPressed[87] || this.keyH.keyPressed[38]) {
-                this.selectedInventoryItem = (this.selectedInventoryItem - 1 + n) % n;
+                this.selectedInventoryItem = (this.selectedInventoryItem - 1 + inventorySize) % inventorySize;
                 this.keyH.keyPressed[87] = false;
                 this.keyH.keyPressed[38] = false;
             }
             if (this.keyH.keyPressed[83] || this.keyH.keyPressed[40]) {
-                this.selectedInventoryItem = (this.selectedInventoryItem + 1) % n;
+                this.selectedInventoryItem = (this.selectedInventoryItem + 1) % inventorySize;
                 this.keyH.keyPressed[83] = false;
                 this.keyH.keyPressed[40] = false;
             }
@@ -317,15 +317,15 @@ public class DebugManager {
         }
     }
 
-    private void addItemToInventory(String string) {
+    private void addItemToInventory(String itemName) {
         if (this.gp.player == null) {
             return;
         }
-        Entity entity = this.gp.eGenerator.getObject(string);
-        if (entity == null) {
+        Entity object = this.gp.eGenerator.getObject(itemName);
+        if (object == null) {
             return;
         }
-        if (this.gp.player.canObtainItem(entity)) {
+        if (this.gp.player.canObtainItem(object)) {
             this.gp.playSE(1);
         } else {
             this.gp.playSE(2);
@@ -340,13 +340,13 @@ public class DebugManager {
         if (this.selectedInventoryItem >= this.gp.player.inventory.size()) {
             this.selectedInventoryItem = 0;
         }
-        Entity entity = (Entity)this.gp.player.inventory.get(this.selectedInventoryItem);
-        if (this.keyH.shiftPressed && entity.stackable && entity.amount > 1) {
+        Entity item = (Entity)this.gp.player.inventory.get(this.selectedInventoryItem);
+        if (this.keyH.shiftPressed && item.stackable && item.amount > 1) {
             this.gp.player.inventory.remove(this.selectedInventoryItem);
             this.gp.playSE(2);
-        } else if (entity.stackable && entity.amount > 1) {
-            --entity.amount;
-            if (entity.amount <= 0) {
+        } else if (item.stackable && item.amount > 1) {
+            --item.amount;
+            if (item.amount <= 0) {
                 this.gp.player.inventory.remove(this.selectedInventoryItem);
             }
             this.gp.playSE(2);
@@ -359,59 +359,59 @@ public class DebugManager {
         }
     }
 
-    private void modifyStat(int n, int n2) {
+    private void modifyStat(int statIndex, int delta) {
         if (this.gp.player == null) {
             return;
         }
-        int n3 = n;
-        this.statValues[n3] = this.statValues[n3] + n2;
-        switch (n) {
+        int index = statIndex;
+        this.statValues[index] = this.statValues[index] + delta;
+        switch (statIndex) {
             case 0: {
-                this.statValues[n] = Math.max(1, Math.min(99, this.statValues[n]));
+                this.statValues[statIndex] = Math.max(1, Math.min(99, this.statValues[statIndex]));
                 break;
             }
             case 1: {
-                this.statValues[n] = Math.max(1, Math.min(999, this.statValues[n]));
-                if (this.statValues[n] <= this.gp.player.maxLife) break;
-                this.gp.player.maxLife = this.statValues[n];
+                this.statValues[statIndex] = Math.max(1, Math.min(999, this.statValues[statIndex]));
+                if (this.statValues[statIndex] <= this.gp.player.maxLife) break;
+                this.gp.player.maxLife = this.statValues[statIndex];
                 break;
             }
             case 2: {
-                this.statValues[n] = Math.max(1, Math.min(999, this.statValues[n]));
-                if (this.statValues[n] <= this.gp.player.maxMana) break;
-                this.gp.player.maxMana = this.statValues[n];
+                this.statValues[statIndex] = Math.max(1, Math.min(999, this.statValues[statIndex]));
+                if (this.statValues[statIndex] <= this.gp.player.maxMana) break;
+                this.gp.player.maxMana = this.statValues[statIndex];
                 break;
             }
             case 3: {
-                this.statValues[n] = Math.max(1, Math.min(20, this.statValues[n]));
+                this.statValues[statIndex] = Math.max(1, Math.min(20, this.statValues[statIndex]));
                 break;
             }
             case 4: {
-                this.statValues[n] = Math.max(1, Math.min(99, this.statValues[n]));
+                this.statValues[statIndex] = Math.max(1, Math.min(99, this.statValues[statIndex]));
                 break;
             }
             case 5: {
-                this.statValues[n] = Math.max(1, Math.min(99, this.statValues[n]));
+                this.statValues[statIndex] = Math.max(1, Math.min(99, this.statValues[statIndex]));
                 break;
             }
             case 6: {
-                this.statValues[n] = Math.max(0, this.statValues[n]);
+                this.statValues[statIndex] = Math.max(0, this.statValues[statIndex]);
                 break;
             }
             case 7: {
-                this.statValues[n] = Math.max(1, this.statValues[n]);
+                this.statValues[statIndex] = Math.max(1, this.statValues[statIndex]);
                 break;
             }
             case 8: {
-                this.statValues[n] = Math.max(0, this.statValues[n]);
+                this.statValues[statIndex] = Math.max(0, this.statValues[statIndex]);
                 break;
             }
             case 9: {
-                this.statValues[n] = Math.max(0, Math.min(3, this.statValues[n]));
+                this.statValues[statIndex] = Math.max(0, Math.min(3, this.statValues[statIndex]));
                 break;
             }
             case 10: {
-                this.statValues[n] = Math.max(0, Math.min(13, this.statValues[n]));
+                this.statValues[statIndex] = Math.max(0, Math.min(13, this.statValues[statIndex]));
             }
         }
         this.applyStatChanges();
@@ -471,328 +471,328 @@ public class DebugManager {
     }
 
     private void drawDebugStatus(Graphics2D graphics2D) {
-        int n = 10;
-        int n2 = 290;
-        int n3 = 20;
+        int textX = 10;
+        int textY = 290;
+        int lineHeight = 20;
         graphics2D.setColor(Color.WHITE);
-        graphics2D.drawString("=== DEBUG MODE ===", n, n2);
+        graphics2D.drawString("=== DEBUG MODE ===", textX, textY);
         graphics2D.setColor(this.godMode ? Color.GREEN : Color.RED);
-        graphics2D.drawString("God Mode: " + (this.godMode ? "ON" : "OFF") + " (G)", n, n2 += n3);
+        graphics2D.drawString("God Mode: " + (this.godMode ? "ON" : "OFF") + " (G)", textX, textY += lineHeight);
         graphics2D.setColor(this.freezeEnemies ? Color.GREEN : Color.RED);
-        graphics2D.drawString("Freeze Enemies: " + (this.freezeEnemies ? "ON" : "OFF") + " (T)", n, n2 += n3);
+        graphics2D.drawString("Freeze Enemies: " + (this.freezeEnemies ? "ON" : "OFF") + " (T)", textX, textY += lineHeight);
         graphics2D.setColor(this.collisionOff ? Color.GREEN : Color.RED);
-        graphics2D.drawString("Collision: " + (this.collisionOff ? "ON" : "OFF") + " (U)", n, n2 += n3);
+        graphics2D.drawString("Collision: " + (this.collisionOff ? "ON" : "OFF") + " (U)", textX, textY += lineHeight);
         graphics2D.setColor(Color.CYAN);
-        graphics2D.drawString("Reload Map (R)", n, n2 += n3);
+        graphics2D.drawString("Reload Map (R)", textX, textY += lineHeight);
         graphics2D.setColor(this.showCollision ? Color.GREEN : Color.RED);
-        graphics2D.drawString("Show Collision: " + (this.showCollision ? "ON" : "OFF") + " (I)", n, n2 += n3);
+        graphics2D.drawString("Show Collision: " + (this.showCollision ? "ON" : "OFF") + " (I)", textX, textY += lineHeight);
         graphics2D.setColor(this.darknessFilterOff ? Color.GREEN : Color.RED);
-        graphics2D.drawString("Darkness Filter: " + (this.darknessFilterOff ? "OFF" : "ON") + " (O)", n, n2 += n3);
+        graphics2D.drawString("Darkness Filter: " + (this.darknessFilterOff ? "OFF" : "ON") + " (O)", textX, textY += lineHeight);
         graphics2D.setColor(this.characterEditor ? Color.GREEN : Color.RED);
-        graphics2D.drawString("Game Master Panel: " + (this.characterEditor ? "ON" : "OFF") + " (P)", n, n2 += n3);
+        graphics2D.drawString("Game Master Panel: " + (this.characterEditor ? "ON" : "OFF") + " (P)", textX, textY += lineHeight);
         graphics2D.setColor(this.debugStore ? Color.GREEN : Color.RED);
-        graphics2D.drawString("Debug Store: " + (this.debugStore ? "ON" : "OFF") + " (Y)", n, n2 += n3);
+        graphics2D.drawString("Debug Store: " + (this.debugStore ? "ON" : "OFF") + " (Y)", textX, textY += lineHeight);
         graphics2D.setColor(Color.YELLOW);
-        graphics2D.drawString("Press F1 to toggle debug mode", n, n2 += n3);
+        graphics2D.drawString("Press F1 to toggle debug mode", textX, textY += lineHeight);
         graphics2D.setFont(this.gp.ui.fontBold20);
         graphics2D.setColor(Color.white);
-        graphics2D.drawString("WorldX " + this.gp.player.worldX, n, n2 += n3);
-        graphics2D.drawString("WorldY " + this.gp.player.worldY, n, n2 += n3);
-        graphics2D.drawString("Col " + (this.gp.player.worldX + this.gp.player.solidArea.x) / this.gp.tileSize, n, n2 += n3);
-        graphics2D.drawString("Row " + (this.gp.player.worldY + this.gp.player.solidArea.y) / this.gp.tileSize, n, n2 += n3);
-        graphics2D.drawString("Draw Time: " + this.gp.drawTime, n, n2 += n3);
-        n2 += n3;
+        graphics2D.drawString("WorldX " + this.gp.player.worldX, textX, textY += lineHeight);
+        graphics2D.drawString("WorldY " + this.gp.player.worldY, textX, textY += lineHeight);
+        graphics2D.drawString("Col " + (this.gp.player.worldX + this.gp.player.solidArea.x) / this.gp.tileSize, textX, textY += lineHeight);
+        graphics2D.drawString("Row " + (this.gp.player.worldY + this.gp.player.solidArea.y) / this.gp.tileSize, textX, textY += lineHeight);
+        graphics2D.drawString("Draw Time: " + this.gp.drawTime, textX, textY += lineHeight);
+        textY += lineHeight;
     }
 
     private void drawCollisionOverlays(Graphics2D graphics2D) {
-        int n;
-        int n2;
-        int n3;
-        int n4;
+        int rectY;
+        int rectX;
+        int attackY;
+        int attackX;
         Stroke stroke = graphics2D.getStroke();
         graphics2D.setStroke(new BasicStroke(2.0f));
         graphics2D.setColor(new Color(255, 0, 0, 180));
         if (this.gp.player != null) {
-            n4 = this.gp.player.getScreenX() + this.gp.player.solidArea.x;
-            n3 = this.gp.player.getScreenY() + this.gp.player.solidArea.y;
-            graphics2D.drawRect(n4, n3, this.gp.player.solidArea.width, this.gp.player.solidArea.height);
+            attackX = this.gp.player.getScreenX() + this.gp.player.solidArea.x;
+            attackY = this.gp.player.getScreenY() + this.gp.player.solidArea.y;
+            graphics2D.drawRect(attackX, attackY, this.gp.player.solidArea.width, this.gp.player.solidArea.height);
         }
-        for (n4 = 0; n4 < this.gp.npc[1].length; ++n4) {
-            Entity entity = this.gp.npc[this.gp.currentMap][n4];
-            if (entity == null || !entity.inCamera()) continue;
-            n2 = entity.getScreenX() + entity.solidArea.x;
-            n = entity.getScreenY() + entity.solidArea.y;
-            graphics2D.drawRect(n2, n, entity.solidArea.width, entity.solidArea.height);
+        for (attackX = 0; attackX < this.gp.npc[1].length; ++attackX) {
+            Entity npc = this.gp.npc[this.gp.currentMap][attackX];
+            if (npc == null || !npc.inCamera()) continue;
+            rectX = npc.getScreenX() + npc.solidArea.x;
+            rectY = npc.getScreenY() + npc.solidArea.y;
+            graphics2D.drawRect(rectX, rectY, npc.solidArea.width, npc.solidArea.height);
         }
-        for (n4 = 0; n4 < this.gp.monster[1].length; ++n4) {
-            Entity entity = this.gp.monster[this.gp.currentMap][n4];
-            if (entity == null || !entity.inCamera()) continue;
-            n2 = entity.getScreenX() + entity.solidArea.x;
-            n = entity.getScreenY() + entity.solidArea.y;
-            graphics2D.drawRect(n2, n, entity.solidArea.width, entity.solidArea.height);
+        for (attackX = 0; attackX < this.gp.monster[1].length; ++attackX) {
+            Entity monster = this.gp.monster[this.gp.currentMap][attackX];
+            if (monster == null || !monster.inCamera()) continue;
+            rectX = monster.getScreenX() + monster.solidArea.x;
+            rectY = monster.getScreenY() + monster.solidArea.y;
+            graphics2D.drawRect(rectX, rectY, monster.solidArea.width, monster.solidArea.height);
         }
-        for (n4 = 0; n4 < this.gp.obj[1].length; ++n4) {
-            Entity entity = this.gp.obj[this.gp.currentMap][n4];
-            if (entity == null || !entity.inCamera()) continue;
-            n2 = entity.getScreenX() + entity.solidArea.x;
-            n = entity.getScreenY() + entity.solidArea.y;
-            graphics2D.drawRect(n2, n, entity.solidArea.width, entity.solidArea.height);
+        for (attackX = 0; attackX < this.gp.obj[1].length; ++attackX) {
+            Entity object = this.gp.obj[this.gp.currentMap][attackX];
+            if (object == null || !object.inCamera()) continue;
+            rectX = object.getScreenX() + object.solidArea.x;
+            rectY = object.getScreenY() + object.solidArea.y;
+            graphics2D.drawRect(rectX, rectY, object.solidArea.width, object.solidArea.height);
         }
-        for (n4 = 0; n4 < this.gp.iTile[1].length; ++n4) {
-            InteractiveTile interactiveTile = this.gp.iTile[this.gp.currentMap][n4];
+        for (attackX = 0; attackX < this.gp.iTile[1].length; ++attackX) {
+            InteractiveTile interactiveTile = this.gp.iTile[this.gp.currentMap][attackX];
             if (interactiveTile == null || !interactiveTile.inCamera()) continue;
-            n2 = interactiveTile.getScreenX() + interactiveTile.solidArea.x;
-            n = interactiveTile.getScreenY() + interactiveTile.solidArea.y;
-            graphics2D.drawRect(n2, n, interactiveTile.solidArea.width, interactiveTile.solidArea.height);
+            rectX = interactiveTile.getScreenX() + interactiveTile.solidArea.x;
+            rectY = interactiveTile.getScreenY() + interactiveTile.solidArea.y;
+            graphics2D.drawRect(rectX, rectY, interactiveTile.solidArea.width, interactiveTile.solidArea.height);
         }
         if (this.gp.player != null && this.gp.player.attackArea != null) {
             graphics2D.setColor(new Color(255, 165, 0, 180));
-            n4 = 0;
-            n3 = 0;
+            attackX = 0;
+            attackY = 0;
             switch (this.gp.player.direction) {
                 case "up": {
-                    n4 = this.gp.player.getScreenX() + this.gp.player.solidArea.x;
-                    n3 = this.gp.player.getScreenY() + this.gp.player.solidArea.y - this.gp.player.attackArea.height;
+                    attackX = this.gp.player.getScreenX() + this.gp.player.solidArea.x;
+                    attackY = this.gp.player.getScreenY() + this.gp.player.solidArea.y - this.gp.player.attackArea.height;
                     break;
                 }
                 case "down": {
-                    n4 = this.gp.player.getScreenX() + this.gp.player.solidArea.x;
-                    n3 = this.gp.player.getScreenY() + this.gp.player.solidArea.y + this.gp.player.solidArea.height;
+                    attackX = this.gp.player.getScreenX() + this.gp.player.solidArea.x;
+                    attackY = this.gp.player.getScreenY() + this.gp.player.solidArea.y + this.gp.player.solidArea.height;
                     break;
                 }
                 case "left": {
-                    n4 = this.gp.player.getScreenX() + this.gp.player.solidArea.x - this.gp.player.attackArea.width;
-                    n3 = this.gp.player.getScreenY() + this.gp.player.solidArea.y;
+                    attackX = this.gp.player.getScreenX() + this.gp.player.solidArea.x - this.gp.player.attackArea.width;
+                    attackY = this.gp.player.getScreenY() + this.gp.player.solidArea.y;
                     break;
                 }
                 case "right": {
-                    n4 = this.gp.player.getScreenX() + this.gp.player.solidArea.x + this.gp.player.solidArea.width;
-                    n3 = this.gp.player.getScreenY() + this.gp.player.solidArea.y;
+                    attackX = this.gp.player.getScreenX() + this.gp.player.solidArea.x + this.gp.player.solidArea.width;
+                    attackY = this.gp.player.getScreenY() + this.gp.player.solidArea.y;
                 }
             }
-            graphics2D.drawRect(n4, n3, this.gp.player.attackArea.width, this.gp.player.attackArea.height);
+            graphics2D.drawRect(attackX, attackY, this.gp.player.attackArea.width, this.gp.player.attackArea.height);
         }
         graphics2D.setColor(new Color(255, 165, 0, 180));
-        for (n4 = 0; n4 < this.gp.npc[1].length; ++n4) {
-            Entity entity = this.gp.npc[this.gp.currentMap][n4];
-            if (entity == null || !entity.inCamera() || entity.attackArea == null || entity.attackArea.width <= 0 || entity.attackArea.height <= 0) continue;
-            int n5 = 0;
-            n = 0;
-            switch (entity.direction) {
+        for (attackX = 0; attackX < this.gp.npc[1].length; ++attackX) {
+            Entity npc = this.gp.npc[this.gp.currentMap][attackX];
+            if (npc == null || !npc.inCamera() || npc.attackArea == null || npc.attackArea.width <= 0 || npc.attackArea.height <= 0) continue;
+            int npcAttackX = 0;
+            rectY = 0;
+            switch (npc.direction) {
                 case "up": {
-                    n5 = entity.getScreenX() + entity.solidArea.x;
-                    n = entity.getScreenY() + entity.solidArea.y - entity.attackArea.height;
+                    npcAttackX = npc.getScreenX() + npc.solidArea.x;
+                    rectY = npc.getScreenY() + npc.solidArea.y - npc.attackArea.height;
                     break;
                 }
                 case "down": {
-                    n5 = entity.getScreenX() + entity.solidArea.x;
-                    n = entity.getScreenY() + entity.solidArea.y + entity.solidArea.height;
+                    npcAttackX = npc.getScreenX() + npc.solidArea.x;
+                    rectY = npc.getScreenY() + npc.solidArea.y + npc.solidArea.height;
                     break;
                 }
                 case "left": {
-                    n5 = entity.getScreenX() + entity.solidArea.x - entity.attackArea.width;
-                    n = entity.getScreenY() + entity.solidArea.y;
+                    npcAttackX = npc.getScreenX() + npc.solidArea.x - npc.attackArea.width;
+                    rectY = npc.getScreenY() + npc.solidArea.y;
                     break;
                 }
                 case "right": {
-                    n5 = entity.getScreenX() + entity.solidArea.x + entity.solidArea.width;
-                    n = entity.getScreenY() + entity.solidArea.y;
+                    npcAttackX = npc.getScreenX() + npc.solidArea.x + npc.solidArea.width;
+                    rectY = npc.getScreenY() + npc.solidArea.y;
                 }
             }
-            graphics2D.drawRect(n5, n, entity.attackArea.width, entity.attackArea.height);
+            graphics2D.drawRect(npcAttackX, rectY, npc.attackArea.width, npc.attackArea.height);
         }
-        for (n4 = 0; n4 < this.gp.monster[1].length; ++n4) {
-            Entity entity = this.gp.monster[this.gp.currentMap][n4];
-            if (entity == null || !entity.inCamera() || entity.attackArea == null || entity.attackArea.width <= 0 || entity.attackArea.height <= 0) continue;
-            int n6 = 0;
-            n = 0;
-            switch (entity.direction) {
+        for (attackX = 0; attackX < this.gp.monster[1].length; ++attackX) {
+            Entity monster = this.gp.monster[this.gp.currentMap][attackX];
+            if (monster == null || !monster.inCamera() || monster.attackArea == null || monster.attackArea.width <= 0 || monster.attackArea.height <= 0) continue;
+            int monsterAttackX = 0;
+            rectY = 0;
+            switch (monster.direction) {
                 case "up": {
-                    n6 = entity.getScreenX() + entity.solidArea.x;
-                    n = entity.getScreenY() + entity.solidArea.y - entity.attackArea.height;
+                    monsterAttackX = monster.getScreenX() + monster.solidArea.x;
+                    rectY = monster.getScreenY() + monster.solidArea.y - monster.attackArea.height;
                     break;
                 }
                 case "down": {
-                    n6 = entity.getScreenX() + entity.solidArea.x;
-                    n = entity.getScreenY() + entity.solidArea.y + entity.solidArea.height;
+                    monsterAttackX = monster.getScreenX() + monster.solidArea.x;
+                    rectY = monster.getScreenY() + monster.solidArea.y + monster.solidArea.height;
                     break;
                 }
                 case "left": {
-                    n6 = entity.getScreenX() + entity.solidArea.x - entity.attackArea.width;
-                    n = entity.getScreenY() + entity.solidArea.y;
+                    monsterAttackX = monster.getScreenX() + monster.solidArea.x - monster.attackArea.width;
+                    rectY = monster.getScreenY() + monster.solidArea.y;
                     break;
                 }
                 case "right": {
-                    n6 = entity.getScreenX() + entity.solidArea.x + entity.solidArea.width;
-                    n = entity.getScreenY() + entity.solidArea.y;
+                    monsterAttackX = monster.getScreenX() + monster.solidArea.x + monster.solidArea.width;
+                    rectY = monster.getScreenY() + monster.solidArea.y;
                 }
             }
-            graphics2D.drawRect(n6, n, entity.attackArea.width, entity.attackArea.height);
+            graphics2D.drawRect(monsterAttackX, rectY, monster.attackArea.width, monster.attackArea.height);
         }
         graphics2D.setStroke(stroke);
     }
 
-    private void changeMap(int n) {
-        int n2 = this.gp.currentArea;
+    private void changeMap(int mapIndex) {
+        int previousArea = this.gp.currentArea;
         this.gp.previousMap = this.gp.currentMap;
-        this.gp.currentMap = n;
-        this.gp.player.setDefaultPositions(n);
-        if (n2 != this.gp.currentArea) {
+        this.gp.currentMap = mapIndex;
+        this.gp.player.setDefaultPositions(mapIndex);
+        if (previousArea != this.gp.currentArea) {
             this.gp.stopMusic();
             this.gp.playMusicForCurrentArea();
         }
     }
 
     private void drawGameMasterPanel(Graphics2D graphics2D) {
-        String string;
-        int n;
-        int n2 = this.gp.screenWidth - 300;
-        int n3 = 30;
-        int n4 = 20;
-        int n5 = this.editableStats.length * n4 + 40 + 20 + this.flagNames.length * n4 + 60;
+        String displayValue;
+        int i;
+        int panelX = this.gp.screenWidth - 300;
+        int panelY = 30;
+        int lineHeight = 20;
+        int panelHeight = this.editableStats.length * lineHeight + 40 + 20 + this.flagNames.length * lineHeight + 60;
         graphics2D.setColor(new Color(0, 0, 0, 150));
-        graphics2D.fillRect(n2 - 10, n3 - 20, 290, n5);
+        graphics2D.fillRect(panelX - 10, panelY - 20, 290, panelHeight);
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(this.gp.ui.fontBold24);
-        graphics2D.drawString("GAME MASTER PANEL", n2, n3);
-        n3 += n4 + 10;
+        graphics2D.drawString("GAME MASTER PANEL", panelX, panelY);
+        panelY += lineHeight + 10;
         graphics2D.setFont(this.gp.ui.fontBold18);
-        for (n = 0; n < this.editableStats.length; ++n) {
-            if (n == this.selectedStat && !this.editingFlags) {
+        for (i = 0; i < this.editableStats.length; ++i) {
+            if (i == this.selectedStat && !this.editingFlags) {
                 graphics2D.setColor(new Color(255, 255, 0, 160));
-                graphics2D.fillRoundRect(n2 - 7, n3 - 18, 284, 22, 6, 6);
+                graphics2D.fillRoundRect(panelX - 7, panelY - 18, 284, 22, 6, 6);
                 graphics2D.setColor(Color.BLACK);
             } else {
                 graphics2D.setColor(Color.WHITE);
             }
-            if (n == 9) {
-                string = this.getDayStateName(this.statValues[n]);
-                graphics2D.drawString(this.editableStats[n] + ": " + string, n2, n3);
-            } else if (n == 10) {
-                string = this.mapNames[this.statValues[n]];
-                graphics2D.drawString(this.editableStats[n] + ": " + string, n2, n3);
+            if (i == 9) {
+                displayValue = this.getDayStateName(this.statValues[i]);
+                graphics2D.drawString(this.editableStats[i] + ": " + displayValue, panelX, panelY);
+            } else if (i == 10) {
+                displayValue = this.mapNames[this.statValues[i]];
+                graphics2D.drawString(this.editableStats[i] + ": " + displayValue, panelX, panelY);
             } else {
-                graphics2D.drawString(this.editableStats[n] + ": " + this.statValues[n], n2, n3);
+                graphics2D.drawString(this.editableStats[i] + ": " + this.statValues[i], panelX, panelY);
             }
-            n3 += n4;
+            panelY += lineHeight;
         }
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(this.gp.ui.fontBold20);
-        graphics2D.drawString("FLAGS", n2, n3 += 15);
-        n3 += n4;
+        graphics2D.drawString("FLAGS", panelX, panelY += 15);
+        panelY += lineHeight;
         graphics2D.setFont(this.gp.ui.fontBold18);
         this.updateFlagValues();
-        for (n = 0; n < this.flagNames.length; ++n) {
-            if (n == this.selectedFlag && this.editingFlags) {
+        for (i = 0; i < this.flagNames.length; ++i) {
+            if (i == this.selectedFlag && this.editingFlags) {
                 graphics2D.setColor(new Color(255, 255, 0, 160));
-                graphics2D.fillRoundRect(n2 - 7, n3 - 18, 284, 22, 6, 6);
+                graphics2D.fillRoundRect(panelX - 7, panelY - 18, 284, 22, 6, 6);
                 graphics2D.setColor(Color.BLACK);
             } else {
                 graphics2D.setColor(Color.WHITE);
             }
-            string = this.flagValues[n] ? "TRUE" : "FALSE";
-            graphics2D.drawString(this.flagNames[n] + ": " + string, n2, n3);
-            n3 += n4;
+            displayValue = this.flagValues[i] ? "TRUE" : "FALSE";
+            graphics2D.drawString(this.flagNames[i] + ": " + displayValue, panelX, panelY);
+            panelY += lineHeight;
         }
         graphics2D.setColor(new Color(0, 0, 0, 120));
-        graphics2D.fillRoundRect(n2 - 10, (n3 += 15) - 20, 280, 60, 10, 10);
+        graphics2D.fillRoundRect(panelX - 10, (panelY += 15) - 20, 280, 60, 10, 10);
         graphics2D.setColor(Color.YELLOW);
         graphics2D.setFont(this.gp.ui.fontBold16);
-        graphics2D.drawString("W/S or \u2191/\u2193: Navigate", n2, n3);
-        graphics2D.drawString("A/D or \u2190/\u2192: Change value / Toggle", n2, n3 += 15);
-        graphics2D.drawString("Shift + A/D: Change by 10 (Stats)", n2, n3 += 15);
+        graphics2D.drawString("W/S or \u2191/\u2193: Navigate", panelX, panelY);
+        graphics2D.drawString("A/D or \u2190/\u2192: Change value / Toggle", panelX, panelY += 15);
+        graphics2D.drawString("Shift + A/D: Change by 10 (Stats)", panelX, panelY += 15);
     }
 
     private void drawDebugStore(Graphics2D graphics2D) {
         this.drawInventoryDisplay(graphics2D);
-        int n = this.gp.screenWidth - 400;
-        int n2 = 30;
-        int n3 = 20;
+        int panelX = this.gp.screenWidth - 400;
+        int panelY = 30;
+        int lineHeight = 20;
         graphics2D.setColor(new Color(0, 0, 0, 150));
-        graphics2D.fillRect(n - 10, n2 - 20, 390, this.storeItems.length * n3 + 40);
+        graphics2D.fillRect(panelX - 10, panelY - 20, 390, this.storeItems.length * lineHeight + 40);
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(this.gp.ui.fontBold24);
-        graphics2D.drawString("DEBUG STORE", n, n2);
-        n2 += n3 + 10;
+        graphics2D.drawString("DEBUG STORE", panelX, panelY);
+        panelY += lineHeight + 10;
         graphics2D.setFont(this.gp.ui.fontBold18);
         for (int i = 0; i < this.storeItems.length; ++i) {
             if (i == this.selectedStoreItem) {
                 graphics2D.setColor(Color.YELLOW);
-                graphics2D.fillRect(n - 5, n2 - 15, 380, 18);
+                graphics2D.fillRect(panelX - 5, panelY - 15, 380, 18);
                 graphics2D.setColor(Color.BLACK);
             } else {
                 graphics2D.setColor(Color.WHITE);
             }
-            graphics2D.drawString(this.storeItems[i], n, n2);
-            n2 += n3;
+            graphics2D.drawString(this.storeItems[i], panelX, panelY);
+            panelY += lineHeight;
         }
         graphics2D.setColor(new Color(0, 0, 0, 120));
-        graphics2D.fillRoundRect(n - 10, (n2 += 20) - 25, 160, 120, 10, 10);
+        graphics2D.fillRoundRect(panelX - 10, (panelY += 20) - 25, 160, 120, 10, 10);
         graphics2D.setColor(Color.YELLOW);
         graphics2D.setFont(this.gp.ui.fontBold16);
-        graphics2D.drawString("A/D: Switch panels", n, n2);
-        graphics2D.drawString("W/S or \u2191/\u2193: Navigate", n, n2 += 15);
-        graphics2D.drawString("ENTER: Add to inventory", n, n2 += 15);
-        graphics2D.drawString("ESC: Close store", n, n2 += 15);
-        graphics2D.drawString("Inventory: " + this.gp.player.inventory.size() + "/20", n, n2 += 15);
+        graphics2D.drawString("A/D: Switch panels", panelX, panelY);
+        graphics2D.drawString("W/S or \u2191/\u2193: Navigate", panelX, panelY += 15);
+        graphics2D.drawString("ENTER: Add to inventory", panelX, panelY += 15);
+        graphics2D.drawString("ESC: Close store", panelX, panelY += 15);
+        graphics2D.drawString("Inventory: " + this.gp.player.inventory.size() + "/20", panelX, panelY += 15);
         graphics2D.setColor(this.storePanelSelected ? Color.GREEN : Color.GRAY);
-        graphics2D.drawString("STORE SELECTED", n, n2 + 20);
+        graphics2D.drawString("STORE SELECTED", panelX, panelY + 20);
     }
 
     private void drawInventoryDisplay(Graphics2D graphics2D) {
-        int n;
-        int n2 = 10;
-        int n3 = 30;
-        int n4 = this.gp.tileSize * 6;
-        int n5 = this.gp.tileSize * 5;
-        this.drawSubWindow(graphics2D, n2, n3, n4, n5);
+        int slotIndex;
+        int frameX = 10;
+        int frameY = 30;
+        int frameWidth = this.gp.tileSize * 6;
+        int frameHeight = this.gp.tileSize * 5;
+        this.drawSubWindow(graphics2D, frameX, frameY, frameWidth, frameHeight);
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(graphics2D.getFont().deriveFont(1, 24.0f));
         graphics2D.drawString("INVENTORY", 15, 25);
-        int n6 = n2 + 20;
-        int n7 = n3 + 20;
-        int n8 = n6;
-        int n9 = n7;
-        int n10 = this.gp.tileSize + 3;
-        for (n = 0; n < 20; ++n) {
-            if (n == this.selectedInventoryItem && !this.storePanelSelected) {
+        int slotStartX = frameX + 20;
+        int slotStartY = frameY + 20;
+        int slotX = slotStartX;
+        int slotY = slotStartY;
+        int slotSize = this.gp.tileSize + 3;
+        for (slotIndex = 0; slotIndex < 20; ++slotIndex) {
+            if (slotIndex == this.selectedInventoryItem && !this.storePanelSelected) {
                 graphics2D.setColor(Color.YELLOW);
                 graphics2D.setStroke(new BasicStroke(3.0f));
-                graphics2D.drawRoundRect(n8 - 2, n9 - 2, this.gp.tileSize + 4, this.gp.tileSize + 4, 10, 10);
+                graphics2D.drawRoundRect(slotX - 2, slotY - 2, this.gp.tileSize + 4, this.gp.tileSize + 4, 10, 10);
             }
-            if (n < this.gp.player.inventory.size()) {
-                Entity entity = (Entity)this.gp.player.inventory.get(n);
-                graphics2D.drawImage((Image)entity.down1, n8, n9, null);
-                if (entity.stackable && entity.amount > 1) {
+            if (slotIndex < this.gp.player.inventory.size()) {
+                Entity item = (Entity)this.gp.player.inventory.get(slotIndex);
+                graphics2D.drawImage((Image)item.down1, slotX, slotY, null);
+                if (item.stackable && item.amount > 1) {
                     graphics2D.setFont(this.gp.ui.fontPlain32);
-                    String string = "" + entity.amount;
-                    int n11 = n8 + this.gp.tileSize - 20;
-                    int n12 = n9 + this.gp.tileSize - 5;
+                    String amountText = "" + item.amount;
+                    int amountX = slotX + this.gp.tileSize - 20;
+                    int amountY = slotY + this.gp.tileSize - 5;
                     graphics2D.setColor(new Color(60, 60, 60));
-                    graphics2D.drawString(string, n11, n12);
+                    graphics2D.drawString(amountText, amountX, amountY);
                     graphics2D.setColor(Color.white);
-                    graphics2D.drawString(string, n11 - 3, n12 - 3);
+                    graphics2D.drawString(amountText, amountX - 3, amountY - 3);
                 }
             }
-            n8 += n10;
-            if (n != 4 && n != 9 && n != 14) continue;
-            n8 = n6;
-            n9 += n10;
+            slotX += slotSize;
+            if (slotIndex != 4 && slotIndex != 9 && slotIndex != 14) continue;
+            slotX = slotStartX;
+            slotY += slotSize;
         }
-        n = n2 + n4 + 20;
-        int n13 = n3 + 30;
+        int helpX = frameX + frameWidth + 20;
+        int helpY = frameY + 30;
         graphics2D.setColor(new Color(0, 0, 0, 120));
-        graphics2D.fillRoundRect(n - 10, n13 - 25, 160, 80, 10, 10);
+        graphics2D.fillRoundRect(helpX - 10, helpY - 25, 160, 80, 10, 10);
         graphics2D.setColor(Color.YELLOW);
         graphics2D.setFont(graphics2D.getFont().deriveFont(1, 16.0f));
-        graphics2D.drawString("ENTER: Remove item", n, n13);
-        graphics2D.drawString("SHIFT+ENTER: Remove all", n, n13 += 15);
+        graphics2D.drawString("ENTER: Remove item", helpX, helpY);
+        graphics2D.drawString("SHIFT+ENTER: Remove all", helpX, helpY += 15);
         graphics2D.setColor(!this.storePanelSelected ? Color.GREEN : Color.GRAY);
-        graphics2D.drawString("INVENTORY SELECTED", n, n13 += 15);
+        graphics2D.drawString("INVENTORY SELECTED", helpX, helpY += 15);
     }
 
-    private String getDayStateName(int n) {
-        switch (n) {
+    private String getDayStateName(int dayState) {
+        switch (dayState) {
             case 0: {
                 return "Day";
             }
@@ -809,18 +809,18 @@ public class DebugManager {
         return "Unknown";
     }
 
-    private void drawSubWindow(Graphics2D graphics2D, int n, int n2, int n3, int n4) {
+    private void drawSubWindow(Graphics2D graphics2D, int x, int y, int width, int height) {
         Color color = new Color(0, 0, 0, 210);
         graphics2D.setColor(color);
-        graphics2D.fillRoundRect(n, n2, n3, n4, 35, 35);
+        graphics2D.fillRoundRect(x, y, width, height, 35, 35);
         color = new Color(255, 255, 255);
         graphics2D.setColor(color);
         graphics2D.setStroke(new BasicStroke(5.0f));
-        graphics2D.drawRoundRect(n + 5, n2 + 5, n3 - 10, n4 - 10, 25, 25);
+        graphics2D.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
 
     private void reloadMap() {
-        int n;
+        int i;
         switch (this.gp.currentMap) {
             case 0: {
                 TileManager tileManager = this.gp.tileM;
@@ -907,17 +907,17 @@ public class DebugManager {
             }
         }
         this.gp.tileM.refreshWorldMapImageForCurrentMap();
-        for (n = 0; n < this.gp.obj[this.gp.currentMap].length; ++n) {
-            this.gp.obj[this.gp.currentMap][n] = null;
+        for (i = 0; i < this.gp.obj[this.gp.currentMap].length; ++i) {
+            this.gp.obj[this.gp.currentMap][i] = null;
         }
-        for (n = 0; n < this.gp.npc[this.gp.currentMap].length; ++n) {
-            this.gp.npc[this.gp.currentMap][n] = null;
+        for (i = 0; i < this.gp.npc[this.gp.currentMap].length; ++i) {
+            this.gp.npc[this.gp.currentMap][i] = null;
         }
-        for (n = 0; n < this.gp.monster[this.gp.currentMap].length; ++n) {
-            this.gp.monster[this.gp.currentMap][n] = null;
+        for (i = 0; i < this.gp.monster[this.gp.currentMap].length; ++i) {
+            this.gp.monster[this.gp.currentMap][i] = null;
         }
-        for (n = 0; n < this.gp.iTile[this.gp.currentMap].length; ++n) {
-            this.gp.iTile[this.gp.currentMap][n] = null;
+        for (i = 0; i < this.gp.iTile[this.gp.currentMap].length; ++i) {
+            this.gp.iTile[this.gp.currentMap][i] = null;
         }
         this.gp.aSetter.setObject();
         this.gp.aSetter.setNPC();

@@ -16,23 +16,23 @@ extends Entity {
     GamePanel gp;
     public static final String objName = "Door";
 
-    public OBJ_Door(GamePanel gamePanel, int n) {
+    public OBJ_Door(GamePanel gamePanel, int sizeScale) {
         super(gamePanel);
         this.gp = gamePanel;
         this.type = 8;
         this.name = objName;
         Objects.requireNonNull(gamePanel);
         Objects.requireNonNull(gamePanel);
-        this.down1 = this.setup("/Object/door.png", 48 * n, 48 * n);
+        this.down1 = this.setup("/Object/door.png", 48 * sizeScale, 48 * sizeScale);
         this.collision = true;
         this.solidArea.x = 0;
         this.solidArea.y = 0;
         this.solidAreaDefaultX = this.solidArea.x;
         this.solidAreaDefaultY = this.solidArea.y;
         Objects.requireNonNull(gamePanel);
-        this.solidArea.width = 48 * n;
+        this.solidArea.width = 48 * sizeScale;
         Objects.requireNonNull(gamePanel);
-        this.solidArea.height = 48 * n;
+        this.solidArea.height = 48 * sizeScale;
         this.setDialogue();
     }
 
@@ -42,18 +42,18 @@ extends Entity {
     }
 
     public void interact() {
-        int n = this.gp.player.searchItemInInventory("Key");
-        if (n != 999) {
-            int n2 = this.getDetected((Entity)this.gp.player, this.gp.obj, objName);
-            if (n2 != 999) {
-                if (((Entity)this.gp.player.inventory.get((int)n)).amount > 1) {
-                    --((Entity)this.gp.player.inventory.get((int)n)).amount;
+        int keySlotIndex = this.gp.player.searchItemInInventory("Key");
+        if (keySlotIndex != 999) {
+            int doorIndex = this.getDetected((Entity)this.gp.player, this.gp.obj, objName);
+            if (doorIndex != 999) {
+                if (((Entity)this.gp.player.inventory.get((int)keySlotIndex)).amount > 1) {
+                    --((Entity)this.gp.player.inventory.get((int)keySlotIndex)).amount;
                 } else {
-                    this.gp.player.inventory.remove(n);
+                    this.gp.player.inventory.remove(keySlotIndex);
                 }
                 this.startDialogue(this, 1);
                 this.gp.playSE(3);
-                this.gp.obj[this.gp.currentMap][n2] = null;
+                this.gp.obj[this.gp.currentMap][doorIndex] = null;
             }
         } else {
             this.startDialogue(this, 0);

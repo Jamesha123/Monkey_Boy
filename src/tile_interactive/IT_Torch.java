@@ -18,22 +18,22 @@ extends InteractiveTile {
     public static final String itName = "Torch";
     GamePanel gp;
 
-    public IT_Torch(GamePanel gamePanel, int n, int n2, int n3) {
-        super(gamePanel, n, n2);
+    public IT_Torch(GamePanel gamePanel, int col, int row, int tileType) {
+        super(gamePanel, col, row);
         this.gp = gamePanel;
-        this.tileType = n3;
-        if (n3 == gamePanel.playerLight) {
+        this.tileType = tileType;
+        if (tileType == gamePanel.playerLight) {
             this.lightRadius = 120;
             this.destructible = true;
-        } else if (n3 == gamePanel.environmentLight) {
+        } else if (tileType == gamePanel.environmentLight) {
             this.lightRadius = 240;
             this.destructible = false;
-        } else if (n3 == gamePanel.bossLight) {
+        } else if (tileType == gamePanel.bossLight) {
             this.lightRadius = 500;
             this.destructible = false;
         }
-        this.worldX = gamePanel.tileSize * n;
-        this.worldY = gamePanel.tileSize * n2;
+        this.worldX = gamePanel.tileSize * col;
+        this.worldY = gamePanel.tileSize * row;
         this.name = itName;
         this.life = 1;
         this.solidArea = new Rectangle();
@@ -48,11 +48,11 @@ extends InteractiveTile {
 
     @Override
     public boolean isCorrectItem(Entity entity) {
-        boolean bl = false;
+        boolean hasCorrectItem = false;
         if (entity.currentWeapon != null && (entity.currentWeapon.type == 4 || entity.currentWeapon.type == 3 || entity.currentWeapon.type == 10)) {
-            bl = true;
+            hasCorrectItem = true;
         }
-        return bl;
+        return hasCorrectItem;
     }
 
     @Override
@@ -80,26 +80,26 @@ extends InteractiveTile {
 
     @Override
     public Color getParticleColor() {
-        Color color = new Color(65, 50, 30);
-        return color;
+        Color particleColor = new Color(65, 50, 30);
+        return particleColor;
     }
 
     @Override
     public int getParticleSize() {
-        int n = 6;
-        return n;
+        int particleSize = 6;
+        return particleSize;
     }
 
     @Override
     public int getParticleSpeed() {
-        int n = 1;
-        return n;
+        int particleSpeed = 1;
+        return particleSpeed;
     }
 
     @Override
     public int getParticleMaxLife() {
-        int n = 20;
-        return n;
+        int particleMaxLife = 20;
+        return particleMaxLife;
     }
 
     @Override
@@ -118,17 +118,17 @@ extends InteractiveTile {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        int n = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
-        int n2 = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
+        int screenX = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
+        int screenY = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
         if (this.inCamera()) {
-            BufferedImage bufferedImage = null;
+            BufferedImage spriteImage = null;
             if (this.spriteNum == 1) {
-                bufferedImage = this.down1;
+                spriteImage = this.down1;
             } else if (this.spriteNum == 2) {
-                bufferedImage = this.down2;
+                spriteImage = this.down2;
             }
-            if (bufferedImage != null) {
-                graphics2D.drawImage((Image)bufferedImage, n, n2, null);
+            if (spriteImage != null) {
+                graphics2D.drawImage((Image)spriteImage, screenX, screenY, null);
             }
         }
     }

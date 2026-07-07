@@ -14,8 +14,8 @@ public class Node {
     boolean open;
     boolean checked;
 
-    public Node(int n, int n2) {
-        this.col = n;
-        this.row = n2;
+    public Node(int col, int row) {
+        this.col = col;
+        this.row = row;
     }
 }

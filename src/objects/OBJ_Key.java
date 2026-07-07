@@ -41,11 +41,11 @@ extends Entity {
     }
 
     public boolean use(Entity entity) {
-        int n = this.getDetected(entity, this.gp.obj, "Door");
-        if (n != 999) {
+        int doorIndex = this.getDetected(entity, this.gp.obj, "Door");
+        if (doorIndex != 999) {
             this.startDialogue(this, 0);
             this.gp.playSE(3);
-            this.gp.obj[this.gp.currentMap][n] = null;
+            this.gp.obj[this.gp.currentMap][doorIndex] = null;
             return true;
         }
         return false;

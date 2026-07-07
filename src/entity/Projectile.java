@@ -10,27 +10,27 @@ public class Projectile
 extends Entity {
     Entity user;
 
-    public Projectile(GamePanel gamePanel) {
-        super(gamePanel);
+    public Projectile(GamePanel gp) {
+        super(gp);
     }
 
-    public void set(int n, int n2, String string, boolean bl, Entity entity) {
-        this.worldX = n;
-        this.worldY = n2;
-        this.direction = string;
-        this.user = entity;
-        this.alive = bl;
+    public void set(int worldX, int worldY, String direction, boolean alive, Entity user) {
+        this.worldX = worldX;
+        this.worldY = worldY;
+        this.direction = direction;
+        this.user = user;
+        this.alive = alive;
         this.life = this.maxLife;
     }
 
     @Override
     public void update() {
-        int n;
+        int monsterIndex;
         if (this.user == this.gp.player) {
-            n = this.gp.cChecker.checkEntity(this, this.gp.monster);
-            if (n != 999) {
-                this.gp.player.damageMonster(n, this, this.attack * (this.gp.player.level / 2), this.knockBackPower, this.direction);
-                this.generateParticle(this.user.projectile, this.gp.monster[this.gp.currentMap][n]);
+            monsterIndex = this.gp.cChecker.checkEntity(this, this.gp.monster);
+            if (monsterIndex != 999) {
+                this.gp.player.damageMonster(monsterIndex, this, this.attack * (this.gp.player.level / 2), this.knockBackPower, this.direction);
+                this.generateParticle(this.user.projectile, this.gp.monster[this.gp.currentMap][monsterIndex]);
                 this.alive = false;
             }
             this.user.projectile.collisionOn = false;
@@ -41,8 +41,8 @@ extends Entity {
             }
         }
         if (this.user != this.gp.player) {
-            n = this.gp.cChecker.checkPlayer(this) ? 1 : 0;
-            if (!this.gp.player.invincible && n == 1) {
+            int hitPlayer = this.gp.cChecker.checkPlayer(this) ? 1 : 0;
+            if (!this.gp.player.invincible && hitPlayer == 1) {
                 this.damagePlayer(this.attack);
                 this.generateParticle(this.user.projectile, this.user.projectile);
                 this.alive = false;
@@ -86,11 +86,10 @@ extends Entity {
         }
     }
 
-    public boolean haveResource(Entity entity) {
-        boolean bl = false;
-        return bl;
+    public boolean haveResource(Entity user) {
+        return false;
     }
 
-    public void subtractResource(Entity entity) {
+    public void subtractResource(Entity user) {
     }
 }

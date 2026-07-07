@@ -56,31 +56,31 @@ extends Entity {
     }
 
     public void getImage() {
-        int n = 5;
+        int spriteScale = 5;
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.up1 = this.setup("/Monster/greenslime_down_1.png", 48 * n, 48 * n);
+        this.up1 = this.setup("/Monster/greenslime_down_1.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.up2 = this.setup("/Monster/greenslime_down_2.png", 48 * n, 48 * n);
+        this.up2 = this.setup("/Monster/greenslime_down_2.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.down1 = this.setup("/Monster/greenslime_down_1.png", 48 * n, 48 * n);
+        this.down1 = this.setup("/Monster/greenslime_down_1.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.down2 = this.setup("/Monster/greenslime_down_2.png", 48 * n, 48 * n);
+        this.down2 = this.setup("/Monster/greenslime_down_2.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.left1 = this.setup("/Monster/greenslime_down_1.png", 48 * n, 48 * n);
+        this.left1 = this.setup("/Monster/greenslime_down_1.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.left2 = this.setup("/Monster/greenslime_down_2.png", 48 * n, 48 * n);
+        this.left2 = this.setup("/Monster/greenslime_down_2.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.right1 = this.setup("/Monster/greenslime_down_1.png", 48 * n, 48 * n);
+        this.right1 = this.setup("/Monster/greenslime_down_1.png", 48 * spriteScale, 48 * spriteScale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.right2 = this.setup("/Monster/greenslime_down_2.png", 48 * n, 48 * n);
+        this.right2 = this.setup("/Monster/greenslime_down_2.png", 48 * spriteScale, 48 * spriteScale);
     }
 
     public void setDialogue() {
@@ -110,15 +110,15 @@ extends Entity {
         this.spawnSlimeAtOffset(new MON_BlueSlime(this.gp), 5, 5);
     }
 
-    private void spawnSlimeAtOffset(Entity entity, int n, int n2) {
+    private void spawnSlimeAtOffset(Entity slime, int colOffset, int rowOffset) {
         for (int i = 0; i < this.gp.monster[1].length; ++i) {
             if (this.gp.monster[this.gp.currentMap][i] != null) continue;
             Objects.requireNonNull(this.gp);
-            entity.worldX = this.worldX + n * 48;
+            slime.worldX = this.worldX + colOffset * 48;
             Objects.requireNonNull(this.gp);
-            entity.worldY = this.worldY + n2 * 48;
-            entity.sleep = false;
-            this.gp.monster[this.gp.currentMap][i] = entity;
+            slime.worldY = this.worldY + rowOffset * 48;
+            slime.sleep = false;
+            this.gp.monster[this.gp.currentMap][i] = slime;
             break;
         }
     }

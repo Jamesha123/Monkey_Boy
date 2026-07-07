@@ -146,8 +146,8 @@ public class Entity {
     public final int type_pickaxe = 10;
     public final int type_spell = 11;
 
-    public Entity(GamePanel gamePanel) {
-        this.gp = gamePanel;
+    public Entity(GamePanel gp) {
+        this.gp = gp;
     }
 
     public void update() {
@@ -241,13 +241,11 @@ public class Entity {
     }
 
     public int getScreenX() {
-        int n = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
-        return n;
+        return this.worldX - this.gp.player.worldX + this.gp.player.screenX;
     }
 
     public int getScreenY() {
-        int n = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
-        return n;
+        return this.worldY - this.gp.player.worldY + this.gp.player.screenY;
     }
 
     public int getLeftX() {
@@ -275,38 +273,31 @@ public class Entity {
     }
 
     public int getCenterX() {
-        int n = this.worldX + this.left1.getWidth() / 2;
-        return n;
+        return this.worldX + this.left1.getWidth() / 2;
     }
 
     public int getCenterY() {
-        int n = this.worldY + this.up1.getHeight() / 2;
-        return n;
+        return this.worldY + this.up1.getHeight() / 2;
     }
 
-    public int getXDistance(Entity entity) {
-        int n = Math.abs(this.getCenterX() - entity.getCenterX());
-        return n;
+    public int getXDistance(Entity target) {
+        return Math.abs(this.getCenterX() - target.getCenterX());
     }
 
-    public int getYDistance(Entity entity) {
-        int n = Math.abs(this.getCenterY() - entity.getCenterY());
-        return n;
+    public int getYDistance(Entity target) {
+        return Math.abs(this.getCenterY() - target.getCenterY());
     }
 
-    public int getTileDistance(Entity entity) {
-        int n = (this.getXDistance(entity) + this.getYDistance(entity)) / this.gp.tileSize;
-        return n;
+    public int getTileDistance(Entity target) {
+        return (this.getXDistance(target) + this.getYDistance(target)) / this.gp.tileSize;
     }
 
-    public int getGoalCol(Entity entity) {
-        int n = (entity.worldX + entity.solidArea.x) / this.gp.tileSize;
-        return n;
+    public int getGoalCol(Entity target) {
+        return (target.worldX + target.solidArea.x) / this.gp.tileSize;
     }
 
-    public int getGoalRow(Entity entity) {
-        int n = (entity.worldY + entity.solidArea.y) / this.gp.tileSize;
-        return n;
+    public int getGoalRow(Entity target) {
+        return (target.worldY + target.solidArea.y) / this.gp.tileSize;
     }
 
     public void resetCounter() {
@@ -322,13 +313,13 @@ public class Entity {
         this.offBalanceCounter = 0;
     }
 
-    public void setLoot(Entity entity) {
+    public void setLoot(Entity loot) {
     }
 
     public void setAction() {
     }
 
-    public void move(String string) {
+    public void move(String direction) {
     }
 
     public void damageReaction() {
@@ -346,7 +337,7 @@ public class Entity {
     public void pickUpObjectDialogue() {
     }
 
-    public boolean use(Entity entity) {
+    public boolean use(Entity user) {
         return false;
     }
 
@@ -373,19 +364,19 @@ public class Entity {
         }
     }
 
-    public void startDialogue(Entity entity, int n) {
+    public void startDialogue(Entity npc, int dialogueSet) {
         Objects.requireNonNull(this.gp);
         this.gp.gameState = 2;
-        this.gp.ui.npc = entity;
-        this.dialogueSet = n;
+        this.gp.ui.npc = npc;
+        this.dialogueSet = dialogueSet;
     }
 
-    public void dropItem(Entity entity) {
+    public void dropItem(Entity item) {
         for (int i = 0; i < this.gp.obj[1].length; ++i) {
             if (this.gp.obj[this.gp.currentMap][i] != null) continue;
             this.worldX = this.worldX + this.solidArea.x + this.solidArea.width / 4;
             this.worldY = this.worldY + this.solidArea.y + this.solidArea.height / 4;
-            this.gp.obj[this.gp.currentMap][i] = entity;
+            this.gp.obj[this.gp.currentMap][i] = item;
             this.gp.obj[this.gp.currentMap][i].worldX = this.worldX;
             this.gp.obj[this.gp.currentMap][i].worldY = this.worldY;
             break;
@@ -393,34 +384,30 @@ public class Entity {
     }
 
     public Color getParticleColor() {
-        Color color = null;
-        return color;
+        return null;
     }
 
     public int getParticleSize() {
-        int n = 0;
-        return n;
+        return 0;
     }
 
     public int getParticleSpeed() {
-        int n = 0;
-        return n;
+        return 0;
     }
 
     public int getParticleMaxLife() {
-        int n = 0;
-        return n;
+        return 0;
     }
 
-    public void generateParticle(Entity entity, Entity entity2) {
-        Color color = entity.getParticleColor();
-        int n = entity.getParticleSize();
-        int n2 = entity.getParticleSpeed();
-        int n3 = entity.getParticleMaxLife();
-        Particle particle = new Particle(this.gp, entity2, color, n, n2, n3, -2, -1);
-        Particle particle2 = new Particle(this.gp, entity2, color, n, n2, n3, 2, -1);
-        Particle particle3 = new Particle(this.gp, entity2, color, n, n2, n3, -2, 1);
-        Particle particle4 = new Particle(this.gp, entity2, color, n, n2, n3, 2, 1);
+    public void generateParticle(Entity source, Entity target) {
+        Color color = source.getParticleColor();
+        int size = source.getParticleSize();
+        int speed = source.getParticleSpeed();
+        int maxLife = source.getParticleMaxLife();
+        Particle particle = new Particle(this.gp, target, color, size, speed, maxLife, -2, -1);
+        Particle particle2 = new Particle(this.gp, target, color, size, speed, maxLife, 2, -1);
+        Particle particle3 = new Particle(this.gp, target, color, size, speed, maxLife, -2, 1);
+        Particle particle4 = new Particle(this.gp, target, color, size, speed, maxLife, 2, 1);
         this.gp.particleList.add(particle);
         this.gp.particleList.add(particle2);
         this.gp.particleList.add(particle3);
@@ -434,39 +421,39 @@ public class Entity {
         this.gp.cChecker.checkEntity(this, this.gp.npc);
         this.gp.cChecker.checkEntity(this, this.gp.monster);
         this.gp.cChecker.checkEntity(this, this.gp.iTile);
-        boolean bl = this.gp.cChecker.checkPlayer(this);
-        if (this.type == 2 && bl) {
+        boolean playerContact = this.gp.cChecker.checkPlayer(this);
+        if (this.type == 2 && playerContact) {
             this.damagePlayer(this.attack);
         }
     }
 
-    public void checkMonsterAttack(int n, int n2, int n3) {
-        int n4;
-        boolean bl = false;
-        int n5 = this.getXDistance(this.gp.player);
-        int n6 = this.getYDistance(this.gp.player);
+    public void checkMonsterAttack(int actionRate, int yRange, int xRange) {
+        int roll;
+        boolean inAttackRange = false;
+        int xDist = this.getXDistance(this.gp.player);
+        int yDist = this.getYDistance(this.gp.player);
         switch (this.direction) {
             case "up": {
-                if (this.gp.player.getCenterY() >= this.getCenterY() || n6 >= n2 || n5 >= n3) break;
-                bl = true;
+                if (this.gp.player.getCenterY() >= this.getCenterY() || yDist >= yRange || xDist >= xRange) break;
+                inAttackRange = true;
                 break;
             }
             case "down": {
-                if (this.gp.player.getCenterY() <= this.worldY || n6 >= n2 || n5 >= n3) break;
-                bl = true;
+                if (this.gp.player.getCenterY() <= this.worldY || yDist >= yRange || xDist >= xRange) break;
+                inAttackRange = true;
                 break;
             }
             case "left": {
-                if (this.gp.player.getCenterX() >= this.getCenterY() || n6 >= n2 || n5 >= n3) break;
-                bl = true;
+                if (this.gp.player.getCenterX() >= this.getCenterY() || yDist >= yRange || xDist >= xRange) break;
+                inAttackRange = true;
                 break;
             }
             case "right": {
-                if (this.gp.player.getCenterX() <= this.getCenterX() || n6 >= n2 || n5 >= n3) break;
-                bl = true;
+                if (this.gp.player.getCenterX() <= this.getCenterX() || yDist >= yRange || xDist >= xRange) break;
+                inAttackRange = true;
             }
         }
-        if (bl && (n4 = new Random().nextInt(n)) == 0) {
+        if (inAttackRange && (roll = new Random().nextInt(actionRate)) == 0) {
             this.attacking = true;
             this.spriteNum = 1;
             this.spriteCounter = 0;
@@ -474,9 +461,9 @@ public class Entity {
         }
     }
 
-    public void checkMonsterShoot(int n, int n2) {
-        int n3 = new Random().nextInt(n);
-        if (n3 == 0 && !this.projectile.alive && this.shotAvailableCounter == n2) {
+    public void checkMonsterShoot(int actionRate, int cooldown) {
+        int roll = new Random().nextInt(actionRate);
+        if (roll == 0 && !this.projectile.alive && this.shotAvailableCounter == cooldown) {
             this.projectile.set(this.worldX, this.worldY, this.direction, true, this);
             for (int i = 0; i < this.gp.projectile[1].length; ++i) {
                 if (this.gp.projectile[this.gp.currentMap][i] != null) continue;
@@ -487,41 +474,41 @@ public class Entity {
         }
     }
 
-    public void checkStartChasing(Entity entity, int n, int n2) {
-        int n3;
-        if (this.getTileDistance(entity) < n && (n3 = new Random().nextInt(n2)) == 0) {
+    public void checkStartChasing(Entity target, int distance, int actionRate) {
+        int roll;
+        if (this.getTileDistance(target) < distance && (roll = new Random().nextInt(actionRate)) == 0) {
             this.onPath = true;
         }
     }
 
-    public void checkStopChasing(Entity entity, int n, int n2) {
-        int n3;
-        if (this.getTileDistance(entity) > n && (n3 = new Random().nextInt(n2)) == 0) {
+    public void checkStopChasing(Entity target, int distance, int actionRate) {
+        int roll;
+        if (this.getTileDistance(target) > distance && (roll = new Random().nextInt(actionRate)) == 0) {
             this.onPath = false;
         }
     }
 
-    public void getRandomDirection(int n) {
+    public void getRandomDirection(int interval) {
         ++this.actionLockCounter;
-        if (this.actionLockCounter > n) {
+        if (this.actionLockCounter > interval) {
             Random random = new Random();
-            int n2 = random.nextInt(100) + 1;
-            if (n2 <= 25) {
+            int directionRoll = random.nextInt(100) + 1;
+            if (directionRoll <= 25) {
                 this.direction = "up";
-            } else if (n2 > 25 && n2 <= 50) {
+            } else if (directionRoll > 25 && directionRoll <= 50) {
                 this.direction = "down";
-            } else if (n2 > 50 && n2 <= 75) {
+            } else if (directionRoll > 50 && directionRoll <= 75) {
                 this.direction = "left";
-            } else if (n2 > 75 && n2 <= 100) {
+            } else if (directionRoll > 75 && directionRoll <= 100) {
                 this.direction = "right";
             }
             this.actionLockCounter = 0;
         }
     }
 
-    public void moveTowardPlayer(int n) {
+    public void moveTowardPlayer(int interval) {
         ++this.actionLockCounter;
-        if (this.actionLockCounter > n) {
+        if (this.actionLockCounter > interval) {
             if (this.getXDistance(this.gp.player) > this.getYDistance(this.gp.player)) {
                 this.direction = this.gp.player.getCenterX() < this.getCenterX() ? "left" : "right";
             } else if (this.getXDistance(this.gp.player) < this.getYDistance(this.gp.player)) {
@@ -531,26 +518,26 @@ public class Entity {
         }
     }
 
-    public String getOppositeDirection(String string) {
-        String string2 = "";
-        switch (string) {
+    public String getOppositeDirection(String direction) {
+        String oppositeDirection = "";
+        switch (direction) {
             case "up": {
-                string2 = "down";
+                oppositeDirection = "down";
                 break;
             }
             case "down": {
-                string2 = "up";
+                oppositeDirection = "up";
                 break;
             }
             case "left": {
-                string2 = "right";
+                oppositeDirection = "right";
                 break;
             }
             case "right": {
-                string2 = "left";
+                oppositeDirection = "left";
             }
         }
-        return string2;
+        return oppositeDirection;
     }
 
     public void attacking() {
@@ -559,10 +546,10 @@ public class Entity {
             this.spriteNum = 1;
         } else if (this.spriteCounter > this.motion1_duration && this.spriteCounter <= this.motion2_duration) {
             this.spriteNum = 2;
-            int n = this.worldX;
-            int n2 = this.worldY;
-            int n3 = this.solidArea.width;
-            int n4 = this.solidArea.height;
+            int savedWorldX = this.worldX;
+            int savedWorldY = this.worldY;
+            int savedWidth = this.solidArea.width;
+            int savedHeight = this.solidArea.height;
             switch (this.direction) {
                 case "up": {
                     this.worldY -= this.attackArea.height;
@@ -587,18 +574,18 @@ public class Entity {
                     this.damagePlayer(this.attack);
                 }
             } else {
-                int n5 = this.gp.cChecker.checkEntity(this, this.gp.monster);
-                int n6 = this.currentWeapon != null ? this.currentWeapon.knockBackPower : 1;
-                this.gp.player.damageMonster(n5, this, this.attack, n6, this.direction);
-                int n7 = this.gp.cChecker.checkInteractiveTile(this);
-                this.gp.player.damageInteractiveTile(n7);
-                int n8 = this.gp.cChecker.checkEntity(this, this.gp.projectile);
-                this.gp.player.damageProjectile(n8);
+                int monsterIndex = this.gp.cChecker.checkEntity(this, this.gp.monster);
+                int knockBackPower = this.currentWeapon != null ? this.currentWeapon.knockBackPower : 1;
+                this.gp.player.damageMonster(monsterIndex, this, this.attack, knockBackPower, this.direction);
+                int tileIndex = this.gp.cChecker.checkInteractiveTile(this);
+                this.gp.player.damageInteractiveTile(tileIndex);
+                int projectileIndex = this.gp.cChecker.checkEntity(this, this.gp.projectile);
+                this.gp.player.damageProjectile(projectileIndex);
             }
-            this.worldX = n;
-            this.worldY = n2;
-            this.solidArea.width = n3;
-            this.solidArea.height = n4;
+            this.worldX = savedWorldX;
+            this.worldY = savedWorldY;
+            this.solidArea.width = savedWidth;
+            this.solidArea.height = savedHeight;
         } else if (this.spriteCounter > this.motion2_duration) {
             this.spriteNum = 1;
             this.spriteCounter = 0;
@@ -606,153 +593,153 @@ public class Entity {
         }
     }
 
-    public void damagePlayer(int n) {
+    public void damagePlayer(int attackPower) {
         if (!this.gp.player.invincible) {
-            String string = this.getOppositeDirection(this.direction);
-            int n2 = n - this.gp.player.defense;
-            if (this.gp.player.guarding && this.gp.player.direction.equals(string)) {
+            String guardDirection = this.getOppositeDirection(this.direction);
+            int damage = attackPower - this.gp.player.defense;
+            if (this.gp.player.guarding && this.gp.player.direction.equals(guardDirection)) {
                 if (this.gp.player.guardCounter < 30) {
-                    n2 = 0;
+                    damage = 0;
                     this.gp.playSE(16);
                     this.setKnockBack(this, this.gp.player, this.knockBackPower, this.gp.player.direction);
                     this.offBalance = true;
                     this.spriteCounter = -60;
                 } else {
-                    n2 /= 3;
+                    damage /= 3;
                     this.gp.playSE(15);
                 }
             } else {
                 this.gp.playSE(6);
-                if (n2 < 1) {
-                    n2 = 1;
+                if (damage < 1) {
+                    damage = 1;
                 }
             }
-            if (n2 != 0) {
+            if (damage != 0) {
                 this.gp.player.transparent = true;
                 this.setKnockBack(this.gp.player, this, this.knockBackPower, this.direction);
             }
-            this.gp.player.life -= n2;
+            this.gp.player.life -= damage;
             this.gp.player.invincible = true;
         }
     }
 
-    public void setKnockBack(Entity entity, Entity entity2, int n, String string) {
-        this.attacker = entity2;
-        entity.knockBackDirection = entity2.direction;
-        entity.speed += n;
-        entity.knockBack = true;
+    public void setKnockBack(Entity target, Entity attacker, int knockBackPower, String direction) {
+        this.attacker = attacker;
+        target.knockBackDirection = attacker.direction;
+        target.speed += knockBackPower;
+        target.knockBack = true;
     }
 
     public boolean inCamera() {
-        int n;
-        int n2;
-        boolean bl;
+        boolean visible;
+        int marginFar;
+        int marginNear;
         block5: {
             block4: {
-                bl = false;
-                n2 = 5;
-                n = 1;
-                int n3 = this.gp.currentMap;
+                visible = false;
+                marginFar = 5;
+                marginNear = 1;
+                int currentMap = this.gp.currentMap;
                 Objects.requireNonNull(this.gp);
-                if (n3 == 5) break block4;
-                int n4 = this.gp.currentMap;
+                if (currentMap == 5) break block4;
+                int mapId = this.gp.currentMap;
                 Objects.requireNonNull(this.gp);
-                if (n4 == 1) break block4;
-                int n5 = this.gp.currentMap;
+                if (mapId == 1) break block4;
+                int mapId2 = this.gp.currentMap;
                 Objects.requireNonNull(this.gp);
-                if (n5 != 2) break block5;
+                if (mapId2 != 2) break block5;
             }
-            n2 = 12;
-            n = 5;
+            marginFar = 12;
+            marginNear = 5;
         }
-        if (this.worldX + this.gp.tileSize * n2 > this.gp.player.worldX - this.gp.player.screenX && this.worldX - this.gp.tileSize * n < this.gp.player.worldX + this.gp.player.screenX && this.worldY + this.gp.tileSize * n2 > this.gp.player.worldY - this.gp.player.screenY && this.worldY - this.gp.tileSize * n < this.gp.player.worldY + this.gp.player.screenY) {
-            bl = true;
+        if (this.worldX + this.gp.tileSize * marginFar > this.gp.player.worldX - this.gp.player.screenX && this.worldX - this.gp.tileSize * marginNear < this.gp.player.worldX + this.gp.player.screenX && this.worldY + this.gp.tileSize * marginFar > this.gp.player.worldY - this.gp.player.screenY && this.worldY - this.gp.tileSize * marginNear < this.gp.player.worldY + this.gp.player.screenY) {
+            visible = true;
         }
-        return bl;
+        return visible;
     }
 
     public void draw(Graphics2D graphics2D) {
-        BufferedImage bufferedImage = null;
+        BufferedImage currentSprite = null;
         if (this.inCamera()) {
-            int n = this.getScreenX();
-            int n2 = this.getScreenY();
+            int screenX = this.getScreenX();
+            int screenY = this.getScreenY();
             switch (this.direction) {
                 case "up": {
                     if (!this.attacking) {
                         if (this.spriteNum == 1) {
-                            bufferedImage = this.up1;
+                            currentSprite = this.up1;
                             break;
                         }
                         if (this.spriteNum != 2) break;
-                        bufferedImage = this.up2;
+                        currentSprite = this.up2;
                         break;
                     }
                     if (!this.attacking) break;
-                    n2 = this.getScreenY() - this.up1.getHeight();
+                    screenY = this.getScreenY() - this.up1.getHeight();
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackUp1;
+                        currentSprite = this.attackUp1;
                         break;
                     }
                     if (this.spriteNum != 2) break;
-                    bufferedImage = this.attackUp2;
+                    currentSprite = this.attackUp2;
                     break;
                 }
                 case "down": {
                     if (!this.attacking) {
                         if (this.spriteNum == 1) {
-                            bufferedImage = this.down1;
+                            currentSprite = this.down1;
                             break;
                         }
                         if (this.spriteNum != 2) break;
-                        bufferedImage = this.down2;
+                        currentSprite = this.down2;
                         break;
                     }
                     if (!this.attacking) break;
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackDown1;
+                        currentSprite = this.attackDown1;
                         break;
                     }
                     if (this.spriteNum != 2) break;
-                    bufferedImage = this.attackDown2;
+                    currentSprite = this.attackDown2;
                     break;
                 }
                 case "left": {
                     if (!this.attacking) {
                         if (this.spriteNum == 1) {
-                            bufferedImage = this.left1;
+                            currentSprite = this.left1;
                             break;
                         }
                         if (this.spriteNum != 2) break;
-                        bufferedImage = this.left2;
+                        currentSprite = this.left2;
                         break;
                     }
                     if (!this.attacking) break;
-                    n = this.getScreenX() - this.left1.getWidth();
+                    screenX = this.getScreenX() - this.left1.getWidth();
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackLeft1;
+                        currentSprite = this.attackLeft1;
                         break;
                     }
                     if (this.spriteNum != 2) break;
-                    bufferedImage = this.attackLeft2;
+                    currentSprite = this.attackLeft2;
                     break;
                 }
                 case "right": {
                     if (!this.attacking) {
                         if (this.spriteNum == 1) {
-                            bufferedImage = this.right1;
+                            currentSprite = this.right1;
                             break;
                         }
                         if (this.spriteNum != 2) break;
-                        bufferedImage = this.right2;
+                        currentSprite = this.right2;
                         break;
                     }
                     if (!this.attacking) break;
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackRight1;
+                        currentSprite = this.attackRight1;
                         break;
                     }
                     if (this.spriteNum != 2) break;
-                    bufferedImage = this.attackRight2;
+                    currentSprite = this.attackRight2;
                 }
             }
             if (this.invincible && !this.sleep) {
@@ -768,84 +755,84 @@ public class Entity {
             if (this.dying) {
                 this.dyingAnimation(graphics2D);
             }
-            graphics2D.drawImage((Image)bufferedImage, n, n2, null);
+            graphics2D.drawImage((Image)currentSprite, screenX, screenY, null);
             this.changeAlpha(graphics2D, 1.0f);
         }
     }
 
     public void dyingAnimation(Graphics2D graphics2D) {
         ++this.dyingCounter;
-        int n = 5;
-        if (this.dyingCounter <= n) {
+        int flashInterval = 5;
+        if (this.dyingCounter <= flashInterval) {
             this.changeAlpha(graphics2D, 0.0f);
-        } else if (this.dyingCounter > n && this.dyingCounter <= n * 2) {
+        } else if (this.dyingCounter > flashInterval && this.dyingCounter <= flashInterval * 2) {
             this.changeAlpha(graphics2D, 1.0f);
-        } else if (this.dyingCounter > n * 2 && this.dyingCounter <= n * 3) {
+        } else if (this.dyingCounter > flashInterval * 2 && this.dyingCounter <= flashInterval * 3) {
             this.changeAlpha(graphics2D, 0.0f);
-        } else if (this.dyingCounter > n * 3 && this.dyingCounter <= n * 4) {
+        } else if (this.dyingCounter > flashInterval * 3 && this.dyingCounter <= flashInterval * 4) {
             this.changeAlpha(graphics2D, 1.0f);
-        } else if (this.dyingCounter > n * 4 && this.dyingCounter <= n * 5) {
+        } else if (this.dyingCounter > flashInterval * 4 && this.dyingCounter <= flashInterval * 5) {
             this.changeAlpha(graphics2D, 0.0f);
-        } else if (this.dyingCounter > n * 5 && this.dyingCounter <= n * 6) {
+        } else if (this.dyingCounter > flashInterval * 5 && this.dyingCounter <= flashInterval * 6) {
             this.changeAlpha(graphics2D, 1.0f);
-        } else if (this.dyingCounter > n * 6 && this.dyingCounter <= n * 7) {
+        } else if (this.dyingCounter > flashInterval * 6 && this.dyingCounter <= flashInterval * 7) {
             this.changeAlpha(graphics2D, 0.0f);
-        } else if (this.dyingCounter > n * 7 && this.dyingCounter <= n * 8) {
+        } else if (this.dyingCounter > flashInterval * 7 && this.dyingCounter <= flashInterval * 8) {
             this.changeAlpha(graphics2D, 1.0f);
-        } else if (this.dyingCounter > n * 8) {
+        } else if (this.dyingCounter > flashInterval * 8) {
             this.alive = false;
         }
     }
 
-    public void changeAlpha(Graphics2D graphics2D, float f) {
-        graphics2D.setComposite(AlphaComposite.getInstance(3, f));
+    public void changeAlpha(Graphics2D graphics2D, float alpha) {
+        graphics2D.setComposite(AlphaComposite.getInstance(3, alpha));
     }
 
-    public BufferedImage setup(String string, int n, int n2) {
-        return ImageCache.getImage(string, n, n2);
+    public BufferedImage setup(String imagePath, int width, int height) {
+        return ImageCache.getImage(imagePath, width, height);
     }
 
-    public void searchPath(int n, int n2) {
-        int n3 = (this.worldX + this.solidArea.x) / this.gp.tileSize;
-        int n4 = (this.worldY + this.solidArea.y) / this.gp.tileSize;
-        this.gp.pFinder.setNodes(n3, n4, n, n2, this);
+    public void searchPath(int goalCol, int goalRow) {
+        int startCol = (this.worldX + this.solidArea.x) / this.gp.tileSize;
+        int startRow = (this.worldY + this.solidArea.y) / this.gp.tileSize;
+        this.gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
         if (this.gp.pFinder.search()) {
-            int n5 = this.gp.pFinder.pathList.get((int)0).col * this.gp.tileSize;
-            int n6 = this.gp.pFinder.pathList.get((int)0).row * this.gp.tileSize;
-            int n7 = this.worldX + this.solidArea.x;
-            int n8 = this.worldX + this.solidArea.x + this.solidArea.width;
-            int n9 = this.worldY + this.solidArea.y;
-            int n10 = this.worldY + this.solidArea.y + this.solidArea.height;
-            if (n9 > n6 && n7 >= n5 && n8 < n5 + this.gp.tileSize) {
+            int nextWorldX = this.gp.pFinder.pathList.get((int)0).col * this.gp.tileSize;
+            int nextWorldY = this.gp.pFinder.pathList.get((int)0).row * this.gp.tileSize;
+            int leftX = this.worldX + this.solidArea.x;
+            int rightX = this.worldX + this.solidArea.x + this.solidArea.width;
+            int topY = this.worldY + this.solidArea.y;
+            int bottomY = this.worldY + this.solidArea.y + this.solidArea.height;
+            if (topY > nextWorldY && leftX >= nextWorldX && rightX < nextWorldX + this.gp.tileSize) {
                 this.direction = "up";
-            } else if (n9 < n6 && n7 >= n5 && n8 < n5 + this.gp.tileSize) {
+            } else if (topY < nextWorldY && leftX >= nextWorldX && rightX < nextWorldX + this.gp.tileSize) {
                 this.direction = "down";
-            } else if (n9 >= n6 && n10 < n6 + this.gp.tileSize) {
-                if (n7 > n5) {
+            } else if (topY >= nextWorldY && bottomY < nextWorldY + this.gp.tileSize) {
+                if (leftX > nextWorldX) {
                     this.direction = "left";
                 }
-                if (n7 < n5) {
+                if (leftX < nextWorldX) {
                     this.direction = "right";
                 }
-            } else if (n9 > n6 && n7 > n5) {
+            } else if (topY > nextWorldY && leftX > nextWorldX) {
                 this.direction = "up";
                 this.checkCollision();
                 if (this.collisionOn) {
                     this.direction = "left";
                 }
-            } else if (n9 > n6 && n7 < n5) {
+            } else if (topY > nextWorldY && leftX < nextWorldX) {
                 this.direction = "up";
                 this.checkCollision();
                 if (this.collisionOn) {
                     this.direction = "right";
                 }
-            } else if (n9 < n6 && n7 > n5) {
+            } else if (topY < nextWorldY && leftX > nextWorldX) {
                 this.direction = "down";
                 this.checkCollision();
                 if (this.collisionOn) {
                     this.direction = "left";
                 }
-            } else if (n9 < n6 && n7 < n5) {
+            } else if (topY < nextWorldY && leftX < nextWorldX) {
                 this.direction = "down";
                 this.checkCollision();
                 if (this.collisionOn) {
@@ -853,93 +840,93 @@ public class Entity {
                 }
             }
             if (!this.following) {
-                int n11 = this.gp.pFinder.pathList.get((int)0).col;
-                int n12 = this.gp.pFinder.pathList.get((int)0).row;
-                if (n11 == n && n12 == n2) {
+                int nextCol = this.gp.pFinder.pathList.get((int)0).col;
+                int nextRow = this.gp.pFinder.pathList.get((int)0).row;
+                if (nextCol == goalCol && nextRow == goalRow) {
                     this.onPath = false;
                 }
             }
         }
     }
 
-    public int getDetected(Entity entity, Entity[][] entityArray, String string) {
-        int n = 999;
-        int n2 = entity.getLeftX();
-        int n3 = entity.getTopY();
-        switch (entity.direction) {
+    public int getDetected(Entity player, Entity[][] entities, String name) {
+        int detectedIndex = 999;
+        int checkX = player.getLeftX();
+        int checkY = player.getTopY();
+        switch (player.direction) {
             case "up": {
-                n3 = entity.getTopY() - this.gp.player.speed;
+                checkY = player.getTopY() - this.gp.player.speed;
                 break;
             }
             case "down": {
-                n3 = entity.getBottomY() + this.gp.player.speed;
+                checkY = player.getBottomY() + this.gp.player.speed;
                 break;
             }
             case "left": {
-                n2 = entity.getLeftX() - this.gp.player.speed;
+                checkX = player.getLeftX() - this.gp.player.speed;
                 break;
             }
             case "right": {
-                n2 = entity.getRightX() + this.gp.player.speed;
+                checkX = player.getRightX() + this.gp.player.speed;
             }
         }
-        int n4 = n2 / this.gp.tileSize;
-        int n5 = n3 / this.gp.tileSize;
-        for (int i = 0; i < entityArray[1].length; ++i) {
-            if (entityArray[this.gp.currentMap][i] == null || !entityArray[this.gp.currentMap][i].name.equals(string)) continue;
-            int n6 = entityArray[this.gp.currentMap][i].getCol();
-            int n7 = entityArray[this.gp.currentMap][i].getRow();
-            int n8 = entityArray[this.gp.currentMap][i].solidArea.width / this.gp.tileSize;
-            int n9 = entityArray[this.gp.currentMap][i].solidArea.height / this.gp.tileSize;
-            boolean bl = false;
-            for (int j = n6; j < n6 + n8; ++j) {
-                for (int k = n7; k < n7 + n9; ++k) {
-                    if (n4 != j || n5 != k) continue;
-                    bl = true;
+        int checkCol = checkX / this.gp.tileSize;
+        int checkRow = checkY / this.gp.tileSize;
+        for (int i = 0; i < entities[1].length; ++i) {
+            if (entities[this.gp.currentMap][i] == null || !entities[this.gp.currentMap][i].name.equals(name)) continue;
+            int entityCol = entities[this.gp.currentMap][i].getCol();
+            int entityRow = entities[this.gp.currentMap][i].getRow();
+            int entityWidth = entities[this.gp.currentMap][i].solidArea.width / this.gp.tileSize;
+            int entityHeight = entities[this.gp.currentMap][i].solidArea.height / this.gp.tileSize;
+            boolean collisionFound = false;
+            for (int j = entityCol; j < entityCol + entityWidth; ++j) {
+                for (int k = entityRow; k < entityRow + entityHeight; ++k) {
+                    if (checkCol != j || checkRow != k) continue;
+                    collisionFound = true;
                     break;
                 }
-                if (bl) break;
+                if (collisionFound) break;
             }
-            if (!bl) continue;
-            n = i;
+            if (!collisionFound) continue;
+            detectedIndex = i;
             break;
         }
-        return n;
+        return detectedIndex;
     }
 
-    public void checkBossShoot(int n, int n2) {
-        int n3 = new Random().nextInt(n);
-        if (n3 == 0 && this.shotAvailableCounter >= n2) {
-            int n4 = this.worldX + this.solidArea.x;
-            int n5 = this.worldX + this.solidArea.x + this.solidArea.width;
-            int n6 = this.worldY + this.solidArea.y;
-            int n7 = this.worldY + this.solidArea.y + this.solidArea.height;
-            int n8 = this.worldX + this.solidArea.x + this.solidArea.width / 2;
-            int n9 = this.worldY + this.solidArea.y + this.solidArea.height / 2;
-            int n10 = n8;
-            int n11 = n9;
+    public void checkBossShoot(int actionRate, int cooldown) {
+        int roll = new Random().nextInt(actionRate);
+        if (roll == 0 && this.shotAvailableCounter >= cooldown) {
+            int leftX = this.worldX + this.solidArea.x;
+            int rightX = this.worldX + this.solidArea.x + this.solidArea.width;
+            int topY = this.worldY + this.solidArea.y;
+            int bottomY = this.worldY + this.solidArea.y + this.solidArea.height;
+            int centerX = this.worldX + this.solidArea.x + this.solidArea.width / 2;
+            int centerY = this.worldY + this.solidArea.y + this.solidArea.height / 2;
+            int spawnX = centerX;
+            int spawnY = centerY;
             switch (this.direction) {
                 case "up": {
-                    n11 = n6 - this.gp.tileSize;
-                    n10 = n8 - this.gp.tileSize / 2;
+                    spawnY = topY - this.gp.tileSize;
+                    spawnX = centerX - this.gp.tileSize / 2;
                     break;
                 }
                 case "down": {
-                    n11 = n7;
-                    n10 = n8 - this.gp.tileSize / 2;
+                    spawnY = bottomY;
+                    spawnX = centerX - this.gp.tileSize / 2;
                     break;
                 }
                 case "left": {
-                    n10 = n4 - this.gp.tileSize;
-                    n11 = n9 - this.gp.tileSize / 2;
+                    spawnX = leftX - this.gp.tileSize;
+                    spawnY = centerY - this.gp.tileSize / 2;
                     break;
                 }
                 case "right": {
-                    n10 = n5;
-                    n11 = n9 - this.gp.tileSize / 2;
+                    spawnX = rightX;
+                    spawnY = centerY - this.gp.tileSize / 2;
                 }
             }
-            this.projectile.set(n10, n11, this.direction, true, this);
+            this.projectile.set(spawnX, spawnY, this.direction, true, this);
             for (int i = 0; i < this.gp.projectile[this.gp.currentMap].length; ++i) {
                 if (this.gp.projectile[this.gp.currentMap][i] != null) continue;
                 this.gp.projectile[this.gp.currentMap][i] = this.projectile;

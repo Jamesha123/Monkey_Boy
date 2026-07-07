@@ -13,8 +13,8 @@ public class NPC_OldMan
 extends Entity {
     public static String npcName = "Old Man";
 
-    public NPC_OldMan(GamePanel gamePanel) {
-        super(gamePanel);
+    public NPC_OldMan(GamePanel gp) {
+        super(gp);
         this.name = npcName;
         this.type = 1;
         this.speed = this.defaultSpeed = 1;

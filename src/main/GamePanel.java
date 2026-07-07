@@ -292,27 +292,27 @@ implements Runnable {
 
     public void setFullScreen() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        double d = dimension.getWidth();
-        double d2 = dimension.getHeight();
+        double screenWidth = dimension.getWidth();
+        double screenHeight = dimension.getHeight();
         Main.window.setExtendedState(6);
-        this.screenWidth2 = (int)d;
-        this.screenHeight2 = (int)d2;
+        this.screenWidth2 = (int)screenWidth;
+        this.screenHeight2 = (int)screenHeight;
     }
 
     @Override
     public void run() {
-        double d = 1000000000 / this.fps;
-        double d2 = 0.0;
-        long l = System.nanoTime();
+        double nanosecondsPerFrame = 1000000000 / this.fps;
+        double delta = 0.0;
+        long lastTime = System.nanoTime();
         while (this.gameThread != null) {
-            long l2 = System.nanoTime();
-            d2 += (double)(l2 - l) / d;
-            l = l2;
-            if (!(d2 >= 1.0)) continue;
+            long now = System.nanoTime();
+            delta += (double)(now - lastTime) / nanosecondsPerFrame;
+            lastTime = now;
+            if (!(delta >= 1.0)) continue;
             this.update();
             this.drawToTempScreen();
             this.drawToScreen();
-            d2 -= 1.0;
+            delta -= 1.0;
         }
     }
 
@@ -328,43 +328,43 @@ implements Runnable {
                 this.gameState = 1;
             }
         } else if (this.gameState == 1) {
-            int n;
+            int i;
             this.player.update();
-            for (n = 0; n < this.npc[1].length; ++n) {
-                if (this.npc[this.currentMap][n] == null) continue;
-                this.npc[this.currentMap][n].update();
+            for (i = 0; i < this.npc[1].length; ++i) {
+                if (this.npc[this.currentMap][i] == null) continue;
+                this.npc[this.currentMap][i].update();
             }
-            for (n = 0; n < this.monster[1].length; ++n) {
-                if (this.monster[this.currentMap][n] == null) continue;
-                if (this.monster[this.currentMap][n].alive && !this.monster[this.currentMap][n].dying) {
-                    this.monster[this.currentMap][n].update();
+            for (i = 0; i < this.monster[1].length; ++i) {
+                if (this.monster[this.currentMap][i] == null) continue;
+                if (this.monster[this.currentMap][i].alive && !this.monster[this.currentMap][i].dying) {
+                    this.monster[this.currentMap][i].update();
                     continue;
                 }
-                if (this.monster[this.currentMap][n].alive) continue;
-                this.monster[this.currentMap][n].checkDrop();
-                this.monster[this.currentMap][n] = null;
+                if (this.monster[this.currentMap][i].alive) continue;
+                this.monster[this.currentMap][i].checkDrop();
+                this.monster[this.currentMap][i] = null;
             }
-            for (n = 0; n < this.projectile[1].length; ++n) {
-                if (this.projectile[this.currentMap][n] == null) continue;
-                if (this.projectile[this.currentMap][n].alive) {
-                    this.projectile[this.currentMap][n].update();
+            for (i = 0; i < this.projectile[1].length; ++i) {
+                if (this.projectile[this.currentMap][i] == null) continue;
+                if (this.projectile[this.currentMap][i].alive) {
+                    this.projectile[this.currentMap][i].update();
                     continue;
                 }
-                if (this.projectile[this.currentMap][n].alive) continue;
-                this.projectile[this.currentMap][n] = null;
+                if (this.projectile[this.currentMap][i].alive) continue;
+                this.projectile[this.currentMap][i] = null;
             }
-            for (n = 0; n < this.particleList.size(); ++n) {
-                if (this.particleList.get(n) == null) continue;
-                if (this.particleList.get((int)n).alive) {
-                    this.particleList.get(n).update();
+            for (i = 0; i < this.particleList.size(); ++i) {
+                if (this.particleList.get(i) == null) continue;
+                if (this.particleList.get((int)i).alive) {
+                    this.particleList.get(i).update();
                     continue;
                 }
-                if (this.particleList.get((int)n).alive) continue;
-                this.particleList.remove(n);
+                if (this.particleList.get((int)i).alive) continue;
+                this.particleList.remove(i);
             }
-            for (n = 0; n < this.iTile[1].length; ++n) {
-                if (this.iTile[this.currentMap][n] == null) continue;
-                this.iTile[this.currentMap][n].update();
+            for (i = 0; i < this.iTile[1].length; ++i) {
+                if (this.iTile[this.currentMap][i] == null) continue;
+                this.iTile[this.currentMap][i].update();
             }
             this.eManager.update();
         }
@@ -374,9 +374,9 @@ implements Runnable {
     }
 
     public void drawToTempScreen() {
-        long l = 0L;
+        long drawStartTime = 0L;
         if (this.keyH.showDebugText || this.debugManager.debugMode) {
-            l = System.nanoTime();
+            drawStartTime = System.nanoTime();
         }
         if (this.gameState == 0) {
             this.ui.draw(this.g2);
@@ -388,23 +388,23 @@ implements Runnable {
             this.g2.setColor(Color.white);
             this.g2.setFont(this.ui.fontBold50);
             int messageX = (960 - this.g2.getFontMetrics().stringWidth(this.loadingMessage)) / 2;
-            int n = 258;
-            this.g2.drawString(this.loadingMessage, messageX, n);
-            int n2 = 300;
-            int n3 = 20;
-            int n4 = (960 - n2) / 2;
-            int n5 = 308;
+            int messageY = 258;
+            this.g2.drawString(this.loadingMessage, messageX, messageY);
+            int barWidth = 300;
+            int barHeight = 20;
+            int barX = (960 - barWidth) / 2;
+            int barY = 308;
             this.g2.setColor(Color.gray);
-            this.g2.fillRect(n4, n5, n2, n3);
+            this.g2.fillRect(barX, barY, barWidth, barHeight);
             this.g2.setColor(Color.green);
-            int n6 = (int)((double)n2 * ((double)this.loadingProgress / 100.0));
-            this.g2.fillRect(n4, n5, n6, n3);
+            int fillWidth = (int)((double)barWidth * ((double)this.loadingProgress / 100.0));
+            this.g2.fillRect(barX, barY, fillWidth, barHeight);
             this.g2.setColor(Color.white);
             this.g2.setFont(this.ui.fontBold24);
-            String string = this.loadingProgress + "%";
-            int n7 = (960 - this.g2.getFontMetrics().stringWidth(string)) / 2;
-            int n8 = n5 + n3 + 30;
-            this.g2.drawString(string, n7, n8);
+            String percentText = this.loadingProgress + "%";
+            int percentX = (960 - this.g2.getFontMetrics().stringWidth(percentText)) / 2;
+            int percentY = barY + barHeight + 30;
+            this.g2.drawString(percentText, percentX, percentY);
         } else if (this.gameState == 12 && this.snakeGame != null) {
             this.snakeGame.draw(this.g2);
         } else {
@@ -436,8 +436,8 @@ implements Runnable {
             }
             Collections.sort(this.entityList, new Comparator<Entity>() {
                 @Override
-                public int compare(Entity entity, Entity entity2) {
-                    return Integer.compare(entity.worldY, entity2.worldY);
+                public int compare(Entity firstEntity, Entity secondEntity) {
+                    return Integer.compare(firstEntity.worldY, secondEntity.worldY);
                 }
             });
             for (int i = 0; i < this.entityList.size(); ++i) {
@@ -451,8 +451,8 @@ implements Runnable {
             this.ui.draw(this.g2);
         }
         if (this.keyH.showDebugText || this.debugManager.debugMode) {
-            long l2 = System.nanoTime();
-            this.drawTime = l2 - l;
+            long drawEndTime = System.nanoTime();
+            this.drawTime = drawEndTime - drawStartTime;
         }
     }
 
@@ -462,8 +462,8 @@ implements Runnable {
         graphics.dispose();
     }
 
-    public void playMusic(int n) {
-        this.music.setFile(n);
+    public void playMusic(int musicIndex) {
+        this.music.setFile(musicIndex);
         this.music.play();
         this.music.loop();
     }
@@ -472,8 +472,8 @@ implements Runnable {
         this.music.stop();
     }
 
-    public void playSE(int n) {
-        this.se.setFile(n);
+    public void playSE(int soundIndex) {
+        this.se.setFile(soundIndex);
         this.se.play();
     }
 
@@ -529,27 +529,27 @@ implements Runnable {
     }
 
     public void clearSlimeBossRoom() {
-        int n;
-        for (n = 0; n < this.monster[9].length; ++n) {
-            if (this.monster[9][n] == null || !this.monster[9][n].name.equals("Red Slime") && !this.monster[9][n].name.equals("Green Slime") && !this.monster[9][n].name.equals("Blue Slime")) continue;
-            this.monster[9][n] = null;
+        int i;
+        for (i = 0; i < this.monster[9].length; ++i) {
+            if (this.monster[9][i] == null || !this.monster[9][i].name.equals("Red Slime") && !this.monster[9][i].name.equals("Green Slime") && !this.monster[9][i].name.equals("Blue Slime")) continue;
+            this.monster[9][i] = null;
         }
         if (!Progress.slimeBossDefeated) {
-            for (n = 0; n < this.obj[9].length && this.obj[9][n] != null; ++n) {
-                this.obj[9][n] = null;
+            for (i = 0; i < this.obj[9].length && this.obj[9][i] != null; ++i) {
+                this.obj[9][i] = null;
             }
         }
     }
 
     public void clearSkeletonLordRoom() {
-        int n;
-        for (n = 0; n < this.monster[13].length; ++n) {
-            if (this.monster[13][n] == null || !this.monster[13][n].name.equals("Dungeon Orc")) continue;
-            this.monster[13][n] = null;
+        int i;
+        for (i = 0; i < this.monster[13].length; ++i) {
+            if (this.monster[13][i] == null || !this.monster[13][i].name.equals("Dungeon Orc")) continue;
+            this.monster[13][i] = null;
         }
         if (!Progress.skeletonLordDefeated) {
-            for (n = 0; n < this.obj[13].length && this.obj[13][n] != null; ++n) {
-                this.obj[13][n] = null;
+            for (i = 0; i < this.obj[13].length && this.obj[13][i] != null; ++i) {
+                this.obj[13][i] = null;
             }
         }
     }

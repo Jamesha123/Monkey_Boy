@@ -34,19 +34,19 @@ public class snakeGame {
     private int totalDots;
     private String spellName;
 
-    public snakeGame(GamePanel gamePanel, KeyHandler keyHandler, String string) {
-        this.gp = gamePanel;
+    public snakeGame(GamePanel gp, KeyHandler keyHandler, String spellName) {
+        this.gp = gp;
         this.keyH = keyHandler;
-        this.spellName = string;
+        this.spellName = spellName;
         this.initializeGame();
     }
 
     public void initializeGame() {
         this.initializePattern();
         this.snake = new ArrayList();
-        int n = 7;
-        int n2 = 9;
-        this.snake.add(new Point(n, n2));
+        int startCol = 7;
+        int startRow = 9;
+        this.snake.add(new Point(startCol, startRow));
         this.direction = new Point(0, -1);
         this.gameActive = true;
         this.gameWon = false;
@@ -85,34 +85,34 @@ public class snakeGame {
         if (!this.hasStarted) {
             return;
         }
-        long l = System.currentTimeMillis();
-        if (l - this.lastUpdate < 100L) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - this.lastUpdate < 100L) {
             return;
         }
-        this.lastUpdate = l;
+        this.lastUpdate = currentTime;
         this.moveSnake();
         this.checkCollisions();
         this.checkWinCondition();
     }
 
     private void moveSnake() {
-        Point point = this.snake.get(0);
-        Point point2 = new Point(point.x + this.direction.x, point.y + this.direction.y);
-        this.snake.add(0, point2);
+        Point head = this.snake.get(0);
+        Point newHead = new Point(head.x + this.direction.x, head.y + this.direction.y);
+        this.snake.add(0, newHead);
         if (this.snake.size() > this.snakeSize) {
             this.snake.remove(this.snake.size() - 1);
         }
     }
 
     private void checkCollisions() {
-        Point point = this.snake.get(0);
-        if (point.x < 0 || point.x >= 14 || point.y < 0 || point.y >= 18) {
+        Point head = this.snake.get(0);
+        if (head.x < 0 || head.x >= 14 || head.y < 0 || head.y >= 18) {
             this.gameLost = true;
             this.gameActive = false;
             return;
         }
         for (int i = 1; i < this.snake.size(); ++i) {
-            if (!point.equals(this.snake.get(i))) continue;
+            if (!head.equals(this.snake.get(i))) continue;
             this.gameLost = true;
             this.gameActive = false;
             return;
@@ -121,9 +121,9 @@ public class snakeGame {
 
     private void checkWinCondition() {
         this.coveredDots = 0;
-        block0: for (Point point : this.patternDots) {
-            for (Point point2 : this.snake) {
-                if (!point.equals(point2)) continue;
+        block0: for (Point patternDot : this.patternDots) {
+            for (Point snakeSegment : this.snake) {
+                if (!patternDot.equals(snakeSegment)) continue;
                 ++this.coveredDots;
                 continue block0;
             }
@@ -134,17 +134,17 @@ public class snakeGame {
         }
     }
 
-    public void handleInput(int n) {
+    public void handleInput(int keyCode) {
         if (!this.gameActive) {
             return;
         }
         if (this.gameWon) {
-            if (n == 10) {
+            if (keyCode == 10) {
                 this.gameActive = false;
             }
             return;
         }
-        switch (n) {
+        switch (keyCode) {
             case 38: 
             case 87: {
                 if (this.direction.y == 1) break;
@@ -180,26 +180,26 @@ public class snakeGame {
     }
 
     public void draw(Graphics2D graphics2D) {
-        int n;
+        int dotIndex;
         graphics2D.setColor(new Color(170, 75, 20, 120));
         graphics2D.fillRoundRect(320, 90, 300, 380, 10, 10);
         graphics2D.setColor(new Color(255, 165, 0, 180));
         graphics2D.setStroke(new BasicStroke(2.0f));
         graphics2D.drawRoundRect(325, 95, 290, 370, 10, 10);
         graphics2D.setColor(Color.yellow);
-        for (Point point : this.patternDots) {
-            graphics2D.fillOval(330 + point.x * 20 + 4, 100 + point.y * 20 + 4, 12, 12);
+        for (Point patternDot : this.patternDots) {
+            graphics2D.fillOval(330 + patternDot.x * 20 + 4, 100 + patternDot.y * 20 + 4, 12, 12);
         }
         graphics2D.setColor(Color.cyan);
-        for (n = 0; n < this.coveredDots; ++n) {
-            int n2 = 330 + n * 15;
-            int n3 = 100;
-            graphics2D.fillOval(n2 + 4, n3 + 4, 12, 12);
+        for (dotIndex = 0; dotIndex < this.coveredDots; ++dotIndex) {
+            int progressDotX = 330 + dotIndex * 15;
+            int progressDotY = 100;
+            graphics2D.fillOval(progressDotX + 4, progressDotY + 4, 12, 12);
         }
         graphics2D.setColor(new Color(128, 0, 128));
-        for (n = 0; n < this.snake.size(); ++n) {
-            Point point = this.snake.get(n);
-            graphics2D.fillOval(330 + point.x * 20 + 1, 100 + point.y * 20 + 1, 18, 18);
+        for (dotIndex = 0; dotIndex < this.snake.size(); ++dotIndex) {
+            Point snakeSegment = this.snake.get(dotIndex);
+            graphics2D.fillOval(330 + snakeSegment.x * 20 + 1, 100 + snakeSegment.y * 20 + 1, 18, 18);
         }
         if (this.gameWon || this.gameLost) {
             this.drawGameOverScreen(graphics2D);
@@ -214,20 +214,20 @@ public class snakeGame {
         if (this.gameWon) {
             switch (this.spellName) {
                 case "fireball": {
-                    int n = this.gp.player.searchItemInInventory("Book of Fireball Magic");
-                    this.gp.player.startDialogue((Entity)this.gp.player.inventory.get(n), 0);
+                    int bookSlotIndex = this.gp.player.searchItemInInventory("Book of Fireball Magic");
+                    this.gp.player.startDialogue((Entity)this.gp.player.inventory.get(bookSlotIndex), 0);
                     this.gp.playSE(2);
                     this.gp.player.maxMana += 5;
                     this.gp.player.mana = this.gp.player.maxMana;
-                    this.gp.player.inventory.remove(n);
+                    this.gp.player.inventory.remove(bookSlotIndex);
                     this.gp.snakeGame = null;
                 }
             }
         } else {
-            String string = "Failure!";
-            int n = 470 - graphics2D.getFontMetrics().stringWidth(string) / 2;
-            int n2 = 280;
-            graphics2D.drawString(string, n, n2);
+            String failureMessage = "Failure!";
+            int textX = 470 - graphics2D.getFontMetrics().stringWidth(failureMessage) / 2;
+            int textY = 280;
+            graphics2D.drawString(failureMessage, textX, textY);
         }
     }
 

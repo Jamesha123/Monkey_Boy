@@ -20,13 +20,13 @@ extends Projectile {
     public static final String objName = "Fireball";
     private int i;
 
-    public OBJ_Fireball(GamePanel gamePanel, String string) {
+    public OBJ_Fireball(GamePanel gamePanel, String variant) {
         super(gamePanel);
         this.gp = gamePanel;
         this.name = objName;
         this.useCost = 1;
         this.alive = false;
-        if (string == "boss") {
+        if (variant == "boss") {
             this.speed = 3;
             this.life = this.maxLife = 180;
             this.attack = 15;
@@ -45,39 +45,39 @@ extends Projectile {
         this.getImage(this.i);
     }
 
-    public void getImage(int n) {
+    public void getImage(int scale) {
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.up1 = this.setup("/Projectile/fireball_up_1.png", 48 * n, 48 * n);
+        this.up1 = this.setup("/Projectile/fireball_up_1.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.up2 = this.setup("/Projectile/fireball_up_2.png", 48 * n, 48 * n);
+        this.up2 = this.setup("/Projectile/fireball_up_2.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.down1 = this.setup("/Projectile/fireball_down_1.png", 48 * n, 48 * n);
+        this.down1 = this.setup("/Projectile/fireball_down_1.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.down2 = this.setup("/Projectile/fireball_down_2.png", 48 * n, 48 * n);
+        this.down2 = this.setup("/Projectile/fireball_down_2.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.left1 = this.setup("/Projectile/fireball_left_1.png", 48 * n, 48 * n);
+        this.left1 = this.setup("/Projectile/fireball_left_1.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.left2 = this.setup("/Projectile/fireball_left_2.png", 48 * n, 48 * n);
+        this.left2 = this.setup("/Projectile/fireball_left_2.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.right1 = this.setup("/Projectile/fireball_right_1.png", 48 * n, 48 * n);
+        this.right1 = this.setup("/Projectile/fireball_right_1.png", 48 * scale, 48 * scale);
         Objects.requireNonNull(this.gp);
         Objects.requireNonNull(this.gp);
-        this.right2 = this.setup("/Projectile/fireball_right_2.png", 48 * n, 48 * n);
+        this.right2 = this.setup("/Projectile/fireball_right_2.png", 48 * scale, 48 * scale);
     }
 
     public boolean haveResource(Entity entity) {
-        boolean bl = false;
+        boolean hasEnoughMana = false;
         if (entity.mana >= this.useCost) {
-            bl = true;
+            hasEnoughMana = true;
         }
-        return bl;
+        return hasEnoughMana;
     }
 
     public void subtractResource(Entity entity) {
@@ -85,22 +85,22 @@ extends Projectile {
     }
 
     public Color getParticleColor() {
-        Color color = new Color(240, 50, 0);
-        return color;
+        Color particleColor = new Color(240, 50, 0);
+        return particleColor;
     }
 
     public int getParticleSize() {
-        int n = 10;
-        return n;
+        int particleSize = 10;
+        return particleSize;
     }
 
     public int getParticleSpeed() {
-        int n = 1;
-        return n;
+        int particleSpeed = 1;
+        return particleSpeed;
     }
 
     public int getParticleMaxLife() {
-        int n = 20;
-        return n;
+        int particleMaxLife = 20;
+        return particleMaxLife;
     }
 }

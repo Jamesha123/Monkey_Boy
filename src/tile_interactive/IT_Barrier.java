@@ -15,11 +15,11 @@ extends InteractiveTile {
     private String requiredTask = "";
     private int barrierID = 0;
 
-    public IT_Barrier(GamePanel gamePanel, int n, int n2) {
-        super(gamePanel, n, n2);
+    public IT_Barrier(GamePanel gamePanel, int col, int row) {
+        super(gamePanel, col, row);
         this.gp = gamePanel;
-        this.worldX = gamePanel.tileSize * n;
-        this.worldY = gamePanel.tileSize * n2;
+        this.worldX = gamePanel.tileSize * col;
+        this.worldY = gamePanel.tileSize * row;
         this.name = itName;
         this.down1 = this.setup("/Tiles_Interactive/barrier", gamePanel.tileSize, gamePanel.tileSize);
         this.solidArea.x = 0;
@@ -31,30 +31,30 @@ extends InteractiveTile {
         this.collision = true;
     }
 
-    public IT_Barrier(GamePanel gamePanel, int n, int n2, String string, int n3) {
-        this(gamePanel, n, n2);
-        this.requiredTask = string;
-        this.barrierID = n3;
+    public IT_Barrier(GamePanel gamePanel, int col, int row, String requiredTask, int barrierId) {
+        this(gamePanel, col, row);
+        this.requiredTask = requiredTask;
+        this.barrierID = barrierId;
     }
 
     public void checkTaskCompletion() {
         if (!this.isActive) {
             return;
         }
-        boolean bl = false;
+        boolean taskCompleted = false;
         switch (this.requiredTask) {
             case "talk_to_mom": {
                 if (!this.gp.talkedToMom) break;
-                bl = true;
+                taskCompleted = true;
                 break;
             }
             case "skeleton_lord": {
                 if (!this.gp.bossBattleOn && !Progress.skeletonLordDefeated) break;
-                bl = true;
+                taskCompleted = true;
                 break;
             }
         }
-        if (bl) {
+        if (taskCompleted) {
             this.removeBarrier();
         }
     }
@@ -83,8 +83,8 @@ extends InteractiveTile {
         return this.isActive;
     }
 
-    public void setRequiredTask(String string) {
-        this.requiredTask = string;
+    public void setRequiredTask(String requiredTask) {
+        this.requiredTask = requiredTask;
     }
 
     public int getBarrierID() {

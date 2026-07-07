@@ -14,22 +14,22 @@ extends Entity {
     public boolean destructible = false;
     public int tileType = 0;
 
-    public InteractiveTile(GamePanel gamePanel, int n, int n2) {
+    public InteractiveTile(GamePanel gamePanel, int col, int row) {
         super(gamePanel);
         this.gp = gamePanel;
     }
 
     public boolean isCorrectItem(Entity entity) {
-        boolean bl = false;
-        return bl;
+        boolean hasCorrectItem = false;
+        return hasCorrectItem;
     }
 
     public void playSE() {
     }
 
     public InteractiveTile getDestroyedForm() {
-        InteractiveTile interactiveTile = null;
-        return interactiveTile;
+        InteractiveTile destroyedForm = null;
+        return destroyedForm;
     }
 
     @Override
@@ -45,10 +45,10 @@ extends Entity {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        int n = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
-        int n2 = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
+        int screenX = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
+        int screenY = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
         if (this.inCamera()) {
-            graphics2D.drawImage((Image)this.down1, n, n2, null);
+            graphics2D.drawImage((Image)this.down1, screenX, screenY, null);
         }
     }
 }

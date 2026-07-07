@@ -77,12 +77,12 @@ extends Entity {
     }
 
     public void checkDrop() {
-        int n = new Random().nextInt(100) + 1;
-        if (n < 60) {
+        int dropRoll = new Random().nextInt(100) + 1;
+        if (dropRoll < 60) {
             this.dropItem(new OBJ_Coin_Bronze(this.gp));
-        } else if (n >= 60 && n < 80) {
+        } else if (dropRoll >= 60 && dropRoll < 80) {
             this.dropItem(new OBJ_Heart(this.gp));
-        } else if (n >= 80 && n < 90 && this.gp.player.mana > 0) {
+        } else if (dropRoll >= 80 && dropRoll < 90 && this.gp.player.mana > 0) {
             this.dropItem(new OBJ_ManaCrystal(this.gp));
         }
     }

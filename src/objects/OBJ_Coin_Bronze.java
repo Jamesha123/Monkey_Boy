@@ -19,11 +19,11 @@ extends Entity {
 
     public OBJ_Coin_Bronze(GamePanel gamePanel) {
         super(gamePanel);
-        int n;
+        int coinValue;
         this.gp = gamePanel;
         this.type = 7;
         this.name = objName;
-        this.value = n = new Random().nextInt(10) + 1;
+        this.value = coinValue = new Random().nextInt(10) + 1;
         Objects.requireNonNull(gamePanel);
         Objects.requireNonNull(gamePanel);
         this.down1 = this.setup("/Object/coin_bronze.png", 48, 48);

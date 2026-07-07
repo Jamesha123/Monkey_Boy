@@ -9,8 +9,8 @@ import main.GamePanel;
 
 public class NPC_Garther
 extends Entity {
-    public NPC_Garther(GamePanel gamePanel) {
-        super(gamePanel);
+    public NPC_Garther(GamePanel gp) {
+        super(gp);
         this.name = "Garther";
         this.type = 1;
         this.speed = this.defaultSpeed = 1;
@@ -26,15 +26,15 @@ extends Entity {
     }
 
     public void getNPCImage() {
-        int n = 1;
-        this.up1 = this.setup("/NPC/garther_right_1", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.up2 = this.setup("/NPC/garther_right_2", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.down1 = this.setup("/NPC/garther_right_1", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.down2 = this.setup("/NPC/garther_right_2", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.left1 = this.setup("/NPC/garther_left_1", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.left2 = this.setup("/NPC/garther_left_2", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.right1 = this.setup("/NPC/garther_right_1", this.gp.tileSize * n, this.gp.tileSize * n);
-        this.right2 = this.setup("/NPC/garther_right_2", this.gp.tileSize * n, this.gp.tileSize * n);
+        int spriteScale = 1;
+        this.up1 = this.setup("/NPC/garther_right_1", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.up2 = this.setup("/NPC/garther_right_2", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.down1 = this.setup("/NPC/garther_right_1", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.down2 = this.setup("/NPC/garther_right_2", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.left1 = this.setup("/NPC/garther_left_1", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.left2 = this.setup("/NPC/garther_left_2", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.right1 = this.setup("/NPC/garther_right_1", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
+        this.right2 = this.setup("/NPC/garther_right_2", this.gp.tileSize * spriteScale, this.gp.tileSize * spriteScale);
     }
 
     public void setDialogue() {

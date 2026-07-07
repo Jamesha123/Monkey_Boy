@@ -16,19 +16,19 @@ extends Entity {
     int xd;
     int yd;
 
-    public Particle(GamePanel gamePanel, Entity entity, Color color, int n, int n2, int n3, int n4, int n5) {
-        super(gamePanel);
-        this.generator = entity;
+    public Particle(GamePanel gp, Entity generator, Color color, int size, int speed, int maxLife, int xDelta, int yDelta) {
+        super(gp);
+        this.generator = generator;
         this.color = color;
-        this.size = n;
-        this.speed = n2;
-        this.maxLife = n3;
-        this.xd = n4;
-        this.yd = n5;
-        this.life = n3;
-        int n6 = gamePanel.tileSize / 2 - n / 2;
-        this.worldX = entity.worldX + n6;
-        this.worldY = entity.worldY + n6;
+        this.size = size;
+        this.speed = speed;
+        this.maxLife = maxLife;
+        this.xd = xDelta;
+        this.yd = yDelta;
+        this.life = maxLife;
+        int offset = gp.tileSize / 2 - size / 2;
+        this.worldX = generator.worldX + offset;
+        this.worldY = generator.worldY + offset;
     }
 
     @Override
@@ -46,9 +46,9 @@ extends Entity {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        int n = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
-        int n2 = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
+        int screenX = this.worldX - this.gp.player.worldX + this.gp.player.screenX;
+        int screenY = this.worldY - this.gp.player.worldY + this.gp.player.screenY;
         graphics2D.setColor(this.color);
-        graphics2D.fillRect(n, n2, this.size, this.size);
+        graphics2D.fillRect(screenX, screenY, this.size, this.size);
     }
 }

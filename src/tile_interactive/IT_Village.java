@@ -12,17 +12,17 @@ extends InteractiveTile {
     GamePanel gp;
     public static final String itName = "Village";
 
-    public IT_Village(GamePanel gamePanel, int n, int n2, int n3) {
-        super(gamePanel, n, n2);
+    public IT_Village(GamePanel gamePanel, int col, int row, int villageType) {
+        super(gamePanel, col, row);
         this.gp = gamePanel;
-        this.tileType = n3;
-        this.worldX = gamePanel.tileSize * n;
-        this.worldY = gamePanel.tileSize * n2;
+        this.tileType = villageType;
+        this.worldX = gamePanel.tileSize * col;
+        this.worldY = gamePanel.tileSize * row;
         this.name = itName;
         Objects.requireNonNull(gamePanel);
-        if (n3 == 1) {
+        if (villageType == 1) {
             this.down1 = this.setup("/Tiles_Interactive/village1", gamePanel.tileSize * 7, gamePanel.tileSize * 8);
-            this.worldY = gamePanel.tileSize * n2 - 27;
+            this.worldY = gamePanel.tileSize * row - 27;
             this.solidArea.x = 30;
             this.solidArea.y = 10;
             this.solidArea.width = 282;
@@ -31,9 +31,9 @@ extends InteractiveTile {
             this.solidAreaDefaultY = this.solidArea.y;
         } else {
             Objects.requireNonNull(gamePanel);
-            if (n3 == 2) {
+            if (villageType == 2) {
                 this.down1 = this.setup("/Tiles_Interactive/village2", gamePanel.tileSize * 11, gamePanel.tileSize * 9);
-                this.worldY = gamePanel.tileSize * n2 - 28;
+                this.worldY = gamePanel.tileSize * row - 28;
                 this.solidArea.x = 30;
                 this.solidArea.y = 10;
                 this.solidArea.width = 290;
@@ -42,9 +42,9 @@ extends InteractiveTile {
                 this.solidAreaDefaultY = this.solidArea.y;
             } else {
                 Objects.requireNonNull(gamePanel);
-                if (n3 == 3) {
+                if (villageType == 3) {
                     this.down1 = this.setup("/Tiles_Interactive/village3", gamePanel.tileSize * 11, gamePanel.tileSize * 8);
-                    this.worldY = gamePanel.tileSize * n2 - 30;
+                    this.worldY = gamePanel.tileSize * row - 30;
                     this.solidArea.x = 20;
                     this.solidArea.y = 0;
                     this.solidArea.width = 475;
@@ -53,9 +53,9 @@ extends InteractiveTile {
                     this.solidAreaDefaultY = this.solidArea.y;
                 } else {
                     Objects.requireNonNull(gamePanel);
-                    if (n3 == 4) {
+                    if (villageType == 4) {
                         this.down1 = this.setup("/Tiles_Interactive/village1Back", gamePanel.tileSize * 7, gamePanel.tileSize * 8);
-                        this.worldY = gamePanel.tileSize * n2 - 27;
+                        this.worldY = gamePanel.tileSize * row - 27;
                         this.solidArea.x = 30;
                         this.solidArea.y = 10;
                         this.solidArea.width = 282;
@@ -64,9 +64,9 @@ extends InteractiveTile {
                         this.solidAreaDefaultY = this.solidArea.y;
                     } else {
                         Objects.requireNonNull(gamePanel);
-                        if (n3 == 5) {
+                        if (villageType == 5) {
                             this.down1 = this.setup("/Tiles_Interactive/village3Back", gamePanel.tileSize * 11, gamePanel.tileSize * 8);
-                            this.worldY = gamePanel.tileSize * n2 - 30;
+                            this.worldY = gamePanel.tileSize * row - 30;
                             this.solidArea.x = 20;
                             this.solidArea.y = 0;
                             this.solidArea.width = 475;
@@ -79,9 +79,9 @@ extends InteractiveTile {
             }
         }
         Objects.requireNonNull(gamePanel);
-        if (n3 == 6) {
+        if (villageType == 6) {
             this.down1 = this.setup("/Tiles_Interactive/store", gamePanel.tileSize * 7, gamePanel.tileSize * 8);
-            this.worldY = gamePanel.tileSize * n2 - 40;
+            this.worldY = gamePanel.tileSize * row - 40;
             this.solidArea.x = 30;
             this.solidArea.y = 10;
             this.solidArea.width = 282;

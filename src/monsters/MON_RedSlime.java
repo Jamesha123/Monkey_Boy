@@ -75,9 +75,9 @@ extends Entity {
     }
 
     public void setAction() {
-        int n = this.gp.currentMap;
+        int currentMap = this.gp.currentMap;
         Objects.requireNonNull(this.gp);
-        if (n == 9) {
+        if (currentMap == 9) {
             this.moveTowardPlayer(60);
         } else if (this.onPath) {
             this.checkStopChasing((Entity)this.gp.player, 15, 100);
@@ -94,23 +94,23 @@ extends Entity {
     }
 
     public void checkDrop() {
-        int n = new Random().nextInt(100) + 1;
-        if (n < 40) {
+        int dropRoll = new Random().nextInt(100) + 1;
+        if (dropRoll < 40) {
             this.dropItem(new OBJ_Coin_Bronze(this.gp));
-        } else if (n >= 40 && n < 41) {
-            int n2 = new Random().nextInt(100) + 1;
-            if (n2 < 33) {
+        } else if (dropRoll >= 40 && dropRoll < 41) {
+            int bonusDropRoll = new Random().nextInt(100) + 1;
+            if (bonusDropRoll < 33) {
                 this.dropItem(new OBJ_Sword_Normal(this.gp));
-            } else if (n2 >= 33 && n2 < 66) {
+            } else if (bonusDropRoll >= 33 && bonusDropRoll < 66) {
                 this.dropItem(new OBJ_Potion_Red(this.gp));
-            } else if (n2 >= 66 && n2 < 99) {
+            } else if (bonusDropRoll >= 66 && bonusDropRoll < 99) {
                 this.dropItem(new OBJ_Shield_Wood(this.gp));
-            } else if (n2 == 100) {
+            } else if (bonusDropRoll == 100) {
                 this.dropItem(new OBJ_Shield_Blue(this.gp));
             }
-        } else if (n >= 50 && n < 75) {
+        } else if (dropRoll >= 50 && dropRoll < 75) {
             this.dropItem(new OBJ_Heart(this.gp));
-        } else if (n >= 75 && n < 100 && this.gp.player.mana > 0) {
+        } else if (dropRoll >= 75 && dropRoll < 100 && this.gp.player.mana > 0) {
             this.dropItem(new OBJ_ManaCrystal(this.gp));
         }
     }
@@ -136,10 +136,9 @@ extends Entity {
     }
 
     public void applyNightTimeBuffs() {
-        boolean bl;
-        boolean bl2 = bl = this.gp.eManager != null && this.gp.eManager.lighting != null && this.gp.eManager.lighting.isNightTime();
-        if (bl != this.isNightTime) {
-            this.isNightTime = bl;
+        boolean isNightNow = this.gp.eManager != null && this.gp.eManager.lighting != null && this.gp.eManager.lighting.isNightTime();
+        if (isNightNow != this.isNightTime) {
+            this.isNightTime = isNightNow;
             if (this.isNightTime) {
                 this.applyNightStats();
             } else {

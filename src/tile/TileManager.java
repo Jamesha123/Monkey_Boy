@@ -29,33 +29,33 @@ public class TileManager {
 
     public TileManager(GamePanel gamePanel) {
         this.gp = gamePanel;
-        InputStream inputStream = this.getClass().getResourceAsStream("/Map/tiledata.txt");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        InputStream tileDataStream = this.getClass().getResourceAsStream("/Map/tiledata.txt");
+        BufferedReader tileDataReader = new BufferedReader(new InputStreamReader(tileDataStream));
         try {
-            String string;
-            while ((string = bufferedReader.readLine()) != null) {
-                this.fileNames.add(string);
-                this.collisionStatus.add(bufferedReader.readLine());
+            String tileFileName;
+            while ((tileFileName = tileDataReader.readLine()) != null) {
+                this.fileNames.add(tileFileName);
+                this.collisionStatus.add(tileDataReader.readLine());
             }
-            bufferedReader.close();
+            tileDataReader.close();
         }
-        catch (IOException iOException) {
-            iOException.printStackTrace();
+        catch (IOException ioException) {
+            ioException.printStackTrace();
         }
         this.tile = new Tile[this.fileNames.size()];
         this.getTileImage();
-        inputStream = this.getClass().getResourceAsStream("/Map/worldmap.txt");
-        bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        tileDataStream = this.getClass().getResourceAsStream("/Map/worldmap.txt");
+        tileDataReader = new BufferedReader(new InputStreamReader(tileDataStream));
         try {
-            String string = bufferedReader.readLine();
-            String[] stringArray = string.split(" ");
-            gamePanel.maxWorldCol = stringArray.length;
-            gamePanel.maxWorldRow = stringArray.length;
+            String worldMapHeader = tileDataReader.readLine();
+            String[] worldMapDimensions = worldMapHeader.split(" ");
+            gamePanel.maxWorldCol = worldMapDimensions.length;
+            gamePanel.maxWorldRow = worldMapDimensions.length;
             this.mapTileNum = new int[gamePanel.maxMap][gamePanel.maxWorldCol][gamePanel.maxWorldRow];
-            bufferedReader.close();
+            tileDataReader.close();
         }
-        catch (IOException iOException) {
-            iOException.printStackTrace();
+        catch (IOException ioException) {
+            ioException.printStackTrace();
         }
         this.worldMapImage = new BufferedImage[gamePanel.maxMap];
         Objects.requireNonNull(gamePanel);
@@ -90,68 +90,68 @@ public class TileManager {
 
     public void getTileImage() {
         for (int i = 0; i < this.fileNames.size(); ++i) {
-            String string = this.fileNames.get(i);
-            boolean bl = this.collisionStatus.get(i).equals("true");
-            this.setup(i, string, bl);
+            String tileFileName = this.fileNames.get(i);
+            boolean hasCollision = this.collisionStatus.get(i).equals("true");
+            this.setup(i, tileFileName, hasCollision);
         }
     }
 
-    public void setup(int n, String string, boolean bl) {
-        UtilityTool utilityTool = new UtilityTool();
+    public void setup(int tileIndex, String tileFileName, boolean hasCollision) {
+        UtilityTool imageScaler = new UtilityTool();
         try {
-            this.tile[n] = new Tile();
-            this.tile[n].image = ImageIO.read(this.getClass().getResourceAsStream("/Tiles/" + string));
-            this.tile[n].image = utilityTool.scaleImage(this.tile[n].image, this.gp.tileSize, this.gp.tileSize);
-            this.tile[n].collision = bl;
+            this.tile[tileIndex] = new Tile();
+            this.tile[tileIndex].image = ImageIO.read(this.getClass().getResourceAsStream("/Tiles/" + tileFileName));
+            this.tile[tileIndex].image = imageScaler.scaleImage(this.tile[tileIndex].image, this.gp.tileSize, this.gp.tileSize);
+            this.tile[tileIndex].collision = hasCollision;
         }
-        catch (IOException iOException) {
-            iOException.printStackTrace();
+        catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 
-    public void loadMap(String string, int n) {
+    public void loadMap(String mapPath, int mapIndex) {
         try {
-            InputStream inputStream = this.getClass().getResourceAsStream(string);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            int n2 = 0;
-            int n3 = 0;
-            while (n2 < this.gp.maxWorldCol && n3 < this.gp.maxWorldRow) {
-                String string2 = bufferedReader.readLine();
-                while (n2 < this.gp.maxWorldCol) {
-                    int n4;
-                    String[] stringArray = string2.split(" ");
-                    this.mapTileNum[n][n2][n3] = n4 = Integer.parseInt(stringArray[n2]);
-                    ++n2;
+            InputStream mapStream = this.getClass().getResourceAsStream(mapPath);
+            BufferedReader mapReader = new BufferedReader(new InputStreamReader(mapStream));
+            int col = 0;
+            int row = 0;
+            while (col < this.gp.maxWorldCol && row < this.gp.maxWorldRow) {
+                String mapLine = mapReader.readLine();
+                while (col < this.gp.maxWorldCol) {
+                    int tileNum;
+                    String[] tileNumbers = mapLine.split(" ");
+                    this.mapTileNum[mapIndex][col][row] = tileNum = Integer.parseInt(tileNumbers[col]);
+                    ++col;
                 }
-                if (n2 != this.gp.maxWorldCol) continue;
-                n2 = 0;
-                ++n3;
+                if (col != this.gp.maxWorldCol) continue;
+                col = 0;
+                ++row;
             }
-            bufferedReader.close();
+            mapReader.close();
         }
         catch (Exception exception) {
             // empty catch block
         }
-        if (this.worldMapImage != null && n >= 0 && n < this.worldMapImage.length) {
-            this.worldMapImage[n] = null;
+        if (this.worldMapImage != null && mapIndex >= 0 && mapIndex < this.worldMapImage.length) {
+            this.worldMapImage[mapIndex] = null;
         }
     }
 
-    private void buildWorldMapImage(int n) {
-        int n2 = this.gp.maxWorldCol * this.gp.tileSize;
-        int n3 = this.gp.maxWorldRow * this.gp.tileSize;
-        BufferedImage bufferedImage = new BufferedImage(n2, n3, 2);
-        Graphics2D graphics2D = bufferedImage.createGraphics();
+    private void buildWorldMapImage(int mapIndex) {
+        int mapWidth = this.gp.maxWorldCol * this.gp.tileSize;
+        int mapHeight = this.gp.maxWorldRow * this.gp.tileSize;
+        BufferedImage worldMapImage = new BufferedImage(mapWidth, mapHeight, 2);
+        Graphics2D graphics2D = worldMapImage.createGraphics();
         for (int i = 0; i < this.gp.maxWorldCol; ++i) {
             for (int j = 0; j < this.gp.maxWorldRow; ++j) {
-                int n4 = this.mapTileNum[n][i][j];
-                int n5 = i * this.gp.tileSize;
-                int n6 = j * this.gp.tileSize;
-                graphics2D.drawImage((Image)this.tile[n4].image, n5, n6, null);
+                int tileNum = this.mapTileNum[mapIndex][i][j];
+                int worldX = i * this.gp.tileSize;
+                int worldY = j * this.gp.tileSize;
+                graphics2D.drawImage((Image)this.tile[tileNum].image, worldX, worldY, null);
             }
         }
         graphics2D.dispose();
-        this.worldMapImage[n] = bufferedImage;
+        this.worldMapImage[mapIndex] = worldMapImage;
     }
 
     public void refreshWorldMapImageForCurrentMap() {
@@ -161,36 +161,36 @@ public class TileManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        int n;
-        int n2;
-        int n3;
-        int n4;
-        int n5;
-        BufferedImage bufferedImage;
+        int sourceRight;
+        int sourceTop;
+        int sourceLeft;
+        int worldViewTop;
+        int worldViewLeft;
+        BufferedImage worldMapImage;
         if (this.worldMapImage[this.gp.currentMap] == null) {
             this.buildWorldMapImage(this.gp.currentMap);
         }
-        if ((bufferedImage = this.worldMapImage[this.gp.currentMap]) != null) {
-            n5 = this.gp.player.worldX - this.gp.player.screenX;
-            n4 = this.gp.player.worldY - this.gp.player.screenY;
-            n3 = Math.max(0, n5);
-            n2 = Math.max(0, n4);
-            n = Math.min(bufferedImage.getWidth(), n5 + this.gp.screenWidth);
-            int n6 = Math.min(bufferedImage.getHeight(), n4 + this.gp.screenHeight);
-            int n7 = Math.max(0, -n5);
-            int n8 = Math.max(0, -n4);
-            int n9 = n7 + (n - n3);
-            int n10 = n8 + (n6 - n2);
-            graphics2D.drawImage(bufferedImage, n7, n8, n9, n10, n3, n2, n, n6, null);
+        if ((worldMapImage = this.worldMapImage[this.gp.currentMap]) != null) {
+            worldViewLeft = this.gp.player.worldX - this.gp.player.screenX;
+            worldViewTop = this.gp.player.worldY - this.gp.player.screenY;
+            sourceLeft = Math.max(0, worldViewLeft);
+            sourceTop = Math.max(0, worldViewTop);
+            sourceRight = Math.min(worldMapImage.getWidth(), worldViewLeft + this.gp.screenWidth);
+            int sourceBottom = Math.min(worldMapImage.getHeight(), worldViewTop + this.gp.screenHeight);
+            int destLeft = Math.max(0, -worldViewLeft);
+            int destTop = Math.max(0, -worldViewTop);
+            int destRight = destLeft + (sourceRight - sourceLeft);
+            int destBottom = destTop + (sourceBottom - sourceTop);
+            graphics2D.drawImage(worldMapImage, destLeft, destTop, destRight, destBottom, sourceLeft, sourceTop, sourceRight, sourceBottom, null);
         }
         if (this.drawPath) {
             graphics2D.setColor(new Color(255, 0, 0, 70));
-            for (n5 = 0; n5 < this.gp.pFinder.pathList.size(); ++n5) {
-                n4 = this.gp.pFinder.pathList.get((int)n5).col * this.gp.tileSize;
-                n3 = this.gp.pFinder.pathList.get((int)n5).row * this.gp.tileSize;
-                n2 = n4 - this.gp.player.worldX + this.gp.player.screenX;
-                n = n3 - this.gp.player.worldY + this.gp.player.screenY;
-                graphics2D.fillRect(n2, n, this.gp.tileSize, this.gp.tileSize);
+            for (worldViewLeft = 0; worldViewLeft < this.gp.pFinder.pathList.size(); ++worldViewLeft) {
+                worldViewTop = this.gp.pFinder.pathList.get((int)worldViewLeft).col * this.gp.tileSize;
+                sourceLeft = this.gp.pFinder.pathList.get((int)worldViewLeft).row * this.gp.tileSize;
+                sourceTop = worldViewTop - this.gp.player.worldX + this.gp.player.screenX;
+                sourceRight = sourceLeft - this.gp.player.worldY + this.gp.player.screenY;
+                graphics2D.fillRect(sourceTop, sourceRight, this.gp.tileSize, this.gp.tileSize);
             }
         }
     }

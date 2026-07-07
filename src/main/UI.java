@@ -106,65 +106,65 @@ public class UI {
         this.g2 = g2;
         g2.setFont(this.maruMonica);
         g2.setColor(Color.white);
-        int n = this.gp.gameState;
+        int gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n == 0) {
+        if (gameState == 0) {
             this.drawTitleScreen();
         }
-        int n2 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n2 == 1) {
+        if (gameState == 1) {
             this.drawPlayerLife();
             this.drawMonsterLife();
             this.drawEntitiesFrozenIndicator();
             this.drawHotbar();
             this.drawDayState();
         }
-        int n3 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n3 == 2) {
+        if (gameState == 2) {
             this.drawDialogueScreen();
         }
-        int n4 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n4 == 3) {
+        if (gameState == 3) {
             this.drawCharacterScreen();
             this.drawInventory(this.gp.player, true);
             this.drawDayState();
         }
-        int n5 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n5 == 4) {
+        if (gameState == 4) {
             this.drawOptionsScreen();
         }
-        int n6 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n6 == 5) {
+        if (gameState == 5) {
             this.drawGameOverScreen();
         }
-        int n7 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n7 == 6) {
+        if (gameState == 6) {
             this.drawTransition();
         }
-        int n8 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n8 == 11) {
+        if (gameState == 11) {
             this.drawCutsceneTransitionScreen();
         }
-        int n9 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n9 == 7) {
+        if (gameState == 7) {
             this.drawTradeScreen();
         }
-        int n10 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n10 == 8) {
+        if (gameState == 8) {
             this.drawSleepScreen();
         }
-        int n11 = this.gp.gameState;
+        gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n11 == 13 && this.gp.debugManager.characterEditor) {
+        if (gameState == 13 && this.gp.debugManager.characterEditor) {
             this.drawPlayerLife();
         }
         this.drawMessage();
@@ -264,9 +264,9 @@ public class UI {
     public void drawMessage() {
         int messageX = this.gp.tileSize / 2;
         int messageY = this.gp.screenHeight / 2 + this.gp.tileSize * 2;
-        int n = this.gp.gameState;
+        int gameState = this.gp.gameState;
         this.gp.getClass();
-        if (n == 3) {
+        if (gameState == 3) {
             messageX = this.gp.screenWidth / 2 - this.gp.tileSize * 2;
             messageY = this.gp.screenHeight - this.gp.tileSize * 2 - this.gp.tileSize / 2;
         } else if (this.gp.debugManager.debugMode) {
@@ -409,12 +409,12 @@ public class UI {
                     }
                     this.charIndex = 0;
                     this.combinedText = "";
-                    int n = this.gp.gameState;
+                    int gameState = this.gp.gameState;
                     this.gp.getClass();
-                    if (n == 2) break block20;
-                    int n2 = this.gp.gameState;
+                    if (gameState == 2) break block20;
+                    gameState = this.gp.gameState;
                     this.gp.getClass();
-                    if (n2 != 10) break block18;
+                    if (gameState != 10) break block18;
                 }
                 if (this.npc instanceof NPC_Mom) {
                     ((NPC_Mom)this.npc).advanceDialogue();
@@ -425,27 +425,27 @@ public class UI {
                 break block18;
             }
             this.npc.dialogueIndex = 0;
-            int n = this.gp.gameState;
+            int gameState = this.gp.gameState;
             this.gp.getClass();
-            if (n == 2) {
+            if (gameState == 2) {
                 this.gp.getClass();
                 this.gp.gameState = 1;
             }
-            int n3 = this.gp.gameState;
+            gameState = this.gp.gameState;
             this.gp.getClass();
-            if (n3 == 10) {
+            if (gameState == 10) {
                 ++this.gp.csManager.scenePhase;
             }
         }
         if (this.combinedText != null && !this.combinedText.isEmpty()) {
-            String[] stringArray = this.combinedText.split("\n");
-            int n = stringArray.length;
-            int n4 = 0;
-            while (n4 < n) {
-                String line = stringArray[n4];
+            String[] dialogueLines = this.combinedText.split("\n");
+            int lineCount = dialogueLines.length;
+            int lineIndex = 0;
+            while (lineIndex < lineCount) {
+                String line = dialogueLines[lineIndex];
                 this.g2.drawString(line, x, y);
                 y += 40;
-                ++n4;
+                ++lineIndex;
             }
         }
     }
@@ -603,14 +603,14 @@ public class UI {
             this.g2.setFont(this.fontPlain28);
             if (!(entity == this.gp.player && this.inHotbarMode || (itemIndex = this.getItemIndexOnSlot(safeSlotCol = Math.max(0, Math.min(slotCol, 4)), safeSlotRow = Math.max(0, Math.min(slotRow, 3)))) < 0 || itemIndex >= entity.inventory.size())) {
                 this.drawSubWindow(dframeX, dframeY, dframeWidth, dframeHeight);
-                String[] stringArray = entity.inventory.get((int)itemIndex).description.split("\n");
-                int n = stringArray.length;
-                int n2 = 0;
-                while (n2 < n) {
-                    String line = stringArray[n2];
+                String[] descriptionLines = entity.inventory.get((int)itemIndex).description.split("\n");
+                int lineCount = descriptionLines.length;
+                int lineIndex = 0;
+                while (lineIndex < lineCount) {
+                    String line = descriptionLines[lineIndex];
                     this.g2.drawString(line, textX, textY);
                     textY += 32;
-                    ++n2;
+                    ++lineIndex;
                 }
             }
         }
@@ -760,14 +760,14 @@ public class UI {
         int textX = frameX + this.gp.tileSize;
         int textY = frameY + this.gp.tileSize * 3;
         this.currentDialogue = "The change will take \neffect after restarting \nthe game.";
-        String[] stringArray = this.currentDialogue.split("\n");
-        int n = stringArray.length;
-        int n2 = 0;
-        while (n2 < n) {
-            String line = stringArray[n2];
+        String[] dialogueLines = this.currentDialogue.split("\n");
+        int lineCount = dialogueLines.length;
+        int lineIndex = 0;
+        while (lineIndex < lineCount) {
+            String line = dialogueLines[lineIndex];
             this.g2.drawString(line, textX, textY);
             textY += 40;
-            ++n2;
+            ++lineIndex;
         }
         textY = frameY + this.gp.tileSize * 9;
         this.g2.drawString("Back", textX, textY);
@@ -823,14 +823,14 @@ public class UI {
         int textX = frameX + this.gp.tileSize;
         int textY = frameY + this.gp.tileSize * 3;
         this.currentDialogue = "Quit the game and \nreturn to the title screen?";
-        String[] stringArray = this.currentDialogue.split("\n");
-        int n = stringArray.length;
-        int n2 = 0;
-        while (n2 < n) {
-            String line = stringArray[n2];
+        String[] dialogueLines = this.currentDialogue.split("\n");
+        int lineCount = dialogueLines.length;
+        int lineIndex = 0;
+        while (lineIndex < lineCount) {
+            String line = dialogueLines[lineIndex];
             this.g2.drawString(line, textX, textY);
             textY += 40;
-            ++n2;
+            ++lineIndex;
         }
         String text = "Yes";
         textX = this.getXforCenteredText(text);
@@ -860,14 +860,14 @@ public class UI {
         int textX = frameX + this.gp.tileSize;
         int textY = frameY + this.gp.tileSize * 3;
         this.currentDialogue = "Save current progress?";
-        String[] stringArray = this.currentDialogue.split("\n");
-        int n = stringArray.length;
-        int n2 = 0;
-        while (n2 < n) {
-            String line = stringArray[n2];
+        String[] dialogueLines = this.currentDialogue.split("\n");
+        int lineCount = dialogueLines.length;
+        int lineIndex = 0;
+        while (lineIndex < lineCount) {
+            String line = dialogueLines[lineIndex];
             this.g2.drawString(line, textX, textY);
             textY += 40;
-            ++n2;
+            ++lineIndex;
         }
         String text = "Yes";
         textX = this.getXforCenteredText(text);
@@ -1180,15 +1180,15 @@ public class UI {
     public void drawDayState() {
         block9: {
             block8: {
-                int n = this.gp.gameState;
+                int gameState = this.gp.gameState;
                 this.gp.getClass();
-                if (n == 2) break block8;
-                int n2 = this.gp.gameState;
+                if (gameState == 2) break block8;
+                gameState = this.gp.gameState;
                 this.gp.getClass();
-                if (n2 == 10) break block8;
-                int n3 = this.gp.gameState;
+                if (gameState == 10) break block8;
+                gameState = this.gp.gameState;
                 this.gp.getClass();
-                if (n3 != 11) break block9;
+                if (gameState != 11) break block9;
             }
             return;
         }

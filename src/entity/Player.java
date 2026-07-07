@@ -30,11 +30,11 @@ extends Entity {
     private final int SPEED_BOOST_DURATION = 600;
     public Entity[] hotbar;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler) {
-        super(gamePanel);
+    public Player(GamePanel gp, KeyHandler keyHandler) {
+        super(gp);
         this.keyH = keyHandler;
-        this.screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
-        this.screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
+        this.screenX = gp.screenWidth / 2 - gp.tileSize / 2;
+        this.screenY = gp.screenHeight / 2 - gp.tileSize / 2;
         this.solidArea = new Rectangle();
         this.solidArea.x = 8;
         this.solidArea.y = 16;
@@ -71,32 +71,32 @@ extends Entity {
         this.setDialogue();
     }
 
-    private int findHotbarSlotForItem(Entity entity) {
-        if (entity == null) {
+    private int findHotbarSlotForItem(Entity item) {
+        if (item == null) {
             return -1;
         }
         for (int i = 0; i < this.hotbar.length; ++i) {
-            if (this.hotbar[i] != entity) continue;
+            if (this.hotbar[i] != item) continue;
             return i;
         }
         return -1;
     }
 
-    private void assignItemToHotbarSlot(Entity entity, int n) {
-        if (n < 0 || n >= this.hotbar.length) {
+    private void assignItemToHotbarSlot(Entity item, int slotIndex) {
+        if (slotIndex < 0 || slotIndex >= this.hotbar.length) {
             return;
         }
-        int n2 = this.findHotbarSlotForItem(entity);
-        if (n2 != -1 && n2 != n) {
-            this.hotbar[n2] = null;
+        int existingSlot = this.findHotbarSlotForItem(item);
+        if (existingSlot != -1 && existingSlot != slotIndex) {
+            this.hotbar[existingSlot] = null;
         }
-        this.hotbar[n] = entity;
+        this.hotbar[slotIndex] = item;
     }
 
-    public void setDefaultPositions(int n) {
-        this.gp.currentMap = n;
+    public void setDefaultPositions(int mapIndex) {
+        this.gp.currentMap = mapIndex;
         Objects.requireNonNull(this.gp);
-        if (n == 0) {
+        if (mapIndex == 0) {
             this.worldX = this.gp.tileSize * 17;
             this.worldY = this.gp.tileSize * 27;
             this.direction = "down";
@@ -104,7 +104,7 @@ extends Entity {
             this.gp.currentArea = 2;
         } else {
             Objects.requireNonNull(this.gp);
-            if (n == 1) {
+            if (mapIndex == 1) {
                 this.worldX = this.gp.tileSize * 29;
                 this.worldY = this.gp.tileSize * 23;
                 this.direction = "down";
@@ -112,7 +112,7 @@ extends Entity {
                 this.gp.currentArea = 2;
             } else {
                 Objects.requireNonNull(this.gp);
-                if (n == 2) {
+                if (mapIndex == 2) {
                     this.worldX = this.gp.tileSize * 19;
                     this.worldY = this.gp.tileSize * 38;
                     this.direction = "down";
@@ -120,7 +120,7 @@ extends Entity {
                     this.gp.currentArea = 1;
                 } else {
                     Objects.requireNonNull(this.gp);
-                    if (n == 3) {
+                    if (mapIndex == 3) {
                         this.worldX = this.gp.tileSize * 25;
                         this.worldY = this.gp.tileSize * 41;
                         this.direction = "up";
@@ -128,7 +128,7 @@ extends Entity {
                         this.gp.currentArea = 1;
                     } else {
                         Objects.requireNonNull(this.gp);
-                        if (n == 4) {
+                        if (mapIndex == 4) {
                             this.worldX = this.gp.tileSize * 9;
                             this.worldY = this.gp.tileSize * 12;
                             this.direction = "right";
@@ -136,7 +136,7 @@ extends Entity {
                             this.gp.currentArea = 1;
                         } else {
                             Objects.requireNonNull(this.gp);
-                            if (n == 8) {
+                            if (mapIndex == 8) {
                                 this.worldX = this.gp.tileSize * 41;
                                 this.worldY = this.gp.tileSize * 8;
                                 this.direction = "left";
@@ -144,7 +144,7 @@ extends Entity {
                                 this.gp.currentArea = 1;
                             } else {
                                 Objects.requireNonNull(this.gp);
-                                if (n == 10) {
+                                if (mapIndex == 10) {
                                     this.worldX = this.gp.tileSize * 22;
                                     this.worldY = this.gp.tileSize * 39;
                                     this.direction = "up";
@@ -152,7 +152,7 @@ extends Entity {
                                     this.gp.currentArea = 1;
                                 } else {
                                     Objects.requireNonNull(this.gp);
-                                    if (n == 5) {
+                                    if (mapIndex == 5) {
                                         this.worldX = this.gp.tileSize * 9;
                                         this.worldY = this.gp.tileSize * 29;
                                         this.direction = "right";
@@ -160,7 +160,7 @@ extends Entity {
                                         this.gp.currentArea = 1;
                                     } else {
                                         Objects.requireNonNull(this.gp);
-                                        if (n == 6) {
+                                        if (mapIndex == 6) {
                                             this.worldX = this.gp.tileSize * 12;
                                             this.worldY = this.gp.tileSize * 12;
                                             this.direction = "up";
@@ -168,7 +168,7 @@ extends Entity {
                                             this.gp.currentArea = 2;
                                         } else {
                                             Objects.requireNonNull(this.gp);
-                                            if (n == 7) {
+                                            if (mapIndex == 7) {
                                                 this.worldX = this.gp.tileSize * 11;
                                                 this.worldY = this.gp.tileSize * 11;
                                                 this.direction = "down";
@@ -176,7 +176,7 @@ extends Entity {
                                                 this.gp.currentArea = 2;
                                             } else {
                                                 Objects.requireNonNull(this.gp);
-                                                if (n == 9) {
+                                                if (mapIndex == 9) {
                                                     this.worldX = this.gp.tileSize * 24;
                                                     this.worldY = this.gp.tileSize * 11;
                                                     this.direction = "down";
@@ -184,7 +184,7 @@ extends Entity {
                                                     this.gp.currentArea = 1;
                                                 } else {
                                                     Objects.requireNonNull(this.gp);
-                                                    if (n == 11) {
+                                                    if (mapIndex == 11) {
                                                         this.worldX = this.gp.tileSize * 9;
                                                         this.worldY = this.gp.tileSize * 42;
                                                         this.direction = "up";
@@ -192,7 +192,7 @@ extends Entity {
                                                         this.gp.currentArea = 3;
                                                     } else {
                                                         Objects.requireNonNull(this.gp);
-                                                        if (n == 12) {
+                                                        if (mapIndex == 12) {
                                                             this.worldX = this.gp.tileSize * 28;
                                                             this.worldY = this.gp.tileSize * 42;
                                                             this.direction = "up";
@@ -200,7 +200,7 @@ extends Entity {
                                                             this.gp.currentArea = 3;
                                                         } else {
                                                             Objects.requireNonNull(this.gp);
-                                                            if (n == 13) {
+                                                            if (mapIndex == 13) {
                                                                 this.worldX = this.gp.tileSize * 25;
                                                                 this.worldY = this.gp.tileSize * 42;
                                                                 this.direction = "up";
@@ -333,36 +333,33 @@ extends Entity {
         if (this.currentWeapon == null) {
             return -1;
         }
-        int n = 0;
         for (int i = 0; i < this.inventory.size(); ++i) {
             if (this.inventory.get(i) != this.currentWeapon) continue;
-            n = i;
+            return i;
         }
-        return n;
+        return 0;
     }
 
     public int getCurrentShieldSlot() {
         if (this.currentShield == null) {
             return -1;
         }
-        int n = 0;
         for (int i = 0; i < this.inventory.size(); ++i) {
             if (this.inventory.get(i) != this.currentShield) continue;
-            n = i;
+            return i;
         }
-        return n;
+        return 0;
     }
 
     public int getCurrentLightSlot() {
         if (this.currentLight == null) {
             return -1;
         }
-        int n = 0;
         for (int i = 0; i < this.inventory.size(); ++i) {
             if (this.inventory.get(i) != this.currentLight) continue;
-            n = i;
+            return i;
         }
-        return n;
+        return 0;
     }
 
     public void getImage() {
@@ -378,15 +375,15 @@ extends Entity {
         this.right3 = this.setup("/Player/Walking sprites/boy_right_3", this.gp.tileSize, this.gp.tileSize);
     }
 
-    public void getSleepingImage(BufferedImage bufferedImage) {
-        this.up1 = bufferedImage;
-        this.up2 = bufferedImage;
-        this.down1 = bufferedImage;
-        this.down2 = bufferedImage;
-        this.left1 = bufferedImage;
-        this.left2 = bufferedImage;
-        this.right1 = bufferedImage;
-        this.right2 = bufferedImage;
+    public void getSleepingImage(BufferedImage sleepingSprite) {
+        this.up1 = sleepingSprite;
+        this.up2 = sleepingSprite;
+        this.down1 = sleepingSprite;
+        this.down2 = sleepingSprite;
+        this.left1 = sleepingSprite;
+        this.left2 = sleepingSprite;
+        this.right1 = sleepingSprite;
+        this.right2 = sleepingSprite;
     }
 
     public void getAttackImage() {
@@ -498,7 +495,7 @@ extends Entity {
         } else if (this.keyH.keyPressed[49] || this.keyH.keyPressed[50] || this.keyH.keyPressed[51] || this.keyH.keyPressed[52] || this.keyH.keyPressed[53]) {
             this.useHotbarItem();
         } else if (this.keyH.upPressed || this.keyH.downPressed || this.keyH.leftPressed || this.keyH.rightPressed || this.keyH.enterPressed) {
-            String string = this.direction;
+            String previousDirection = this.direction;
             if (this.keyH.upPressed) {
                 this.direction = "up";
             } else if (this.keyH.downPressed) {
@@ -508,20 +505,20 @@ extends Entity {
             } else if (this.keyH.rightPressed) {
                 this.direction = "right";
             }
-            if (!string.equals(this.direction)) {
+            if (!previousDirection.equals(this.direction)) {
                 this.spriteNum = 1;
             }
             this.collisionOn = false;
             if (this.gp.debugManager == null || !this.gp.debugManager.collisionOff) {
                 this.gp.cChecker.checkTile(this);
-                int n = this.gp.cChecker.checkObject(this, true);
-                this.pickUpObject(n);
-                int n2 = this.gp.cChecker.checkEntity(this, this.gp.npc);
-                this.interactNPC(n2);
-                int n3 = this.gp.cChecker.checkEntity(this, this.gp.monster);
-                this.contactMonster(n3);
-                int n4 = this.gp.cChecker.checkInteractiveTile(this);
-                this.interactInteractiveTile(n4);
+                int objectIndex = this.gp.cChecker.checkObject(this, true);
+                this.pickUpObject(objectIndex);
+                int npcIndex = this.gp.cChecker.checkEntity(this, this.gp.npc);
+                this.interactNPC(npcIndex);
+                int monsterIndex = this.gp.cChecker.checkEntity(this, this.gp.monster);
+                this.contactMonster(monsterIndex);
+                int tileIndex = this.gp.cChecker.checkInteractiveTile(this);
+                this.interactInteractiveTile(tileIndex);
             }
             this.gp.eHandler.checkEvent();
             if (!this.collisionOn && !this.keyH.enterPressed) {
@@ -615,13 +612,13 @@ extends Entity {
             this.mana = this.maxMana;
         }
         if (this.maxMana > 0 && this.mana != this.maxMana) {
-            long l = System.currentTimeMillis();
+            long currentTime = System.currentTimeMillis();
             if (this.lastManaRegen == 0L) {
-                this.lastManaRegen = l;
+                this.lastManaRegen = currentTime;
             }
-            if (l - this.lastManaRegen >= 8000L) {
+            if (currentTime - this.lastManaRegen >= 8000L) {
                 ++this.mana;
-                this.lastManaRegen = l;
+                this.lastManaRegen = currentTime;
             }
         }
         if (!this.keyH.godModeOn && this.life <= 0) {
@@ -633,110 +630,110 @@ extends Entity {
         }
     }
 
-    public void pickUpObject(int n) {
-        if (n != 999) {
-            if (this.gp.obj[this.gp.currentMap][n].type == 7) {
-                this.gp.obj[this.gp.currentMap][n].use(this);
-                this.gp.obj[this.gp.currentMap][n] = null;
-            } else if (this.gp.obj[this.gp.currentMap][n].type == 8) {
+    public void pickUpObject(int objectIndex) {
+        if (objectIndex != 999) {
+            if (this.gp.obj[this.gp.currentMap][objectIndex].type == 7) {
+                this.gp.obj[this.gp.currentMap][objectIndex].use(this);
+                this.gp.obj[this.gp.currentMap][objectIndex] = null;
+            } else if (this.gp.obj[this.gp.currentMap][objectIndex].type == 8) {
                 if (this.keyH.enterPressed) {
                     this.attackCanceled = true;
-                    this.gp.obj[this.gp.currentMap][n].interact();
+                    this.gp.obj[this.gp.currentMap][objectIndex].interact();
                 }
             } else {
-                Object object;
-                if (this.canObtainItem(this.gp.obj[this.gp.currentMap][n])) {
+                String message;
+                if (this.canObtainItem(this.gp.obj[this.gp.currentMap][objectIndex])) {
                     this.gp.playSE(1);
-                    object = "Got a " + this.gp.obj[this.gp.currentMap][n].name + "!";
-                    this.gp.obj[this.gp.currentMap][n].pickUpObjectDialogue();
+                    message = "Got a " + this.gp.obj[this.gp.currentMap][objectIndex].name + "!";
+                    this.gp.obj[this.gp.currentMap][objectIndex].pickUpObjectDialogue();
                 } else {
-                    object = "Inventory Full";
+                    message = "Inventory Full";
                 }
-                this.gp.ui.addMessage((String)object);
-                this.gp.obj[this.gp.currentMap][n] = null;
+                this.gp.ui.addMessage(message);
+                this.gp.obj[this.gp.currentMap][objectIndex] = null;
             }
         }
     }
 
-    public void interactNPC(int n) {
-        if (n != 999) {
+    public void interactNPC(int npcIndex) {
+        if (npcIndex != 999) {
             if (this.gp.keyH.enterPressed) {
                 this.attackCanceled = true;
-                this.gp.npc[this.gp.currentMap][n].speak();
+                this.gp.npc[this.gp.currentMap][npcIndex].speak();
             }
-            this.gp.npc[this.gp.currentMap][n].move(this.direction);
+            this.gp.npc[this.gp.currentMap][npcIndex].move(this.direction);
         }
     }
 
-    public void interactInteractiveTile(int n) {
-        if (n != 999 && this.gp.keyH.enterPressed && !this.gp.iTile[this.gp.currentMap][n].destructible) {
+    public void interactInteractiveTile(int tileIndex) {
+        if (tileIndex != 999 && this.gp.keyH.enterPressed && !this.gp.iTile[this.gp.currentMap][tileIndex].destructible) {
             this.attackCanceled = true;
-            this.gp.iTile[this.gp.currentMap][n].interact();
+            this.gp.iTile[this.gp.currentMap][tileIndex].interact();
         }
     }
 
-    public void contactMonster(int n) {
-        if (n != 999 && !this.invincible && !this.gp.monster[this.gp.currentMap][n].dying && this.gp.monster[this.gp.currentMap][n].canContactDamage) {
+    public void contactMonster(int monsterIndex) {
+        if (monsterIndex != 999 && !this.invincible && !this.gp.monster[this.gp.currentMap][monsterIndex].dying && this.gp.monster[this.gp.currentMap][monsterIndex].canContactDamage) {
             this.gp.playSE(6);
-            int n2 = this.gp.monster[this.gp.currentMap][n].attack - this.defense;
-            if (n2 < 1) {
-                n2 = 1;
+            int damage = this.gp.monster[this.gp.currentMap][monsterIndex].attack - this.defense;
+            if (damage < 1) {
+                damage = 1;
             }
-            this.life -= n2;
+            this.life -= damage;
             this.invincible = true;
             this.transparent = true;
         }
     }
 
-    public void damageMonster(int n, Entity entity, int n2, int n3, String string) {
-        if (n != 999 && !this.gp.monster[this.gp.currentMap][n].invincible) {
-            int n4;
+    public void damageMonster(int monsterIndex, Entity attacker, int attackPower, int knockBackPower, String knockBackDir) {
+        if (monsterIndex != 999 && !this.gp.monster[this.gp.currentMap][monsterIndex].invincible) {
+            int damage;
             this.gp.playSE(5);
-            if (n3 > 0) {
-                this.setKnockBack(this.gp.monster[this.gp.currentMap][n], entity, n3, string);
+            if (knockBackPower > 0) {
+                this.setKnockBack(this.gp.monster[this.gp.currentMap][monsterIndex], attacker, knockBackPower, knockBackDir);
             }
-            if (this.gp.monster[this.gp.currentMap][n].offBalance) {
-                n2 += 5;
+            if (this.gp.monster[this.gp.currentMap][monsterIndex].offBalance) {
+                attackPower += 5;
             }
-            if (entity != null && entity.name != null && entity.name.equals("Fireball")) {
-                n4 = n2;
+            if (attacker != null && attacker.name != null && attacker.name.equals("Fireball")) {
+                damage = attackPower;
             } else {
-                n4 = n2 - this.gp.monster[this.gp.currentMap][n].defense;
-                if (n4 < 0) {
-                    n4 = 0;
+                damage = attackPower - this.gp.monster[this.gp.currentMap][monsterIndex].defense;
+                if (damage < 0) {
+                    damage = 0;
                 }
             }
-            this.gp.monster[this.gp.currentMap][n].life -= n4;
-            this.gp.ui.addMessage(n4 + " damage!");
-            this.gp.monster[this.gp.currentMap][n].invincible = true;
-            this.gp.monster[this.gp.currentMap][n].damageReaction();
-            if (this.gp.monster[this.gp.currentMap][n].life <= 0) {
-                this.gp.monster[this.gp.currentMap][n].dying = true;
-                this.gp.ui.addMessage("Killed the " + this.gp.monster[this.gp.currentMap][n].name + "!");
-                this.gp.ui.addMessage("Gained + " + this.gp.monster[this.gp.currentMap][n].exp + " exp!");
-                this.exp += this.gp.monster[this.gp.currentMap][n].exp;
+            this.gp.monster[this.gp.currentMap][monsterIndex].life -= damage;
+            this.gp.ui.addMessage(damage + " damage!");
+            this.gp.monster[this.gp.currentMap][monsterIndex].invincible = true;
+            this.gp.monster[this.gp.currentMap][monsterIndex].damageReaction();
+            if (this.gp.monster[this.gp.currentMap][monsterIndex].life <= 0) {
+                this.gp.monster[this.gp.currentMap][monsterIndex].dying = true;
+                this.gp.ui.addMessage("Killed the " + this.gp.monster[this.gp.currentMap][monsterIndex].name + "!");
+                this.gp.ui.addMessage("Gained + " + this.gp.monster[this.gp.currentMap][monsterIndex].exp + " exp!");
+                this.exp += this.gp.monster[this.gp.currentMap][monsterIndex].exp;
                 this.checkLevelUp();
             }
         }
     }
 
-    public void damageInteractiveTile(int n) {
-        if (n != 999 && this.gp.iTile[this.gp.currentMap][n].destructible && this.gp.iTile[this.gp.currentMap][n].isCorrectItem(this) && !this.gp.iTile[this.gp.currentMap][n].invincible) {
-            this.gp.iTile[this.gp.currentMap][n].playSE();
-            --this.gp.iTile[this.gp.currentMap][n].life;
-            this.gp.iTile[this.gp.currentMap][n].invincible = true;
-            this.generateParticle(this.gp.iTile[this.gp.currentMap][n], this.gp.iTile[this.gp.currentMap][n]);
-            if (this.gp.iTile[this.gp.currentMap][n].life == 0) {
-                this.gp.iTile[this.gp.currentMap][n] = this.gp.iTile[this.gp.currentMap][n].getDestroyedForm();
+    public void damageInteractiveTile(int tileIndex) {
+        if (tileIndex != 999 && this.gp.iTile[this.gp.currentMap][tileIndex].destructible && this.gp.iTile[this.gp.currentMap][tileIndex].isCorrectItem(this) && !this.gp.iTile[this.gp.currentMap][tileIndex].invincible) {
+            this.gp.iTile[this.gp.currentMap][tileIndex].playSE();
+            --this.gp.iTile[this.gp.currentMap][tileIndex].life;
+            this.gp.iTile[this.gp.currentMap][tileIndex].invincible = true;
+            this.generateParticle(this.gp.iTile[this.gp.currentMap][tileIndex], this.gp.iTile[this.gp.currentMap][tileIndex]);
+            if (this.gp.iTile[this.gp.currentMap][tileIndex].life == 0) {
+                this.gp.iTile[this.gp.currentMap][tileIndex] = this.gp.iTile[this.gp.currentMap][tileIndex].getDestroyedForm();
             }
         }
     }
 
-    public void damageProjectile(int n) {
-        if (n != 999) {
-            Entity entity = this.gp.projectile[this.gp.currentMap][n];
-            entity.alive = false;
-            this.generateParticle(entity, entity);
+    public void damageProjectile(int projectileIndex) {
+        if (projectileIndex != 999) {
+            Entity projectile = this.gp.projectile[this.gp.currentMap][projectileIndex];
+            projectile.alive = false;
+            this.generateParticle(projectile, projectile);
         }
     }
 
@@ -763,54 +760,54 @@ extends Entity {
     }
 
     public void selectItem() {
-        int n = this.gp.ui.getItemIndexOnSlot(this.gp.ui.playerSlotCol, this.gp.ui.playerSlotRow);
+        int slotIndex = this.gp.ui.getItemIndexOnSlot(this.gp.ui.playerSlotCol, this.gp.ui.playerSlotRow);
         if (this.gp.ui.inHotbarAssignmentMode) {
-            if (n < this.inventory.size()) {
-                Entity entity = (Entity)this.inventory.get(n);
-                this.assignItemToHotbarSlot(entity, this.gp.ui.hotbarSlot);
+            if (slotIndex < this.inventory.size()) {
+                Entity item = (Entity)this.inventory.get(slotIndex);
+                this.assignItemToHotbarSlot(item, this.gp.ui.hotbarSlot);
                 this.gp.ui.inHotbarAssignmentMode = false;
             }
-        } else if (n < this.inventory.size()) {
-            Entity entity = (Entity)this.inventory.get(n);
-            if (entity.type == 3 || entity.type == 4 || entity.type == 10) {
-                this.currentWeapon = entity;
+        } else if (slotIndex < this.inventory.size()) {
+            Entity item = (Entity)this.inventory.get(slotIndex);
+            if (item.type == 3 || item.type == 4 || item.type == 10) {
+                this.currentWeapon = item;
                 this.defense = this.getAttack();
                 this.getAttackImage();
             }
-            if (entity.type == 5) {
-                this.currentShield = entity;
+            if (item.type == 5) {
+                this.currentShield = item;
                 this.defense = this.getDefense();
                 this.getGuardImage();
             }
-            if (entity.type == 9) {
-                if (entity.placable) {
-                    entity.placeItem();
-                    if (entity.amount > 1) {
-                        --entity.amount;
+            if (item.type == 9) {
+                if (item.placable) {
+                    item.placeItem();
+                    if (item.amount > 1) {
+                        --item.amount;
                     } else {
-                        this.inventory.remove(n);
+                        this.inventory.remove(slotIndex);
                     }
                 } else {
-                    this.currentLight = this.currentLight == entity ? null : entity;
+                    this.currentLight = this.currentLight == item ? null : item;
                 }
                 this.lightUpdated = true;
             }
-            if (entity.type == 6 && entity.use(this)) {
-                if (entity.amount > 1) {
-                    --entity.amount;
+            if (item.type == 6 && item.use(this)) {
+                if (item.amount > 1) {
+                    --item.amount;
                 } else {
-                    this.inventory.remove(n);
+                    this.inventory.remove(slotIndex);
                 }
             }
-            if (entity.type == 11) {
-                String string = null;
-                if (entity.name == null) {
+            if (item.type == 11) {
+                String spellName = null;
+                if (item.name == null) {
                     return;
                 }
-                if (entity.name.contains("Fireball")) {
-                    string = "fireball";
+                if (item.name.contains("Fireball")) {
+                    spellName = "fireball";
                 }
-                this.gp.snakeGame = new snakeGame(this.gp, this.gp.keyH, string);
+                this.gp.snakeGame = new snakeGame(this.gp, this.gp.keyH, spellName);
                 Objects.requireNonNull(this.gp);
                 this.gp.gameState = 12;
             }
@@ -818,65 +815,63 @@ extends Entity {
     }
 
     public void dropItem() {
-        int n = this.gp.ui.getItemIndexOnSlot(this.gp.ui.playerSlotCol, this.gp.ui.playerSlotRow);
-        if (n < this.inventory.size()) {
-            Entity entity = (Entity)this.inventory.get(n);
-            if (entity == this.currentWeapon || entity == this.currentShield || entity == this.currentLight) {
+        int slotIndex = this.gp.ui.getItemIndexOnSlot(this.gp.ui.playerSlotCol, this.gp.ui.playerSlotRow);
+        if (slotIndex < this.inventory.size()) {
+            Entity item = (Entity)this.inventory.get(slotIndex);
+            if (item == this.currentWeapon || item == this.currentShield || item == this.currentLight) {
                 this.gp.ui.addMessage("Cannot drop equipped item!");
                 return;
             }
-            Entity entity2 = this.gp.eGenerator.getObject(entity.name);
-            if (entity2 != null) {
-                entity2.solidArea.x = 0;
-                entity2.solidArea.y = 0;
-                entity2.solidArea.width = 48;
-                entity2.solidArea.height = 48;
-                entity2.solidAreaDefaultX = entity2.solidArea.x;
-                entity2.solidAreaDefaultY = entity2.solidArea.y;
-                if (entity.stackable && entity.amount > 1) {
-                    entity2.amount = entity.amount;
+            Entity droppedItem = this.gp.eGenerator.getObject(item.name);
+            if (droppedItem != null) {
+                droppedItem.solidArea.x = 0;
+                droppedItem.solidArea.y = 0;
+                droppedItem.solidArea.width = 48;
+                droppedItem.solidArea.height = 48;
+                droppedItem.solidAreaDefaultX = droppedItem.solidArea.x;
+                droppedItem.solidAreaDefaultY = droppedItem.solidArea.y;
+                if (item.stackable && item.amount > 1) {
+                    droppedItem.amount = item.amount;
                 }
-                int n2 = this.worldX;
-                int n3 = this.worldY;
+                int dropWorldX = this.worldX;
+                int dropWorldY = this.worldY;
                 switch (this.direction) {
                     case "up": {
-                        n3 -= this.gp.tileSize;
+                        dropWorldY -= this.gp.tileSize;
                         break;
                     }
                     case "down": {
-                        n3 += this.gp.tileSize;
+                        dropWorldY += this.gp.tileSize;
                         break;
                     }
                     case "left": {
-                        n2 -= this.gp.tileSize;
+                        dropWorldX -= this.gp.tileSize;
                         break;
                     }
                     case "right": {
-                        n2 += this.gp.tileSize;
+                        dropWorldX += this.gp.tileSize;
                     }
                 }
-                entity2.worldX = n2;
-                entity2.worldY = n3;
+                droppedItem.worldX = dropWorldX;
+                droppedItem.worldY = dropWorldY;
                 for (int i = 0; i < this.gp.obj[1].length; ++i) {
                     if (this.gp.obj[this.gp.currentMap][i] != null) continue;
-                    this.gp.obj[this.gp.currentMap][i] = entity2;
+                    this.gp.obj[this.gp.currentMap][i] = droppedItem;
                     break;
                 }
-                this.inventory.remove(n);
-                this.gp.ui.addMessage("Dropped " + entity.name);
+                this.inventory.remove(slotIndex);
+                this.gp.ui.addMessage("Dropped " + item.name);
                 this.gp.playSE(2);
             }
         }
     }
 
-    public int searchItemInInventory(String string) {
-        int n = 999;
+    public int searchItemInInventory(String itemName) {
         for (int i = 0; i < this.inventory.size(); ++i) {
-            if (!((Entity)this.inventory.get((int)i)).name.equals(string)) continue;
-            n = i;
-            break;
+            if (!((Entity)this.inventory.get((int)i)).name.equals(itemName)) continue;
+            return i;
         }
-        return n;
+        return 999;
     }
 
     private int findEmptyHotbarSlot() {
@@ -887,117 +882,117 @@ extends Entity {
         return -1;
     }
 
-    private void autoFillHotbar(Entity entity) {
-        int n;
-        if ((entity.type == 3 || entity.type == 4 || entity.type == 10 || entity.type == 5 || entity.type == 9 || entity.type == 6) && this.findHotbarSlotForItem(entity) == -1 && (n = this.findEmptyHotbarSlot()) != -1) {
-            this.assignItemToHotbarSlot(entity, n);
+    private void autoFillHotbar(Entity item) {
+        int emptySlot;
+        if ((item.type == 3 || item.type == 4 || item.type == 10 || item.type == 5 || item.type == 9 || item.type == 6) && this.findHotbarSlotForItem(item) == -1 && (emptySlot = this.findEmptyHotbarSlot()) != -1) {
+            this.assignItemToHotbarSlot(item, emptySlot);
         }
     }
 
-    public boolean canObtainItem(Entity entity) {
-        boolean bl = false;
-        Entity entity2 = this.gp.eGenerator.getObject(entity.name);
-        if (entity2.stackable) {
-            int n = this.searchItemInInventory(entity2.name);
-            if (n != 999) {
-                ((Entity)this.inventory.get((int)n)).amount += entity.amount;
-                bl = true;
+    public boolean canObtainItem(Entity sourceItem) {
+        boolean obtained = false;
+        Entity inventoryItem = this.gp.eGenerator.getObject(sourceItem.name);
+        if (inventoryItem.stackable) {
+            int existingIndex = this.searchItemInInventory(inventoryItem.name);
+            if (existingIndex != 999) {
+                ((Entity)this.inventory.get((int)existingIndex)).amount += sourceItem.amount;
+                obtained = true;
             } else if (this.inventory.size() != 20) {
-                entity2.amount = entity.amount;
-                this.inventory.add(entity2);
-                this.autoFillHotbar(entity2);
-                bl = true;
+                inventoryItem.amount = sourceItem.amount;
+                this.inventory.add(inventoryItem);
+                this.autoFillHotbar(inventoryItem);
+                obtained = true;
             }
         } else if (this.inventory.size() != 20) {
-            this.inventory.add(entity2);
-            this.autoFillHotbar(entity2);
-            bl = true;
+            this.inventory.add(inventoryItem);
+            this.autoFillHotbar(inventoryItem);
+            obtained = true;
         }
-        return bl;
+        return obtained;
     }
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        BufferedImage bufferedImage = null;
-        int n = this.screenX;
-        int n2 = this.screenY;
+        BufferedImage currentSprite = null;
+        int screenX = this.screenX;
+        int screenY = this.screenY;
         switch (this.direction) {
             case "up": {
                 if (!this.attacking) {
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.up1;
+                        currentSprite = this.up1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.up2;
+                        currentSprite = this.up2;
                     }
                 } else if (this.attacking) {
-                    n2 = this.screenY - this.gp.tileSize;
+                    screenY = this.screenY - this.gp.tileSize;
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackUp1;
+                        currentSprite = this.attackUp1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.attackUp2;
+                        currentSprite = this.attackUp2;
                     }
                 }
                 if (!this.guarding || this.guardUp == null) break;
-                bufferedImage = this.guardUp;
+                currentSprite = this.guardUp;
                 break;
             }
             case "down": {
                 if (!this.attacking) {
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.down1;
+                        currentSprite = this.down1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.down2;
+                        currentSprite = this.down2;
                     }
                 } else if (this.attacking) {
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackDown1;
+                        currentSprite = this.attackDown1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.attackDown2;
+                        currentSprite = this.attackDown2;
                     }
                 }
                 if (!this.guarding || this.guardDown == null) break;
-                bufferedImage = this.guardDown;
+                currentSprite = this.guardDown;
                 break;
             }
             case "left": {
                 if (!this.attacking) {
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.left1;
+                        currentSprite = this.left1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.left2;
+                        currentSprite = this.left2;
                     } else if (this.spriteNum == 3) {
-                        bufferedImage = this.left3;
+                        currentSprite = this.left3;
                     }
                 } else if (this.attacking) {
-                    n = this.screenX - this.gp.tileSize;
+                    screenX = this.screenX - this.gp.tileSize;
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackLeft1;
+                        currentSprite = this.attackLeft1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.attackLeft2;
+                        currentSprite = this.attackLeft2;
                     }
                 }
                 if (!this.guarding || this.guardLeft == null) break;
-                bufferedImage = this.guardLeft;
+                currentSprite = this.guardLeft;
                 break;
             }
             case "right": {
                 if (!this.attacking) {
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.right1;
+                        currentSprite = this.right1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.right2;
+                        currentSprite = this.right2;
                     } else if (this.spriteNum == 3) {
-                        bufferedImage = this.right3;
+                        currentSprite = this.right3;
                     }
                 } else if (this.attacking) {
                     if (this.spriteNum == 1) {
-                        bufferedImage = this.attackRight1;
+                        currentSprite = this.attackRight1;
                     } else if (this.spriteNum == 2) {
-                        bufferedImage = this.attackRight2;
+                        currentSprite = this.attackRight2;
                     }
                 }
                 if (!this.guarding || this.guardRight == null) break;
-                bufferedImage = this.guardRight;
+                currentSprite = this.guardRight;
             }
         }
         if (this.transparent) {
@@ -1009,73 +1004,72 @@ extends Entity {
             }
         }
         if (this.drawing) {
-            graphics2D.drawImage((Image)bufferedImage, n, n2, null);
+            graphics2D.drawImage((Image)currentSprite, screenX, screenY, null);
         }
         graphics2D.setComposite(AlphaComposite.getInstance(3, 1.0f));
     }
 
     private void useHotbarItem() {
-        int n = -1;
+        int hotbarSlot = -1;
         if (this.keyH.keyPressed[49]) {
-            n = 0;
+            hotbarSlot = 0;
             this.keyH.keyPressed[49] = false;
         } else if (this.keyH.keyPressed[50]) {
-            n = 1;
+            hotbarSlot = 1;
             this.keyH.keyPressed[50] = false;
         } else if (this.keyH.keyPressed[51]) {
-            n = 2;
+            hotbarSlot = 2;
             this.keyH.keyPressed[51] = false;
         } else if (this.keyH.keyPressed[52]) {
-            n = 3;
+            hotbarSlot = 3;
             this.keyH.keyPressed[52] = false;
         } else if (this.keyH.keyPressed[53]) {
-            n = 4;
+            hotbarSlot = 4;
             this.keyH.keyPressed[53] = false;
         }
-        if (n >= 0 && n < this.hotbar.length && this.hotbar[n] != null) {
-            int n2;
-            Entity entity = this.hotbar[n];
-            if (entity.type == 3 || entity.type == 4 || entity.type == 10) {
-                this.currentWeapon = entity;
+        if (hotbarSlot >= 0 && hotbarSlot < this.hotbar.length && this.hotbar[hotbarSlot] != null) {
+            Entity item = this.hotbar[hotbarSlot];
+            if (item.type == 3 || item.type == 4 || item.type == 10) {
+                this.currentWeapon = item;
                 this.defense = this.getAttack();
                 this.getAttackImage();
             }
-            if (entity.type == 5) {
-                this.currentShield = entity;
+            if (item.type == 5) {
+                this.currentShield = item;
                 this.defense = this.getDefense();
                 this.getGuardImage();
             }
-            if (entity.type == 9) {
-                if (entity.placable) {
-                    entity.placeItem();
-                    if (entity.amount > 1) {
-                        --entity.amount;
+            if (item.type == 9) {
+                if (item.placable) {
+                    item.placeItem();
+                    if (item.amount > 1) {
+                        --item.amount;
                     } else {
-                        this.hotbar[n] = null;
-                        for (n2 = 0; n2 < this.inventory.size(); ++n2) {
-                            if (this.inventory.get(n2) != entity) continue;
-                            this.inventory.remove(n2);
+                        this.hotbar[hotbarSlot] = null;
+                        for (int inventoryIndex = 0; inventoryIndex < this.inventory.size(); ++inventoryIndex) {
+                            if (this.inventory.get(inventoryIndex) != item) continue;
+                            this.inventory.remove(inventoryIndex);
                             break;
                         }
                     }
                 } else {
-                    this.currentLight = this.currentLight == entity ? null : entity;
+                    this.currentLight = this.currentLight == item ? null : item;
                 }
                 this.lightUpdated = true;
             }
-            if (entity.type == 6 && entity.use(this)) {
-                if (entity.amount > 1) {
-                    --entity.amount;
+            if (item.type == 6 && item.use(this)) {
+                if (item.amount > 1) {
+                    --item.amount;
                 } else {
-                    this.hotbar[n] = null;
-                    for (n2 = 0; n2 < this.inventory.size(); ++n2) {
-                        if (this.inventory.get(n2) != entity) continue;
-                        this.inventory.remove(n2);
+                    this.hotbar[hotbarSlot] = null;
+                    for (int inventoryIndex = 0; inventoryIndex < this.inventory.size(); ++inventoryIndex) {
+                        if (this.inventory.get(inventoryIndex) != item) continue;
+                        this.inventory.remove(inventoryIndex);
                         break;
                     }
                 }
             }
-            if (entity.type == 11) {
+            if (item.type == 11) {
                 // empty if block
             }
         }

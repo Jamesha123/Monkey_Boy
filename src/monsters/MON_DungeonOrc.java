@@ -105,9 +105,9 @@ extends Entity {
     }
 
     public void setAction() {
-        int n = this.gp.currentMap;
+        int currentMap = this.gp.currentMap;
         Objects.requireNonNull(this.gp);
-        if (n == 13) {
+        if (currentMap == 13) {
             this.searchPath(this.getGoalCol((Entity)this.gp.player), this.getGoalRow((Entity)this.gp.player));
             if (!this.attacking) {
                 Objects.requireNonNull(this.gp);
@@ -136,23 +136,23 @@ extends Entity {
     }
 
     public void checkDrop() {
-        int n = new Random().nextInt(100) + 1;
-        if (n < 30) {
+        int dropRoll = new Random().nextInt(100) + 1;
+        if (dropRoll < 30) {
             this.dropItem(new OBJ_Coin_Bronze(this.gp));
-        } else if (n >= 30 && n < 35) {
-            int n2 = new Random().nextInt(100) + 1;
-            if (n2 < 33) {
+        } else if (dropRoll >= 30 && dropRoll < 35) {
+            int bonusDropRoll = new Random().nextInt(100) + 1;
+            if (bonusDropRoll < 33) {
                 this.dropItem(new OBJ_Sword_Normal(this.gp));
-            } else if (n2 >= 33 && n2 < 66) {
+            } else if (bonusDropRoll >= 33 && bonusDropRoll < 66) {
                 this.dropItem(new OBJ_Axe(this.gp));
-            } else if (n2 >= 66 && n2 < 99) {
+            } else if (bonusDropRoll >= 66 && bonusDropRoll < 99) {
                 this.dropItem(new OBJ_Shield_Wood(this.gp));
-            } else if (n2 == 100) {
+            } else if (bonusDropRoll == 100) {
                 this.dropItem(new OBJ_Shield_Blue(this.gp));
             }
-        } else if (n >= 50 && n < 75) {
+        } else if (dropRoll >= 50 && dropRoll < 75) {
             this.dropItem(new OBJ_Heart(this.gp));
-        } else if (n >= 75 && n < 100) {
+        } else if (dropRoll >= 75 && dropRoll < 100) {
             this.dropItem(new OBJ_ManaCrystal(this.gp));
         }
     }

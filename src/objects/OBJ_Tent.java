@@ -32,12 +32,12 @@ extends Entity {
     public boolean use(Entity entity) {
         block3: {
             block2: {
-                int n = this.gp.eManager.lighting.dayState;
+                int dayState = this.gp.eManager.lighting.dayState;
                 Objects.requireNonNull(this.gp.eManager.lighting);
-                if (n == 2) break block2;
-                int n2 = this.gp.eManager.lighting.dayState;
+                if (dayState == 2) break block2;
+                int currentDayState = this.gp.eManager.lighting.dayState;
                 Objects.requireNonNull(this.gp.eManager.lighting);
-                if (n2 != 1) break block3;
+                if (currentDayState != 1) break block3;
             }
             Objects.requireNonNull(this.gp);
             this.gp.gameState = 8;

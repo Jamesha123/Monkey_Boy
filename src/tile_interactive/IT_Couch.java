@@ -11,11 +11,11 @@ extends InteractiveTile {
     GamePanel gp;
     public static final String itName = "Couch";
 
-    public IT_Couch(GamePanel gamePanel, int n, int n2) {
-        super(gamePanel, n, n2);
+    public IT_Couch(GamePanel gamePanel, int col, int row) {
+        super(gamePanel, col, row);
         this.gp = gamePanel;
-        this.worldX = gamePanel.tileSize * n;
-        this.worldY = gamePanel.tileSize * n2;
+        this.worldX = gamePanel.tileSize * col;
+        this.worldY = gamePanel.tileSize * row;
         this.name = itName;
         this.down1 = this.setup("/Tiles_Interactive/couch", gamePanel.tileSize * 2, gamePanel.tileSize * 3);
         this.solidArea.x = 30;

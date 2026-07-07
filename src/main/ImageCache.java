@@ -36,7 +36,7 @@ public class ImageCache {
         ImageCache.getImage("/Object/heart_blank", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
     }
 
-    public static void preloadMapImages(int n) {
+    public static void preloadMapImages(int mapIndex) {
         block3: {
             block8: {
                 block7: {
@@ -45,7 +45,7 @@ public class ImageCache {
                             block4: {
                                 block2: {
                                     Objects.requireNonNull(gp);
-                                    if (n != 3) break block2;
+                                    if (mapIndex != 3) break block2;
                                     ImageCache.getImage("/Monster/greenslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                                     ImageCache.getImage("/Monster/greenslime_down_2", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                                     ImageCache.getImage("/Monster/redslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
@@ -54,7 +54,7 @@ public class ImageCache {
                                     break block3;
                                 }
                                 Objects.requireNonNull(gp);
-                                if (n != 4) break block4;
+                                if (mapIndex != 4) break block4;
                                 ImageCache.getImage("/Monster/greenslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                                 ImageCache.getImage("/Monster/greenslime_down_2", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                                 ImageCache.getImage("/Monster/redslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
@@ -71,7 +71,7 @@ public class ImageCache {
                                 break block3;
                             }
                             Objects.requireNonNull(gp);
-                            if (n != 8) break block5;
+                            if (mapIndex != 8) break block5;
                             ImageCache.getImage("/Monster/greenslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                             ImageCache.getImage("/Monster/greenslime_down_2", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                             ImageCache.getImage("/Monster/redslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
@@ -88,7 +88,7 @@ public class ImageCache {
                             break block3;
                         }
                         Objects.requireNonNull(gp);
-                        if (n != 10) break block6;
+                        if (mapIndex != 10) break block6;
                         ImageCache.getImage("/Monster/greenslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                         ImageCache.getImage("/Monster/greenslime_down_2", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                         ImageCache.getImage("/Monster/redslime_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
@@ -105,7 +105,7 @@ public class ImageCache {
                         break block3;
                     }
                     Objects.requireNonNull(gp);
-                    if (n != 5) break block7;
+                    if (mapIndex != 5) break block7;
                     ImageCache.getImage("/NPC/garther_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                     ImageCache.getImage("/NPC/garther_down_2", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
                     ImageCache.getImage("/NPC/blacksmith_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
@@ -113,9 +113,9 @@ public class ImageCache {
                     break block3;
                 }
                 Objects.requireNonNull(gp);
-                if (n == 11) break block8;
+                if (mapIndex == 11) break block8;
                 Objects.requireNonNull(gp);
-                if (n != 12) break block3;
+                if (mapIndex != 12) break block3;
             }
             ImageCache.getImage("/Monster/bat_down_1", ImageCache.gp.tileSize, ImageCache.gp.tileSize);
             ImageCache.getImage("/Monster/bat_down_2", ImageCache.gp.tileSize, ImageCache.gp.tileSize);

@@ -41,17 +41,17 @@ public class Config {
     public void loadConfig() {
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("config.txt"));
-            String string = bufferedReader.readLine();
-            if (string.equals("On")) {
+            String line = bufferedReader.readLine();
+            if (line.equals("On")) {
                 this.gp.fullScreenOn = true;
             }
-            if (string.equals("Off")) {
+            if (line.equals("Off")) {
                 this.gp.fullScreenOn = false;
             }
-            string = bufferedReader.readLine();
-            this.gp.music.volumeScale = Integer.parseInt(string);
-            string = bufferedReader.readLine();
-            this.gp.se.volumeScale = Integer.parseInt(string);
+            line = bufferedReader.readLine();
+            this.gp.music.volumeScale = Integer.parseInt(line);
+            line = bufferedReader.readLine();
+            this.gp.se.volumeScale = Integer.parseInt(line);
             bufferedReader.close();
         }
         catch (Exception exception) {

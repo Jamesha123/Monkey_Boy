@@ -49,8 +49,8 @@ public class Lighting {
     private int centerX;
     private int centerY;
 
-    public Lighting(GamePanel gamePanel) {
-        this.gp = gamePanel;
+    public Lighting(GamePanel gp) {
+        this.gp = gp;
         this.setLightSource();
     }
 
@@ -88,17 +88,16 @@ public class Lighting {
     }
 
     public void update() {
-        boolean bl;
         this.playerTileCol = this.gp.player.worldX / this.gp.tileSize;
         this.playerTileRow = this.gp.player.worldY / this.gp.tileSize;
         this.playerLightRadius = this.gp.player.currentLight != null ? this.gp.player.currentLight.lightRadius : -1;
         this.torchHash = this.calculateTorchLayoutHash();
-        boolean bl2 = this.playerTileCol != this.lastPlayerTileCol || this.playerTileRow != this.lastPlayerTileRow;
-        boolean bl3 = this.playerLightRadius != this.lastPlayerLightRadius;
-        boolean bl4 = this.dayState != this.lastDayState;
-        boolean bl5 = this.filterAlpha != this.lastFilterAlpha;
-        boolean bl6 = bl = this.torchHash != this.lastTorchLayoutHash;
-        if (bl2 || bl3 || bl4 || bl5 || bl || this.dirty) {
+        boolean playerTileChanged = this.playerTileCol != this.lastPlayerTileCol || this.playerTileRow != this.lastPlayerTileRow;
+        boolean lightRadiusChanged = this.playerLightRadius != this.lastPlayerLightRadius;
+        boolean dayStateChanged = this.dayState != this.lastDayState;
+        boolean filterAlphaChanged = this.filterAlpha != this.lastFilterAlpha;
+        boolean torchLayoutChanged = this.torchHash != this.lastTorchLayoutHash;
+        if (playerTileChanged || lightRadiusChanged || dayStateChanged || filterAlphaChanged || torchLayoutChanged || this.dirty) {
             this.setLightSource();
             this.dirty = false;
             this.lastPlayerTileCol = this.playerTileCol;
@@ -114,20 +113,20 @@ public class Lighting {
     }
 
     private long calculateTorchLayoutHash() {
-        long l = 1469598103934665603L;
+        long hash = 1469598103934665603L;
         for (int i = 0; i < this.gp.iTile[1].length; ++i) {
             if (this.gp.iTile[this.gp.currentMap][i] == null || this.gp.iTile[this.gp.currentMap][i].name == null || !this.gp.iTile[this.gp.currentMap][i].name.equals("Torch")) continue;
-            InteractiveTile interactiveTile = this.gp.iTile[this.gp.currentMap][i];
-            long l2 = (long)interactiveTile.worldX * 31L + (long)interactiveTile.worldY * 131L + (long)interactiveTile.lightRadius * 997L;
-            l ^= l2;
-            l *= 1099511628211L;
+            InteractiveTile torchTile = this.gp.iTile[this.gp.currentMap][i];
+            long torchContribution = (long)torchTile.worldX * 31L + (long)torchTile.worldY * 131L + (long)torchTile.lightRadius * 997L;
+            hash ^= torchContribution;
+            hash *= 1099511628211L;
         }
-        return l;
+        return hash;
     }
 
-    public void removeLight(int n, int n2, int n3) {
+    public void removeLight(int mapIndex, int col, int row) {
         for (int i = 0; i < this.gp.iTile[1].length; ++i) {
-            if (this.gp.iTile[this.gp.currentMap][i] == null || this.gp.iTile[this.gp.currentMap][i].getCol() != n2 || this.gp.iTile[this.gp.currentMap][i].getRow() != n3) continue;
+            if (this.gp.iTile[this.gp.currentMap][i] == null || this.gp.iTile[this.gp.currentMap][i].getCol() != col || this.gp.iTile[this.gp.currentMap][i].getRow() != row) continue;
             this.gp.iTile[this.gp.currentMap][i] = null;
         }
         this.dirty = true;
@@ -137,26 +136,26 @@ public class Lighting {
         if (!this.gp.debugManager.darknessFilterOff) {
             return false;
         }
-        String string = "";
+        String dayStateLabel = "";
         switch (this.dayState) {
             case 0: {
-                string = "Day";
+                dayStateLabel = "Day";
                 break;
             }
             case 1: {
-                string = "Dusk";
+                dayStateLabel = "Dusk";
                 break;
             }
             case 2: {
-                string = "Night";
+                dayStateLabel = "Night";
                 break;
             }
             case 3: {
-                string = "Dawn";
+                dayStateLabel = "Dawn";
             }
         }
         graphics2D.setFont(this.gp.ui.fontBold20);
-        graphics2D.drawString(string, 920, 500);
+        graphics2D.drawString(dayStateLabel, 920, 500);
         return true;
     }
 
@@ -172,9 +171,9 @@ public class Lighting {
     }
 
     private void setOutsideComposite(Graphics2D graphics2D) {
-        int n = this.gp.currentArea;
+        int currentArea = this.gp.currentArea;
         Objects.requireNonNull(this.gp);
-        if (n == 1) {
+        if (currentArea == 1) {
             graphics2D.setComposite(AlphaComposite.getInstance(3, this.filterAlpha));
         }
     }
@@ -182,12 +181,12 @@ public class Lighting {
     private void drawDarknessFilterWithPlayerOffset(Graphics2D graphics2D) {
         block3: {
             block2: {
-                int n = this.gp.currentArea;
+                int currentArea = this.gp.currentArea;
                 Objects.requireNonNull(this.gp);
-                if (n == 1) break block2;
-                int n2 = this.gp.currentArea;
+                if (currentArea == 1) break block2;
+                int areaCheck = this.gp.currentArea;
                 Objects.requireNonNull(this.gp);
-                if (n2 != 3) break block3;
+                if (areaCheck != 3) break block3;
             }
             this.padding = this.gp.tileSize;
             this.offsetX = (this.lastPlayerWorldX - this.gp.player.worldX) % this.gp.tileSize - this.padding;
@@ -230,19 +229,19 @@ public class Lighting {
         }
         this.centerX = this.padding + this.gp.player.screenX + this.gp.tileSize / 2;
         this.centerY = this.padding + this.gp.player.screenY + this.gp.tileSize / 2;
-        RadialGradientPaint radialGradientPaint = new RadialGradientPaint(this.centerX, (float)this.centerY, this.gp.player.currentLight.lightRadius / 2, this.gradientFractions, this.gradientColors);
-        graphics2D.setPaint(radialGradientPaint);
+        RadialGradientPaint playerLightGradient = new RadialGradientPaint(this.centerX, (float)this.centerY, this.gp.player.currentLight.lightRadius / 2, this.gradientFractions, this.gradientColors);
+        graphics2D.setPaint(playerLightGradient);
         graphics2D.fillRect(0, 0, this.darknessFilter.getWidth(), this.darknessFilter.getHeight());
     }
 
     private void buildTorchLights(Graphics2D graphics2D) {
         for (int i = 0; i < this.gp.iTile[1].length; ++i) {
             if (this.gp.iTile[this.gp.currentMap][i] == null || this.gp.iTile[this.gp.currentMap][i].name == null || !this.gp.iTile[this.gp.currentMap][i].name.equals("Torch")) continue;
-            InteractiveTile interactiveTile = this.gp.iTile[this.gp.currentMap][i];
-            this.centerX = this.padding + interactiveTile.getCenterX() - this.gp.player.worldX + this.gp.player.screenX;
-            this.centerY = this.padding + interactiveTile.getCenterY() - this.gp.player.worldY + this.gp.player.screenY;
-            RadialGradientPaint radialGradientPaint = new RadialGradientPaint(this.centerX, (float)this.centerY, interactiveTile.lightRadius, this.gradientFractions, this.gradientColors);
-            graphics2D.setPaint(radialGradientPaint);
+            InteractiveTile torchTile = this.gp.iTile[this.gp.currentMap][i];
+            this.centerX = this.padding + torchTile.getCenterX() - this.gp.player.worldX + this.gp.player.screenX;
+            this.centerY = this.padding + torchTile.getCenterY() - this.gp.player.worldY + this.gp.player.screenY;
+            RadialGradientPaint torchLightGradient = new RadialGradientPaint(this.centerX, (float)this.centerY, torchTile.lightRadius, this.gradientFractions, this.gradientColors);
+            graphics2D.setPaint(torchLightGradient);
             graphics2D.fillRect(0, 0, this.darknessFilter.getWidth(), this.darknessFilter.getHeight());
         }
     }

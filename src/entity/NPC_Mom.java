@@ -9,8 +9,8 @@ import main.GamePanel;
 
 public class NPC_Mom
 extends Entity {
-    public NPC_Mom(GamePanel gamePanel) {
-        super(gamePanel);
+    public NPC_Mom(GamePanel gp) {
+        super(gp);
         this.name = "Mom";
         this.type = 1;
         this.solidArea = new Rectangle();
@@ -66,12 +66,11 @@ extends Entity {
     }
 
     private int determineDialogueSet() {
-        boolean bl;
-        boolean bl2 = bl = this.gp.player.searchItemInInventory("Sugar") != 999;
+        boolean hasSugar = this.gp.player.searchItemInInventory("Sugar") != 999;
         if (this.gp.questCompleted) {
             return 3;
         }
-        if (bl) {
+        if (hasSugar) {
             this.gp.questCompleted = true;
             return 2;
         }

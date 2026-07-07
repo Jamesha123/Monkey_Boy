@@ -54,111 +54,111 @@ public class EntityGenerator {
         this.gp = gamePanel;
     }
 
-    public Entity getObject(String string) {
-        Entity entity = null;
-        switch (string) {
+    public Entity getObject(String itemName) {
+        Entity object = null;
+        switch (itemName) {
             case "Woodcutter's Axe": {
-                entity = new OBJ_Axe(this.gp);
+                object = new OBJ_Axe(this.gp);
                 break;
             }
             case "Boots": {
-                entity = new OBJ_Boots(this.gp);
+                object = new OBJ_Boots(this.gp);
                 break;
             }
             case "Key": {
-                entity = new OBJ_Key(this.gp);
+                object = new OBJ_Key(this.gp);
                 break;
             }
             case "Lantern": {
-                entity = new OBJ_Lantern(this.gp);
+                object = new OBJ_Lantern(this.gp);
                 break;
             }
             case "Red Potion": {
-                entity = new OBJ_Potion_Red(this.gp);
+                object = new OBJ_Potion_Red(this.gp);
                 break;
             }
             case "Blue Shield": {
-                entity = new OBJ_Shield_Blue(this.gp);
+                object = new OBJ_Shield_Blue(this.gp);
                 break;
             }
             case "Wood Shield": {
-                entity = new OBJ_Shield_Wood(this.gp);
+                object = new OBJ_Shield_Wood(this.gp);
                 break;
             }
             case "Normal Sword": {
-                entity = new OBJ_Sword_Normal(this.gp);
+                object = new OBJ_Sword_Normal(this.gp);
                 break;
             }
             case "Tent": {
-                entity = new OBJ_Tent(this.gp);
+                object = new OBJ_Tent(this.gp);
                 break;
             }
             case "Door": {
-                entity = new OBJ_Door(this.gp, 2);
+                object = new OBJ_Door(this.gp, 2);
                 break;
             }
             case "Chest": {
-                entity = new OBJ_Chest(this.gp);
+                object = new OBJ_Chest(this.gp);
                 break;
             }
             case "Bronze Coin": {
-                entity = new OBJ_Coin_Bronze(this.gp);
+                object = new OBJ_Coin_Bronze(this.gp);
                 break;
             }
             case "Heart": {
-                entity = new OBJ_Heart(this.gp);
+                object = new OBJ_Heart(this.gp);
                 break;
             }
             case "Mana Crystal": {
-                entity = new OBJ_ManaCrystal(this.gp);
+                object = new OBJ_ManaCrystal(this.gp);
                 break;
             }
             case "Fireball": {
-                entity = new OBJ_Fireball(this.gp, "normal");
+                object = new OBJ_Fireball(this.gp, "normal");
                 break;
             }
             case "Rock": {
-                entity = new OBJ_Rock(this.gp, "normal");
+                object = new OBJ_Rock(this.gp, "normal");
                 break;
             }
             case "Pickaxe": {
-                entity = new OBJ_Pickaxe(this.gp);
+                object = new OBJ_Pickaxe(this.gp);
                 break;
             }
             case "Iron Door": {
-                entity = new OBJ_Door_Iron(this.gp);
+                object = new OBJ_Door_Iron(this.gp);
                 break;
             }
             case "Torch": {
-                entity = new OBJ_Torch(this.gp);
+                object = new OBJ_Torch(this.gp);
                 break;
             }
             case "Bag": {
-                entity = new OBJ_Bag(this.gp);
+                object = new OBJ_Bag(this.gp);
                 break;
             }
             case "Sugar": {
-                entity = new OBJ_Sugar(this.gp);
+                object = new OBJ_Sugar(this.gp);
                 break;
             }
             case "Book of Fireball Magic": {
-                entity = new OBJ_Book_Fireball(this.gp);
+                object = new OBJ_Book_Fireball(this.gp);
                 break;
             }
             case "Epic Sword": {
-                entity = new OBJ_Sword_Epic(this.gp);
+                object = new OBJ_Sword_Epic(this.gp);
             }
         }
-        return entity;
+        return object;
     }
 
-    public InteractiveTile getInteractiveTile(String string) {
-        return this.getInteractiveTile(string, 0);
+    public InteractiveTile getInteractiveTile(String tileName) {
+        return this.getInteractiveTile(tileName, 0);
     }
 
-    public InteractiveTile getInteractiveTile(String string, int n) {
+    public InteractiveTile getInteractiveTile(String tileName, int variantIndex) {
         InteractiveTile interactiveTile = null;
-        switch (string) {
+        switch (tileName) {
             case "Bed": {
                 interactiveTile = new IT_Bed(this.gp, 0, 0);
                 break;
@@ -216,7 +216,7 @@ public class EntityGenerator {
                 break;
             }
             case "Torch": {
-                interactiveTile = new IT_Torch(this.gp, 0, 0, n);
+                interactiveTile = new IT_Torch(this.gp, 0, 0, variantIndex);
                 break;
             }
             case "Trunk": {
@@ -224,7 +224,7 @@ public class EntityGenerator {
                 break;
             }
             case "Village": {
-                interactiveTile = new IT_Village(this.gp, 0, 0, n);
+                interactiveTile = new IT_Village(this.gp, 0, 0, variantIndex);
             }
         }
         return interactiveTile;

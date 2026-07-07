@@ -13,8 +13,8 @@ public class NPC_BigRock
 extends Entity {
     public static final String npcName = "BigRock";
 
-    public NPC_BigRock(GamePanel gamePanel) {
-        super(gamePanel);
+    public NPC_BigRock(GamePanel gp) {
+        super(gp);
         this.name = npcName;
         this.direction = "down";
         this.speed = 4;
@@ -59,8 +59,8 @@ extends Entity {
     }
 
     @Override
-    public void move(String string) {
-        this.direction = string;
+    public void move(String direction) {
+        this.direction = direction;
         this.checkCollision();
         if (!this.collisionOn) {
             switch (this.direction) {
@@ -85,40 +85,38 @@ extends Entity {
     }
 
     public void detectPlate() {
-        int n;
-        int n2;
-        ArrayList<InteractiveTile> arrayList = new ArrayList<InteractiveTile>();
-        ArrayList<Entity> arrayList2 = new ArrayList<Entity>();
-        for (n2 = 0; n2 < this.gp.iTile[1].length; ++n2) {
-            if (this.gp.iTile[this.gp.currentMap][n2] == null || this.gp.iTile[this.gp.currentMap][n2].name == null || !this.gp.iTile[this.gp.currentMap][n2].name.equals("Metal Plate")) continue;
-            arrayList.add(this.gp.iTile[this.gp.currentMap][n2]);
+        ArrayList<InteractiveTile> metalPlates = new ArrayList<InteractiveTile>();
+        ArrayList<Entity> bigRocks = new ArrayList<Entity>();
+        for (int i = 0; i < this.gp.iTile[1].length; ++i) {
+            if (this.gp.iTile[this.gp.currentMap][i] == null || this.gp.iTile[this.gp.currentMap][i].name == null || !this.gp.iTile[this.gp.currentMap][i].name.equals("Metal Plate")) continue;
+            metalPlates.add(this.gp.iTile[this.gp.currentMap][i]);
         }
-        for (n2 = 0; n2 < this.gp.npc[1].length; ++n2) {
-            if (this.gp.npc[this.gp.currentMap][n2] == null || !this.gp.npc[this.gp.currentMap][n2].name.equals(npcName)) continue;
-            arrayList2.add(this.gp.npc[this.gp.currentMap][n2]);
+        for (int i = 0; i < this.gp.npc[1].length; ++i) {
+            if (this.gp.npc[this.gp.currentMap][i] == null || !this.gp.npc[this.gp.currentMap][i].name.equals(npcName)) continue;
+            bigRocks.add(this.gp.npc[this.gp.currentMap][i]);
         }
-        n2 = 0;
-        for (n = 0; n < arrayList.size(); ++n) {
-            int n3;
-            int n4 = Math.abs(this.worldX - ((InteractiveTile)arrayList.get((int)n)).worldX);
-            int n5 = Math.max(n4, n3 = Math.abs(this.worldY - ((InteractiveTile)arrayList.get((int)n)).worldY));
-            if (n5 < 8) {
+        int linkedRockCount = 0;
+        for (int i = 0; i < metalPlates.size(); ++i) {
+            int deltaY = Math.abs(this.worldY - metalPlates.get(i).worldY);
+            int deltaX = Math.abs(this.worldX - metalPlates.get(i).worldX);
+            int maxDelta = Math.max(deltaX, deltaY);
+            if (maxDelta < 8) {
                 if (this.linkedEntity != null) continue;
-                this.linkedEntity = (Entity)arrayList.get(n);
+                this.linkedEntity = metalPlates.get(i);
                 this.gp.playSE(3);
                 continue;
             }
-            if (this.linkedEntity != arrayList.get(n)) continue;
+            if (this.linkedEntity != metalPlates.get(i)) continue;
             this.linkedEntity = null;
         }
-        for (n = 0; n < arrayList2.size(); ++n) {
-            if (((Entity)arrayList2.get((int)n)).linkedEntity == null) continue;
-            ++n2;
+        for (int i = 0; i < bigRocks.size(); ++i) {
+            if (bigRocks.get(i).linkedEntity == null) continue;
+            ++linkedRockCount;
         }
-        if (n2 == arrayList2.size()) {
-            for (n = 0; n < this.gp.obj[1].length; ++n) {
-                if (this.gp.obj[this.gp.currentMap][n] == null || !this.gp.obj[this.gp.currentMap][n].name.equals("Iron Door")) continue;
-                this.gp.obj[this.gp.currentMap][n] = null;
+        if (linkedRockCount == bigRocks.size()) {
+            for (int i = 0; i < this.gp.obj[1].length; ++i) {
+                if (this.gp.obj[this.gp.currentMap][i] == null || !this.gp.obj[this.gp.currentMap][i].name.equals("Iron Door")) continue;
+                this.gp.obj[this.gp.currentMap][i] = null;
                 this.gp.playSE(21);
             }
         }

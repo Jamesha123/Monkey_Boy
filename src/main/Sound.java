@@ -42,9 +42,9 @@ public class Sound {
         this.soundURL[22] = this.getClass().getResource("/Sound/FinalBattle.wav");
     }
 
-    public void setFile(int n) {
+    public void setFile(int soundIndex) {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(this.soundURL[n]);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(this.soundURL[soundIndex]);
             this.clip = AudioSystem.getClip();
             this.clip.open(audioInputStream);
             this.fc = (FloatControl)this.clip.getControl(FloatControl.Type.MASTER_GAIN);
