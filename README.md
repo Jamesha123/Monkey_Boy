@@ -1,10 +1,10 @@
 # Monkey Boy 🐒
 
-A 2D adventure game built in Java featuring exploration, combat, magic, and quests in a pixel-art world.
+A 2D adventure game built in Java featuring exploration, combat, magic, and quests in a pixel art 2D world.
 
 ## Game Overview
 
-Monkey Boy is a classic 2D top-down adventure game where you play as a young hero exploring villages, dungeons, and boss arenas. The game features real-time combat, magic spells, inventory management, and an engaging storyline with NPCs and quests.
+Monkey Boy is a classic 2D top down adventure game where you play as a young hero exploring villages, dungeons, and boss arenas. The game features real-time combat, magic spells, inventory management, and an engaging storyline with NPCs and quests.
 
 ## Features
 
@@ -30,8 +30,7 @@ Monkey Boy is a classic 2D top-down adventure game where you play as a young her
   - Orcs and Dungeon Orcs
   - Bats
   - Boss Monsters (Slime Boss, Skeleton Lord)
-- **Boss Battles** — Epic encounters with unique mechanics
-- **Projectile Combat** — Ranged attacks and magic spells
+- **Boss Battles** — Each boss has unique mechanics
 
 ### Technical Features
 
@@ -39,7 +38,6 @@ Monkey Boy is a classic 2D top-down adventure game where you play as a young her
 - **Fullscreen Support** — Toggle between windowed and fullscreen modes
 - **Debug Mode** — Developer tools for testing and debugging
 - **Audio System** — Background music and sound effects
-- **Particle Effects** — Visual feedback for combat and magic
 
 ## Game Areas
 
@@ -162,10 +160,10 @@ Off    # Fullscreen (On/Off)
 
 - **Normal Sword** — Basic melee weapon
 - **Epic Sword** — Upgraded melee weapon
-- **Axe** — Alternative melee weapon
+- **Axe** — Chops wood
 - **Pickaxe** — Mining tool
 
-### Armor & Shields
+### Shields
 
 - **Wood Shield** — Basic defense
 - **Blue Shield** — Enhanced defense
@@ -175,13 +173,13 @@ Off    # Fullscreen (On/Off)
 
 - **Red Potion** — Health restoration
 - **Mana Crystal** — Magic energy restoration
-- **Heart** — Permanent health increase
+- **Heart** — Retore 1 health point
 - **Sugar** — Quest item
 
 ### Magic & Tools
 
 - **Fireball Book** — Learn fireball spell
-- **Lantern** — Light source
+- **Lantern** — Constant light source
 - **Torch** — Portable light
 - **Tent** — Rest and save point
 
@@ -196,19 +194,8 @@ Off    # Fullscreen (On/Off)
 ### Skeleton Lord
 
 - **Location:** Skeleton Lord Room
-- **Abilities:** Two-phase battle, powerful melee attacks
-- **Strategy:** Learn attack patterns, use guard effectively
-
-## Technical Details
-
-| | |
-|---|---|
-| **Engine** | Custom Java 2D game engine |
-| **Graphics** | Pixel art sprites with 16×16 base tiles scaled to 48×48 |
-| **Resolution** | 960×576 pixels (20×12 tiles) |
-| **Audio** | WAV/FLAC sound effects and music |
-| **Performance** | 60 FPS target with optimized rendering pipeline |
-| **Entry Point** | `main.Main` |
+- **Abilities:** Four phase battle, gets enraged after half health
+- **Strategy:** Use guard to counter attacks
 
 ## Project Structure
 
@@ -246,15 +233,5 @@ The playable JAR build works fine. Restoring clean source and full asset folders
 - Fullscreen mode may not work correctly on all systems
 - Save files are stored locally and may be lost if the game directory is moved
 - Building from source requires game assets to be present in `res/` beyond the included map data
-
-## Art & Audio Credits
-
-The game features custom pixel art sprites and original audio designed specifically for this project.
-
-## License
-
-This is a personal project. All rights reserved.
-
----
 
 Enjoy playing Monkey Boy! 🐒⚔️✨
